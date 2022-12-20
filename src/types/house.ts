@@ -33,7 +33,7 @@ export interface SearchAddressData {
   autoRoadAddressEnglish: string; // : ""
   autoJibunAddress: string; // : "경기 성남시 분당구 정자동 117"
   autoJibunAddressEnglish: string; // : "117, Jeongja-dong, Bundang-gu, Seongnam-si, Gyeonggi-do, Korea"
-  userSelectedType: string; // : "R"
+  userSelectedType: 'R' | 'J'; // : "R"
   noSelected: string; // : "N"
   hname: string; // : ""
   roadnameCode: string; // : "3180003"

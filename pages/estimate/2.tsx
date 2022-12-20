@@ -3,15 +3,20 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Header from '~/components/Header';
 import NextHead from '~/components/NextHead';
+import { SearchAddressData, SearchResize } from '~/types/house';
+import { initialAddress } from '~/utils/house';
 
 const EstimateSecondPage = () => {
   const searchBlockRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const searchBlock = searchBlockRef.current as HTMLDivElement;
-  const addressInput = useState<string>('');
+
+  const [addressState, setAddressState] =
+    useState<typeof initialAddress>(initialAddress);
 
   useEffect(() => {
+    // ref를 위해 적용
     setIsLoading(false);
   }, []);
 
@@ -19,75 +24,52 @@ const EstimateSecondPage = () => {
     setIsOpen(false);
   };
   const frameOpenClick = () => {
-    // 현재 scroll 위치를 저장해놓는다.
-    const currentScroll = Math.max(
-      document.body.scrollTop,
-      document.documentElement.scrollTop,
-    );
+    setAddressState(initialAddress);
     new daum.Postcode({
-      oncomplete: function (data) {
-        // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+      oncomplete: function (data: SearchAddressData) {
+        const {
+          userSelectedType,
+          roadAddress,
+          jibunAddress,
+          bname,
+          buildingName,
+          apartment,
+          zonecode,
+        } = data;
 
-        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-        let addr = ''; // 주소 변수
-        let extraAddr = ''; // 참고항목 변수
+        let extraAddr = '';
 
-        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-        if (data.userSelectedType === 'R') {
-          // 사용자가 도로명 주소를 선택했을 경우
-          addr = data.roadAddress;
+        if (userSelectedType === 'R') {
+          setAddressState((prev) => ({ ...prev, roadAddress, zonecode }));
         } else {
-          // 사용자가 지번 주소를 선택했을 경우(J)
-          addr = data.jibunAddress;
+          setAddressState((prev) => ({ ...prev, jibunAddress, zonecode }));
         }
 
-        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-        if (data.userSelectedType === 'R') {
-          // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-          // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-            extraAddr += data.bname;
+        if (userSelectedType === 'R') {
+          if (bname !== '' && /[동|로|가]$/g.test(bname)) {
+            extraAddr += bname;
           }
-          // 건물명이 있고, 공동주택일 경우 추가한다.
-          if (data.buildingName !== '' && data.apartment === 'Y') {
-            extraAddr +=
-              extraAddr !== '' ? ', ' + data.buildingName : data.buildingName;
+          if (buildingName !== '' && apartment === 'Y') {
+            extraAddr += extraAddr !== '' ? ', ' + buildingName : buildingName;
           }
-          // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
           if (extraAddr !== '') {
             extraAddr = ' (' + extraAddr + ')';
           }
           // 조합된 참고항목을 해당 필드에 넣는다.
-          document.getElementById('sample3_extraAddress').value = extraAddr;
-        } else {
-          document.getElementById('sample3_extraAddress').value = '';
+
+          setAddressState((prev) => ({ ...prev, userSelectedType, extraAddr }));
         }
 
-        // 우편번호와 주소 정보를 해당 필드에 넣는다.
-        document.getElementById('sample3_postcode').value = data.zonecode;
-        document.getElementById('sample3_address').value = addr;
-        // 커서를 상세주소 필드로 이동한다.
-        document.getElementById('sample3_detailAddress').focus();
-
-        // iframe을 넣은 element를 안보이게 한다.
-        // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-
-        setIsOpen((prev) => false);
-
-        // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
-        document.body.scrollTop = currentScroll;
+        setIsOpen(() => false);
       },
-      // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
-      onresize: function (size) {
-        console.log(searchBlock);
+
+      onresize: function (size: SearchResize) {
         searchBlock.style.height = size.height + 'px';
       },
       width: '100%',
       height: '100%',
     }).embed(searchBlock);
 
-    // iframe을 넣은 element를 보이게 한다.
     setIsOpen(() => true);
   };
 
@@ -99,46 +81,51 @@ const EstimateSecondPage = () => {
       <NextHead title='두번째' />
       <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
       <Header />
-      <div>두번째페이지</div>
-      <div>가자</div>
-      <button onClick={handleSubmitClick}>결과 보기</button>
+      <button onClick={frameOpenClick}>아파트 찾기</button>
       <div>
-        <input type='text' id='sample3_postcode' placeholder='우편번호' />
-        <input type='button' onClick={frameOpenClick} value='우편번호 찾기' />
-        <input type='text' id='sample3_address' placeholder='주소' />
+        {addressState.userSelectedType === 'R'
+          ? addressState.roadAddress + addressState.extraAddr
+          : addressState.jibunAddress}
+      </div>
+      <div>
+        {/* <input type='text' id='sample3_postcode' placeholder='우편번호' />
+        <input type='button' onClick={frameOpenClick} value='우편번호 찾기' /> */}
+        {/* <input type='text' id='sample3_address' placeholder='주소' />
         <input type='text' id='sample3_detailAddress' placeholder='상세주소' />
-        <input type='text' id='sample3_extraAddress' placeholder='참고항목' />
-        <StyledDiv
+        <input type='text' id='sample3_extraAddress' placeholder='참고항목' /> */}
+        <StyledFrameWrapper
           ref={searchBlockRef}
           style={{ display: isOpen ? 'block' : 'none' }}
         >
-          <StyledImg
+          <StyledExitImg
             src='//t1.daumcdn.net/postcode/resource/images/close.png'
             id='btnFoldWrap'
             onClick={frameCloseClick}
             alt='접기 버튼'
           />
-        </StyledDiv>
+        </StyledFrameWrapper>
       </div>
 
-      <button> 다음으로 </button>
+      <button onClick={handleSubmitClick}> 다음으로 </button>
     </>
   );
 };
 
-const StyledDiv = styled.div`
+const StyledFrameWrapper = styled.div`
   display: none;
   border: 1px solid;
   width: 500px;
-  height: 300px;
+  height: 466px;
   margin: 5px 0;
   position: relative;
+  min-height: 400px;
+  max-height: 500px;
   @media screen and (max-width: 400px) {
     width: 90%;
   }
 `;
 
-const StyledImg = styled.img`
+const StyledExitImg = styled.img`
   cursor: pointer;
   position: absolute;
   right: 0px;
