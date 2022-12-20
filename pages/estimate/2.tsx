@@ -7,11 +7,10 @@ import { SearchAddressData, SearchResize } from '~/types/house';
 import { initialAddress } from '~/utils/house';
 
 const EstimateSecondPage = () => {
-  const searchBlockRef = useRef<HTMLDivElement>(null);
+  const searchFrameRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const searchBlock = searchBlockRef.current as HTMLDivElement;
-
+  const searchFrame = searchFrameRef.current as HTMLDivElement;
   const [addressState, setAddressState] =
     useState<typeof initialAddress>(initialAddress);
 
@@ -40,12 +39,6 @@ const EstimateSecondPage = () => {
         let extraAddr = '';
 
         if (userSelectedType === 'R') {
-          setAddressState((prev) => ({ ...prev, roadAddress, zonecode }));
-        } else {
-          setAddressState((prev) => ({ ...prev, jibunAddress, zonecode }));
-        }
-
-        if (userSelectedType === 'R') {
           if (bname !== '' && /[동|로|가]$/g.test(bname)) {
             extraAddr += bname;
           }
@@ -55,20 +48,27 @@ const EstimateSecondPage = () => {
           if (extraAddr !== '') {
             extraAddr = ' (' + extraAddr + ')';
           }
-          // 조합된 참고항목을 해당 필드에 넣는다.
 
-          setAddressState((prev) => ({ ...prev, userSelectedType, extraAddr }));
+          setAddressState((prev) => ({
+            ...prev,
+            roadAddress,
+            zonecode,
+            userSelectedType,
+            extraAddr,
+          }));
+        } else {
+          setAddressState((prev) => ({ ...prev, jibunAddress, zonecode }));
         }
 
         setIsOpen(() => false);
       },
 
       onresize: function (size: SearchResize) {
-        searchBlock.style.height = size.height + 'px';
+        searchFrame.style.height = size.height + 'px';
       },
       width: '100%',
       height: '100%',
-    }).embed(searchBlock);
+    }).embed(searchFrame);
 
     setIsOpen(() => true);
   };
@@ -87,14 +87,9 @@ const EstimateSecondPage = () => {
           ? addressState.roadAddress + addressState.extraAddr
           : addressState.jibunAddress}
       </div>
-      <div>
-        {/* <input type='text' id='sample3_postcode' placeholder='우편번호' />
-        <input type='button' onClick={frameOpenClick} value='우편번호 찾기' /> */}
-        {/* <input type='text' id='sample3_address' placeholder='주소' />
-        <input type='text' id='sample3_detailAddress' placeholder='상세주소' />
-        <input type='text' id='sample3_extraAddress' placeholder='참고항목' /> */}
+      <StyledFrameContainer>
         <StyledFrameWrapper
-          ref={searchBlockRef}
+          ref={searchFrameRef}
           style={{ display: isOpen ? 'block' : 'none' }}
         >
           <StyledExitImg
@@ -104,12 +99,16 @@ const EstimateSecondPage = () => {
             alt='접기 버튼'
           />
         </StyledFrameWrapper>
-      </div>
+      </StyledFrameContainer>
 
       <button onClick={handleSubmitClick}> 다음으로 </button>
     </>
   );
 };
+
+const StyledFrameContainer = styled.div`
+  height: 500px;
+`;
 
 const StyledFrameWrapper = styled.div`
   display: none;
