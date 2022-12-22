@@ -25,6 +25,7 @@ const EstimateInput = ({
           type={type}
           onChange={handleInputChange}
           pattern='\\d*'
+          inputMode='decimal'
         />
         <span>{tag}</span>
       </div>
