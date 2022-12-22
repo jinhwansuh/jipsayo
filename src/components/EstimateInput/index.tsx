@@ -35,6 +35,7 @@ const EstimateInput = ({
 
 const StyledInputContainer = styled.div`
   width: 100%;
+  font-size: 16px;
 `;
 
 const StyledLabel = styled.label`
@@ -43,6 +44,9 @@ const StyledLabel = styled.label`
 
 const StyledInput = styled.input`
   width: 80%;
+  height: 40px;
+  font-size: 20px;
+  // font-size가 16px 아래면 ios에서 자동으로 zoom-in이 된다!
 `;
 
 export default EstimateInput;
