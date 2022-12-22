@@ -1,10 +1,12 @@
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import Header from '~/components/Header';
-import NextHead from '~/components/NextHead';
+import { Header, NextHead } from '~/components';
 import { SearchAddressData, SearchResize } from '~/types/house';
 import { initialAddress } from '~/utils/house';
+import { researchSecondState } from '~/atoms/research';
 
 const EstimateSecondPage = () => {
   const searchFrameRef = useRef<HTMLDivElement>(null);
@@ -13,6 +15,9 @@ const EstimateSecondPage = () => {
   const searchFrame = searchFrameRef.current as HTMLDivElement;
   const [addressState, setAddressState] =
     useState<typeof initialAddress>(initialAddress);
+  const [isComplete, setIsComplete] = useState(false);
+  const [researchRecoilState, setResearchRecoilState] =
+    useRecoilState(researchSecondState);
 
   useEffect(() => {
     // ref를 위해 적용
@@ -22,8 +27,10 @@ const EstimateSecondPage = () => {
   const frameCloseClick = () => {
     setIsOpen(false);
   };
+
   const frameOpenClick = () => {
-    setAddressState(initialAddress);
+    setAddressState(() => initialAddress);
+    setIsComplete(() => false);
     new daum.Postcode({
       oncomplete: function (data: SearchAddressData) {
         const {
@@ -61,6 +68,7 @@ const EstimateSecondPage = () => {
         }
 
         setIsOpen(() => false);
+        setIsComplete(() => true);
       },
 
       onresize: function (size: SearchResize) {
@@ -74,41 +82,76 @@ const EstimateSecondPage = () => {
   };
 
   const handleSubmitClick = () => {
-    console.log(123);
+    setResearchRecoilState(() => ({ ...addressState }));
   };
+
   return (
     <>
       <NextHead title='두번째' />
       <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
-      <Header />
-      <button onClick={frameOpenClick}>아파트 찾기</button>
-      <div>
-        {addressState.userSelectedType === 'R'
-          ? addressState.roadAddress + addressState.extraAddr
-          : addressState.jibunAddress}
-      </div>
-      <StyledFrameContainer>
-        <StyledFrameWrapper
-          ref={searchFrameRef}
-          style={{ display: isOpen ? 'block' : 'none' }}
-        >
-          <StyledExitImg
-            src='//t1.daumcdn.net/postcode/resource/images/close.png'
-            id='btnFoldWrap'
-            onClick={frameCloseClick}
-            alt='접기 버튼'
-          />
-        </StyledFrameWrapper>
-      </StyledFrameContainer>
 
-      <button onClick={handleSubmitClick}> 다음으로 </button>
+      <main>
+        <Header />
+        <div>
+          <StyledAddressWrapper onClick={frameOpenClick}>
+            <div>
+              {addressState.userSelectedType === '' ? (
+                '눌러서 아파트 검색!'
+              ) : addressState.userSelectedType === 'R' ? (
+                <>
+                  <div>{addressState.roadAddress}</div>
+                  <div>{addressState.extraAddr}</div>
+                </>
+              ) : (
+                <div>{addressState.jibunAddress}</div>
+              )}
+            </div>
+          </StyledAddressWrapper>
+        </div>
+
+        <StyledFrameContainer>
+          <StyledFrameWrapper
+            ref={searchFrameRef}
+            style={{ display: isOpen ? 'block' : 'none' }}
+          >
+            <StyledExitImg
+              src='//t1.daumcdn.net/postcode/resource/images/close.png'
+              id='btnFoldWrap'
+              onClick={frameCloseClick}
+              alt='접기 버튼'
+            />
+          </StyledFrameWrapper>
+        </StyledFrameContainer>
+        <div>
+          {isComplete && (
+            <StyleButtonWrapper>
+              <StyledMotionButton
+                animate={{ scale: [1, 1.5, 1.1] }}
+                transition={{
+                  ease: 'easeInOut',
+                }}
+                onClick={handleSubmitClick}
+              >
+                다음으로
+              </StyledMotionButton>
+            </StyleButtonWrapper>
+          )}
+        </div>
+      </main>
     </>
   );
 };
 
-const StyledFrameContainer = styled.div`
-  height: 500px;
+const StyledAddressWrapper = styled.div`
+  height: 50px;
+  background-color: #ddd;
+  cursor: pointer;
+  &:hover {
+    background-color: #ccc;
+  }
 `;
+
+const StyledFrameContainer = styled.div``;
 
 const StyledFrameWrapper = styled.div`
   display: none;
@@ -132,6 +175,17 @@ const StyledExitImg = styled.img`
   z-index: 1;
 `;
 
-export default EstimateSecondPage;
+const StyleButtonWrapper = styled.div`
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+`;
 
-// https://postcode.map.daum.net/guide
+const StyledMotionButton = styled(motion.button)`
+  width: 120px;
+  height: 50px;
+  cursor: pointer;
+`;
+
+export default EstimateSecondPage;
