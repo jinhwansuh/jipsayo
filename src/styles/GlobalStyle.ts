@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
   #__next {
     background-color: #eee;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
     width: 100%;
     height: 100%;
   }
