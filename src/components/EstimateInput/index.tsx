@@ -1,10 +1,12 @@
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 interface Props {
   title: string;
-  handleInputChange: () => void;
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   tag?: string;
   type?: string;
+  name: string;
 }
 
 const EstimateInput = ({
@@ -12,12 +14,18 @@ const EstimateInput = ({
   handleInputChange,
   type = 'text',
   tag,
+  name,
 }: Props) => {
   return (
     <StyledInputContainer>
       <StyledLabel>{title}</StyledLabel>
       <div>
-        <StyledInput type={type} onChange={handleInputChange} />
+        <StyledInput
+          name={name}
+          type={type}
+          onChange={handleInputChange}
+          pattern='\\d*'
+        />
         <span>{tag}</span>
       </div>
     </StyledInputContainer>
