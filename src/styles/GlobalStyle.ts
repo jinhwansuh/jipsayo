@@ -27,6 +27,9 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     height: 100%;
   }
+  button {
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyle;
