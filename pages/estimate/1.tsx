@@ -53,8 +53,9 @@ const EstimateFirstPage = () => {
             type={'number'}
           />
         </InputWrapper>
-
-        {isError && <ErrorMessage>모든 항목을 입력해주세요</ErrorMessage>}
+        <ErrorContainer>
+          {isError && <ErrorMessage>모든 항목을 입력해주세요</ErrorMessage>}
+        </ErrorContainer>
 
         <Button content='다음으로' handleButtonClick={handleNextClick} />
       </main>
@@ -67,6 +68,10 @@ const InputWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const ErrorContainer = styled.div`
+  height: 20px;
 `;
 
 const ErrorMessage = styled.div`
