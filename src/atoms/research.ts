@@ -3,11 +3,11 @@ import { initialAddress, initialResearch } from '~/utils/house';
 
 export const researchFirstState = atom({
   key: 'researchFirstStateKey',
-  default: initialAddress,
+  default: initialResearch,
 });
 export const researchSecondState = atom({
   key: 'researchSecondStateKey',
-  default: initialResearch,
+  default: initialAddress,
 });
 
 export const researchIndexState = atom({
