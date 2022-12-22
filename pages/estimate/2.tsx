@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -9,6 +10,7 @@ import { initialAddress } from '~/utils/house';
 import { researchSecondState } from '~/atoms/research';
 
 const EstimateSecondPage = () => {
+  const router = useRouter();
   const searchFrameRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -33,6 +35,7 @@ const EstimateSecondPage = () => {
     setIsComplete(() => false);
     new daum.Postcode({
       oncomplete: function (data: SearchAddressData) {
+        console.log(data);
         const {
           userSelectedType,
           roadAddress,
@@ -64,7 +67,12 @@ const EstimateSecondPage = () => {
             extraAddr,
           }));
         } else {
-          setAddressState((prev) => ({ ...prev, jibunAddress, zonecode }));
+          setAddressState((prev) => ({
+            ...prev,
+            userSelectedType,
+            jibunAddress,
+            zonecode,
+          }));
         }
 
         setIsOpen(() => false);
@@ -82,7 +90,10 @@ const EstimateSecondPage = () => {
   };
 
   const handleSubmitClick = () => {
-    setResearchRecoilState(() => ({ ...addressState }));
+    if (addressState.userSelectedType) {
+      setResearchRecoilState(() => ({ ...addressState }));
+      router.push('/result');
+    }
   };
 
   return (
