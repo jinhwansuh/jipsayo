@@ -8,3 +8,9 @@ export const initialAddress = {
   zonecode: '',
   extraAddr: '',
 };
+
+export const initialResearch = {
+  cash: '',
+  saving: '',
+  rate: '',
+};
