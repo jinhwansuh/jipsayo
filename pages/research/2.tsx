@@ -5,11 +5,11 @@ import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { Header, NextHead } from '~/components';
-import { SearchAddressData, SearchResize } from '~/types/house';
+import { SearchAddressData, SearchResize } from '~/types/research';
 import { initialAddress } from '~/utils/house';
 import { researchSecondState } from '~/atoms/research';
 
-const EstimateSecondPage = () => {
+const ResearchSecondPage = () => {
   const router = useRouter();
   const searchFrameRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -199,4 +199,4 @@ const StyledMotionButton = styled(motion.button)`
   cursor: pointer;
 `;
 
-export default EstimateSecondPage;
+export default ResearchSecondPage;

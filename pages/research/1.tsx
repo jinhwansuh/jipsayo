@@ -6,7 +6,7 @@ import { Button, EstimateInput } from '~/components';
 import Header from '~/components/Header';
 import { researchFirstState, researchIndexState } from '~/atoms/research';
 
-const EstimateFirstPage = () => {
+const ResearchFirstPage = () => {
   const router = useRouter();
   const setResearchIndex = useSetRecoilState(researchIndexState);
   const [researchState, setResearchState] = useRecoilState(researchFirstState);
@@ -78,4 +78,4 @@ const ErrorMessage = styled.div`
   color: red;
 `;
 
-export default EstimateFirstPage;
+export default ResearchFirstPage;
