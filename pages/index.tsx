@@ -3,13 +3,14 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { Button } from '~/components';
 import Header from '~/components/Header';
+import { PAGE_ROUTE } from '~/constants';
 import Transitions from '~/layout/transitions';
 
 export default function Home() {
   const router = useRouter();
 
   const handleStartClick = () => {
-    router.push('/estimate/1');
+    router.push(PAGE_ROUTE.RESEARCH_FIRST);
   };
 
   return (

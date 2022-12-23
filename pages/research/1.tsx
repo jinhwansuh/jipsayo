@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Button, EstimateInput } from '~/components';
 import Header from '~/components/Header';
 import { researchFirstState, researchIndexState } from '~/atoms/research';
+import { PAGE_ROUTE } from '~/constants';
 
 const ResearchFirstPage = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const ResearchFirstPage = () => {
     if (researchState.cash && researchState.rate && researchState.saving) {
       setIsError(() => false);
       setResearchIndex((prev) => ({ ...prev, first: true }));
-      router.push('/estimate/2');
+      router.push(PAGE_ROUTE.RESEARCH_SECOND);
     } else {
       setIsError(() => true);
     }

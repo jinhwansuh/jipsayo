@@ -8,6 +8,7 @@ import { Header, NextHead } from '~/components';
 import { SearchAddressData, SearchResize } from '~/types/research';
 import { initialAddress } from '~/utils/house';
 import { researchSecondState } from '~/atoms/research';
+import { PAGE_ROUTE } from '~/constants';
 
 const ResearchSecondPage = () => {
   const router = useRouter();
@@ -92,7 +93,7 @@ const ResearchSecondPage = () => {
   const handleSubmitClick = () => {
     if (addressState.userSelectedType) {
       setResearchRecoilState(() => ({ ...addressState }));
-      router.push('/result');
+      router.push(PAGE_ROUTE.RESULT);
     }
   };
 

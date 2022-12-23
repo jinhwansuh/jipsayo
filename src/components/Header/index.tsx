@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { PAGE_ROUTE } from '~/constants';
 
 const Header = () => {
   const router = useRouter();
 
   const handleHomeClick = () => {
-    router.push('/');
+    router.push(PAGE_ROUTE.HOME);
   };
 
   return (

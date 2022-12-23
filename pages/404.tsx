@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { PAGE_ROUTE } from '~/constants';
 
 const NotFoundPage = () => {
   const router = useRouter();
@@ -7,7 +8,9 @@ const NotFoundPage = () => {
   return (
     <Container>
       <ErrorText>404 This page could not be found.</ErrorText>
-      <Button onClick={() => router.replace('/')}>Back to Home</Button>
+      <Button onClick={() => router.replace(PAGE_ROUTE.HOME)}>
+        Back to Home
+      </Button>
     </Container>
   );
 };
