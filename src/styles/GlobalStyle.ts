@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
   #__next {
-    background-color: #eee;
     min-height: 100vh;
     min-height: -webkit-fill-available;
     width: 100%;

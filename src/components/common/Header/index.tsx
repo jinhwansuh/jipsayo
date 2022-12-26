@@ -20,7 +20,7 @@ const Header = () => {
 
 const Container = styled.header`
   z-index: 9000;
-  height: 50px;
+  min-height: 50px;
   background-color: #b6b6ef;
   display: flex;
   justify-content: space-between;
