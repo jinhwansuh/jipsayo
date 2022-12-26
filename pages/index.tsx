@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
-import { Button } from '~/components';
+import { Button } from '~/components/domains';
 import { PAGE_ROUTE } from '~/constants';
 
 export default function Home() {

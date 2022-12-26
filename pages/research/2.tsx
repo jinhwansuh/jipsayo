@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { NextHead } from '~/components';
+import { NextHead } from '~/components/common';
 import { SearchAddressData, SearchResize } from '~/types/research';
 import { initialAddress } from '~/utils/house';
 import { researchSecondState } from '~/atoms/research';
@@ -99,7 +99,7 @@ const ResearchSecondPage = () => {
 
   return (
     <>
-      <NextHead title='두번째' />
+      <NextHead title='주소 입력' />
       <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
 
       <div>

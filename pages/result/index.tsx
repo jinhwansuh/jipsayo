@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Button } from '~/components';
+import { Button } from '~/components/domains';
 
 const ResearchResultPage = () => {
   const router = useRouter();

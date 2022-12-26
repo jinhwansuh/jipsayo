@@ -2,7 +2,9 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Button, EstimateInput } from '~/components';
+import { NextHead } from '~/components/common';
+import { Button, EstimateInput } from '~/components/domains';
+import { initialResearch } from '~/utils/house';
 import { researchFirstState, researchIndexState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
@@ -11,14 +13,16 @@ const ResearchFirstPage = () => {
   const setResearchIndex = useSetRecoilState(researchIndexState);
   const [researchState, setResearchState] = useRecoilState(researchFirstState);
   const [isError, setIsError] = useState(false);
+  const [inputState, setInputState] = useState(initialResearch);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setResearchState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setInputState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleNextClick = () => {
-    if (researchState.cash && researchState.rate && researchState.saving) {
+    if (inputState.cash && inputState.rate && inputState.saving) {
       setIsError(() => false);
+      setResearchState(() => ({ ...inputState }));
       setResearchIndex((prev) => ({ ...prev, first: true }));
       router.push(PAGE_ROUTE.RESEARCH_SECOND);
     } else {
@@ -28,6 +32,8 @@ const ResearchFirstPage = () => {
 
   return (
     <>
+      <NextHead title='자산 입력' />
+
       <InputWrapper>
         <EstimateInput
           handleInputChange={handleInputChange}
@@ -45,8 +51,8 @@ const ResearchFirstPage = () => {
         />
         <EstimateInput
           handleInputChange={handleInputChange}
-          title={'인상률'}
-          tag={'만원'}
+          title={'연봉 인상률 (%)'}
+          tag={'%'}
           name={'rate'}
           type={'number'}
         />
