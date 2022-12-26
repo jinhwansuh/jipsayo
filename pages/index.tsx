@@ -23,7 +23,6 @@ export default function Home() {
       </Head>
 
       <Transitions>
-        <Header />
         <StyledContentsWrapper>
           <div>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam

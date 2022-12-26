@@ -3,7 +3,6 @@ import { ChangeEvent, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { Button, EstimateInput } from '~/components';
-import Header from '~/components/Header';
 import { researchFirstState, researchIndexState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
@@ -29,37 +28,34 @@ const ResearchFirstPage = () => {
 
   return (
     <>
-      <main>
-        <Header />
-        <InputWrapper>
-          <EstimateInput
-            handleInputChange={handleInputChange}
-            title={'보유 현금'}
-            tag={'만원'}
-            name={'cash'}
-            type={'number'}
-          />
-          <EstimateInput
-            handleInputChange={handleInputChange}
-            title={'한달 저축 가능 금액'}
-            tag={'만원'}
-            name={'saving'}
-            type={'number'}
-          />
-          <EstimateInput
-            handleInputChange={handleInputChange}
-            title={'인상률'}
-            tag={'만원'}
-            name={'rate'}
-            type={'number'}
-          />
-        </InputWrapper>
-        <ErrorContainer>
-          {isError && <ErrorMessage>모든 항목을 입력해주세요</ErrorMessage>}
-        </ErrorContainer>
+      <InputWrapper>
+        <EstimateInput
+          handleInputChange={handleInputChange}
+          title={'보유 현금'}
+          tag={'만원'}
+          name={'cash'}
+          type={'number'}
+        />
+        <EstimateInput
+          handleInputChange={handleInputChange}
+          title={'한달 저축 가능 금액'}
+          tag={'만원'}
+          name={'saving'}
+          type={'number'}
+        />
+        <EstimateInput
+          handleInputChange={handleInputChange}
+          title={'인상률'}
+          tag={'만원'}
+          name={'rate'}
+          type={'number'}
+        />
+      </InputWrapper>
+      <ErrorContainer>
+        {isError && <ErrorMessage>모든 항목을 입력해주세요</ErrorMessage>}
+      </ErrorContainer>
 
-        <Button content='다음으로' handleButtonClick={handleNextClick} />
-      </main>
+      <Button content='다음으로' handleButtonClick={handleNextClick} />
     </>
   );
 };

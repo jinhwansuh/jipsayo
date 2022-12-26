@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Button, Header } from '~/components';
+import { Button } from '~/components';
 
 const ResearchResultPage = () => {
   const router = useRouter();
@@ -9,11 +9,8 @@ const ResearchResultPage = () => {
 
   return (
     <>
-      <main>
-        <Header />
-        <div>결과 페이지 입니다.</div>
-        <Button content='홈으로' handleButtonClick={handleButtonClick} />
-      </main>
+      <div>결과 페이지 입니다.</div>
+      <Button content='홈으로' handleButtonClick={handleButtonClick} />
     </>
   );
 };

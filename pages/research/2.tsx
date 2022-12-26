@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Header, NextHead } from '~/components';
+import { NextHead } from '~/components';
 import { SearchAddressData, SearchResize } from '~/types/research';
 import { initialAddress } from '~/utils/house';
 import { researchSecondState } from '~/atoms/research';
@@ -102,8 +102,7 @@ const ResearchSecondPage = () => {
       <NextHead title='두번째' />
       <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
 
-      <main>
-        <Header />
+      <div>
         <div>
           <StyledAddressWrapper onClick={frameOpenClick}>
             <div>
@@ -138,9 +137,11 @@ const ResearchSecondPage = () => {
           {isComplete && (
             <StyleButtonWrapper>
               <StyledMotionButton
-                animate={{ scale: [1, 1.5, 1.1] }}
+                animate={{ scale: [1, 1.5, 1.2, 1] }}
                 transition={{
                   ease: 'easeInOut',
+                  repeat: Infinity,
+                  duration: 2,
                 }}
                 onClick={handleSubmitClick}
               >
@@ -149,7 +150,7 @@ const ResearchSecondPage = () => {
             </StyleButtonWrapper>
           )}
         </div>
-      </main>
+      </div>
     </>
   );
 };
@@ -195,7 +196,7 @@ const StyleButtonWrapper = styled.div`
 `;
 
 const StyledMotionButton = styled(motion.button)`
-  width: 120px;
+  width: 60%;
   height: 50px;
   cursor: pointer;
 `;
