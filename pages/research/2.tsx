@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import Transitions from '~/layouts/Transitions';
 import { NextHead } from '~/components/common';
 import { SearchAddressData, SearchResize } from '~/types/research';
 import { initialAddress } from '~/utils/house';
@@ -36,7 +37,6 @@ const ResearchSecondPage = () => {
     setIsComplete(() => false);
     new daum.Postcode({
       oncomplete: function (data: SearchAddressData) {
-        console.log(data);
         const {
           userSelectedType,
           roadAddress,
@@ -102,7 +102,7 @@ const ResearchSecondPage = () => {
       <NextHead title='주소 입력' />
       <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
 
-      <div>
+      <Transitions>
         <div>
           <StyledAddressWrapper onClick={frameOpenClick}>
             <div>
@@ -150,7 +150,7 @@ const ResearchSecondPage = () => {
             </StyleButtonWrapper>
           )}
         </div>
-      </div>
+      </Transitions>
     </>
   );
 };
