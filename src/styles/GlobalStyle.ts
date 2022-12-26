@@ -23,11 +23,6 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
-  main {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
   button {
     cursor: pointer;
   }
