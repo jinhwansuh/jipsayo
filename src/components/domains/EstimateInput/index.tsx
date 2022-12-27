@@ -19,7 +19,7 @@ const EstimateInput = ({
   return (
     <StyledInputContainer>
       <StyledLabel>{title}</StyledLabel>
-      <div>
+      <StyledInputWrapper>
         <StyledInput
           name={name}
           type={type}
@@ -27,8 +27,8 @@ const EstimateInput = ({
           pattern='\\d*'
           inputMode='decimal'
         />
-        <span>{tag}</span>
-      </div>
+        <StyledTag>{tag}</StyledTag>
+      </StyledInputWrapper>
     </StyledInputContainer>
   );
 };
@@ -40,16 +40,35 @@ const StyledInputContainer = styled.div`
 `;
 
 const StyledLabel = styled.label`
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 10px;
   display: block;
+  padding-left: 10px;
+`;
+
+const StyledInputWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const StyledInput = styled.input`
+  // font-size가 16px 아래면 ios에서 자동으로 zoom-in이 된다!
   width: 80%;
   height: 40px;
   font-size: 20px;
-  // font-size가 16px 아래면 ios에서 자동으로 zoom-in이 된다!
+  padding-left: 20px;
+  border: 0.5px solid grey;
+  border-radius: 20px;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #e18f9a;
+  }
+`;
+
+const StyledTag = styled.p`
+  flex: 1;
+  padding-left: 10px;
+  font-size: 16px;
 `;
 
 export default EstimateInput;

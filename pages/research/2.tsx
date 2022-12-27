@@ -103,22 +103,18 @@ const ResearchSecondPage = () => {
       <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
 
       <Transitions>
-        <div>
-          <StyledAddressWrapper onClick={frameOpenClick}>
-            <div>
-              {addressState.userSelectedType === '' ? (
-                '눌러서 아파트 검색!'
-              ) : addressState.userSelectedType === 'R' ? (
-                <>
-                  <div>{addressState.roadAddress}</div>
-                  <div>{addressState.extraAddr}</div>
-                </>
-              ) : (
-                <div>{addressState.jibunAddress}</div>
-              )}
-            </div>
-          </StyledAddressWrapper>
-        </div>
+        <StyledAddressWrapper onClick={frameOpenClick}>
+          {addressState.userSelectedType === '' ? (
+            <StyledSelectText>눌러서 아파트 검색!</StyledSelectText>
+          ) : addressState.userSelectedType === 'R' ? (
+            <>
+              <div>{addressState.roadAddress}</div>
+              <div>{addressState.extraAddr}</div>
+            </>
+          ) : (
+            <div>{addressState.jibunAddress}</div>
+          )}
+        </StyledAddressWrapper>
 
         <StyledFrameContainer>
           <StyledFrameWrapper
@@ -162,6 +158,12 @@ const StyledAddressWrapper = styled.div`
   &:hover {
     background-color: #ccc;
   }
+`;
+
+const StyledSelectText = styled.div`
+  text-align: center;
+  font-size: 23px;
+  height: 100%;
 `;
 
 const StyledFrameContainer = styled.div``;
