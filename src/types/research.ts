@@ -46,7 +46,7 @@ export interface SearchResize {
   height: number;
 }
 
-export interface PostResearch {
+export interface PostResearchRequest {
   savedMoney: number;
   moneyPerMonth: number;
   jibunAddress?: string;
@@ -54,4 +54,8 @@ export interface PostResearch {
   increaseRate: number;
   job?: string;
   occupation?: string;
+}
+
+export interface PostResearchResponse {
+  id: number;
 }
