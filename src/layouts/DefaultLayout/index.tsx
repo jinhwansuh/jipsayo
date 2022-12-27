@@ -26,7 +26,7 @@ const ContentWrapper = styled.main`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #eee;
+  background-color: #f1eded;
 `;
 
 export default DefaultLayout;

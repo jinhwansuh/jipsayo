@@ -21,7 +21,7 @@ const Header = () => {
 const Container = styled.header`
   z-index: 9000;
   min-height: 50px;
-  background-color: #b6b6ef;
+  background-color: #d6d6ec;
   display: flex;
   justify-content: space-between;
   align-items: center;
