@@ -41,21 +41,18 @@ const ResearchFirstPage = () => {
             title={'보유 현금'}
             tag={'만원'}
             name={'cash'}
-            type={'number'}
           />
           <EstimateInput
             handleInputChange={handleInputChange}
             title={'한달 저축 가능 금액'}
             tag={'만원'}
             name={'saving'}
-            type={'number'}
           />
           <EstimateInput
             handleInputChange={handleInputChange}
             title={'연봉 인상률 (%)'}
             tag={'%'}
             name={'rate'}
-            type={'number'}
           />
         </InputWrapper>
         <ErrorContainer>
@@ -77,6 +74,7 @@ const InputWrapper = styled.div`
 
 const ErrorContainer = styled.div`
   height: 20px;
+  margin-top: 5px;
 `;
 
 const ErrorMessage = styled.div`

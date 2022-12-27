@@ -12,7 +12,7 @@ interface Props {
 const EstimateInput = ({
   title,
   handleInputChange,
-  type = 'text',
+  type = 'number',
   tag,
   name,
 }: Props) => {
@@ -36,10 +36,13 @@ const EstimateInput = ({
 const StyledInputContainer = styled.div`
   width: 100%;
   font-size: 16px;
+  margin: 5px auto;
 `;
 
 const StyledLabel = styled.label`
-  width: 100%;
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: block;
 `;
 
 const StyledInput = styled.input`
