@@ -15,3 +15,7 @@ export interface FetchHouseResponse {
   createdDate: string;
   modifiedDate: string;
 }
+
+export interface HouseData extends FetchHouseResponse {
+  estimateTime: [number, number] | false;
+}
