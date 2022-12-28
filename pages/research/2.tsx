@@ -8,7 +8,7 @@ import Transitions from '~/layouts/Transitions';
 import { NextHead } from '~/components/common';
 import { SearchAddressData, SearchResize } from '~/types/research';
 import { initialAddress } from '~/utils/house';
-import { researchSecondState } from '~/atoms/research';
+import { researchState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
 const ResearchSecondPage = () => {
@@ -21,7 +21,7 @@ const ResearchSecondPage = () => {
     useState<typeof initialAddress>(initialAddress);
   const [isComplete, setIsComplete] = useState(false);
   const [researchRecoilState, setResearchRecoilState] =
-    useRecoilState(researchSecondState);
+    useRecoilState(researchState);
 
   useEffect(() => {
     // ref를 위해 적용
@@ -92,7 +92,7 @@ const ResearchSecondPage = () => {
 
   const handleSubmitClick = () => {
     if (addressState.userSelectedType) {
-      setResearchRecoilState(() => ({ ...addressState }));
+      setResearchRecoilState((prev) => ({ ...prev, ...addressState }));
       router.push(PAGE_ROUTE.RESULT);
     }
   };

@@ -6,13 +6,14 @@ import Transitions from '~/layouts/Transitions';
 import { NextHead } from '~/components/common';
 import { Button, EstimateInput } from '~/components/domains';
 import { initialResearch } from '~/utils/house';
-import { researchFirstState, researchIndexState } from '~/atoms/research';
+import { researchIndexState, researchState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
 const ResearchFirstPage = () => {
   const router = useRouter();
   const setResearchIndex = useSetRecoilState(researchIndexState);
-  const [researchState, setResearchState] = useRecoilState(researchFirstState);
+  const [researchRecoilState, setResearchRecoilState] =
+    useRecoilState(researchState);
   const [isError, setIsError] = useState(false);
   const [inputState, setInputState] = useState(initialResearch);
 
@@ -23,7 +24,7 @@ const ResearchFirstPage = () => {
   const handleNextClick = () => {
     if (inputState.cash && inputState.rate && inputState.saving) {
       setIsError(() => false);
-      setResearchState(() => ({ ...inputState }));
+      setResearchRecoilState((prev) => ({ ...prev, ...inputState }));
       setResearchIndex((prev) => ({ ...prev, first: true }));
       router.push(PAGE_ROUTE.RESEARCH_SECOND);
     } else {
@@ -34,6 +35,7 @@ const ResearchFirstPage = () => {
   return (
     <>
       <NextHead title='자산 입력' />
+
       <Transitions>
         <InputWrapper>
           <EstimateInput
