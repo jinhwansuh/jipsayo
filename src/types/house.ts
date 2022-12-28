@@ -7,8 +7,11 @@ export interface FetchHouseResponse {
   jibunAddress: string;
   roadAddress: string;
   cost: number;
+  danjiName: string;
+  hangCode: number;
   latitude: number;
   longitude: number;
+  postCode: number;
   createdDate: string;
   modifiedDate: string;
 }
