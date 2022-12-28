@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Header } from '~/components/common';
@@ -8,10 +9,14 @@ interface LayoutProps {
 
 const DefaultLayout = ({ children }: LayoutProps) => {
   return (
-    <Container>
-      <Header />
-      <ContentWrapper>{children}</ContentWrapper>
-    </Container>
+    <>
+      <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
+
+      <Container>
+        <Header />
+        <ContentWrapper>{children}</ContentWrapper>
+      </Container>
+    </>
   );
 };
 

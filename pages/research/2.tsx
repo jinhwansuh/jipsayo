@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { NextHead } from '~/components/common';
@@ -45,7 +44,6 @@ const ResearchSecondPage = () => {
   return (
     <>
       <NextHead title='주소 입력' />
-      <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
 
       {hasData && <DynamicResearch2 />}
     </>
