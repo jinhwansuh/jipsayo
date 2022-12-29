@@ -2,7 +2,7 @@ export interface FetchHouseRequest {
   jibunAddress: string;
 }
 
-export interface FetchHouseResponse {
+interface FetchHouseData {
   id: number;
   jibunAddress: string;
   roadAddress: string;
@@ -16,6 +16,13 @@ export interface FetchHouseResponse {
   modifiedDate: string;
 }
 
-export interface HouseData extends FetchHouseResponse {
+export interface FetchHouseResponse {
+  data: FetchHouseData;
+  errors: string;
+  message: string;
+  timestamp: string;
+}
+
+export interface HouseData extends FetchHouseData {
   estimateTime: [number, number] | false;
 }
