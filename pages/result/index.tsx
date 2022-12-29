@@ -13,29 +13,38 @@ const ResearchResultPage = () => {
   const [houseState, setHouseState] = useState<HouseData>();
   const [isLoading, setIsLoading] = useState(false);
   const researchRecoilState = useRecoilValue(researchState);
+  const [isError, setIsError] = useState(false);
+
+  // TODO: 로딩 spinner or something
+  // TODO: 전역상태에 값이 없을 때 (방어코드)
+  // TODO: 데이터가 없을 때
+  // TODO: 기본 값 제거
+  // TODO: 통신 에러가 발생했을 때
 
   const fetchHouse = useCallback(async () => {
-    const { data } = await getHouse({
-      jibunAddress: '충남 천안시 서북구 성정동 1438',
-    });
-
-    // TODO: 방어코드 처리를 하면 삭제를 해야함
-    setHouseState(() => ({
-      ...data.data,
-      estimateTime: calculateEstimateTime({
-        budget: researchRecoilState.cash
-          ? parseInt(researchRecoilState.cash, 10)
-          : 4000,
-        saving: researchRecoilState.saving
-          ? parseInt(researchRecoilState.saving, 10)
-          : 250,
-        rate: researchRecoilState.rate
-          ? parseInt(researchRecoilState.rate, 10)
-          : 5.5,
-        targetPrice: data.data.cost,
-      }),
-    }));
-  }, []);
+    try {
+      const { data } = await getHouse({
+        jibunAddress: researchRecoilState.jibunAddress,
+      });
+      if (data) {
+        setHouseState(() => ({
+          ...data.data,
+          estimateTime: calculateEstimateTime({
+            budget: researchRecoilState.cash
+              ? parseInt(researchRecoilState.cash, 10)
+              : 4000,
+            saving: researchRecoilState.saving
+              ? parseInt(researchRecoilState.saving, 10)
+              : 250,
+            rate: researchRecoilState.rate ? +researchRecoilState.rate : 5.5,
+            targetPrice: data.data.cost || 5000,
+          }),
+        }));
+      }
+    } catch {
+      setIsError(true);
+    }
+  }, [researchRecoilState]);
 
   useEffect(() => {
     setIsLoading(() => true);
@@ -47,7 +56,9 @@ const ResearchResultPage = () => {
     router.push('/');
   };
 
-  if (!houseState || isLoading) return <div>로딩중...</div>;
+  if (!houseState || isLoading) return <div>데이터를 불러오고 있습니다...</div>;
+
+  if (!houseState?.danjiName && !isLoading) return <div>데이터가 없습니다</div>;
 
   return (
     <>
