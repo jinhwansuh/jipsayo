@@ -29,17 +29,9 @@ const ResearchSecondPage = () => {
       return;
     }
 
-    const timer = setTimeout(() => {
-      router.replace(PAGE_ROUTE.RESEARCH_FIRST, undefined, { shallow: true });
-    }, 4000);
-
+    router.replace(PAGE_ROUTE.RESEARCH_FIRST, undefined, { shallow: true });
     setIsLoading(() => false);
-    return () => {
-      clearTimeout(timer);
-    };
   }, []);
-
-  if (!hasData && !isLoading) return <div>데이터가 없습니다</div>;
 
   return (
     <>
