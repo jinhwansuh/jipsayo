@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { SearchAddressData, SearchResize } from '~/types/research';
 import { initialAddress } from '~/utils/house';
+import { postResearch } from '~/api/research';
 import { researchIndexState, researchState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
@@ -20,8 +21,10 @@ const DynamicResearch2 = () => {
     useRecoilState(researchState);
   const [pageRecoilState, setPageRecoilState] =
     useRecoilState(researchIndexState);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    // ref current 정의
     const searchFrame = searchFrameRef.current as HTMLDivElement;
   }, []);
 
@@ -42,6 +45,7 @@ const DynamicResearch2 = () => {
           buildingName,
           apartment,
           zonecode,
+          autoJibunAddress,
         } = data;
 
         let extraAddr = '';
@@ -62,6 +66,7 @@ const DynamicResearch2 = () => {
             roadAddress,
             zonecode,
             userSelectedType,
+            jibunAddress: autoJibunAddress,
             extraAddr,
           }));
         } else {
@@ -87,11 +92,22 @@ const DynamicResearch2 = () => {
     setIsOpen(() => true);
   };
 
-  const handleSubmitClick = () => {
+  const handleSubmitClick = async () => {
     if (addressState.userSelectedType) {
       setPageRecoilState((prev) => ({ ...prev, second: true }));
       setResearchRecoilState((prev) => ({ ...prev, ...addressState }));
-      router.push(PAGE_ROUTE.RESULT);
+      try {
+        await postResearch({
+          savedMoney: +researchRecoilState.cash,
+          moneyPerMonth: +researchRecoilState.saving,
+          jibunAddress: researchRecoilState.jibunAddress,
+          increaseRate: +researchRecoilState.rate,
+        });
+        setIsError(false);
+        router.push(PAGE_ROUTE.RESULT);
+      } catch {
+        setIsError(true);
+      }
     }
   };
 
@@ -141,6 +157,8 @@ const DynamicResearch2 = () => {
             </StyleButtonWrapper>
           )}
         </div>
+
+        {isError && <div>서버와 통신 에러입니다.</div>}
       </Transitions>
     </>
   );
