@@ -7,6 +7,10 @@ interface CalculateEstimateTimeType {
   targetPrice: number;
 }
 
+/**
+ *
+ * @returns [number 개월, number 월] | false 이미 가격보다 많음
+ */
 export const calculateEstimateTime = ({
   budget,
   saving,
@@ -17,22 +21,23 @@ export const calculateEstimateTime = ({
     return false;
   }
 
-  let target = targetPrice;
+  let target = targetPrice - budget;
+  let nextSaving = saving;
   let yearMoney = saving * 12;
-  let months = 0;
+  let month = 0;
+  let year = 0;
 
-  while (target >= 0) {
-    if (yearMoney > target) {
+  while (target > 0) {
+    if (yearMoney < target) {
       target -= yearMoney;
-      yearMoney = yearMoney * ((100 + rate) / 100);
+      nextSaving *= (100 + rate) / 100;
+      yearMoney *= nextSaving * 12;
+      year += 1;
     } else {
-      months += Math.round(target / yearMoney);
-      target = 0;
+      month = Math.round(target / nextSaving);
+      break;
     }
   }
-
-  const year = Math.floor(months / 12);
-  const month = months % 12;
 
   return [year, month];
 };
