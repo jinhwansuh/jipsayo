@@ -1,5 +1,6 @@
 export interface FetchHouseRequest {
-  jibunAddress: string;
+  roadAddress: string;
+  danjiName: string;
 }
 
 interface FetchHouseData {
