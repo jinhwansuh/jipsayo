@@ -21,8 +21,10 @@ const ResearchResultPage = () => {
   const fetchHouse = useCallback(async () => {
     try {
       const { data } = await getHouse({
-        jibunAddress: researchRecoilState.jibunAddress,
+        roadAddress: researchRecoilState.roadAddress,
+        danjiName: researchRecoilState.buildingName,
       });
+
       if (isEmpty(data.data)) {
         setHasNoData(() => true);
       } else {

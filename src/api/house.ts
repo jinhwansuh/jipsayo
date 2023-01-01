@@ -4,7 +4,8 @@ import axiosInstance from '.';
 export const getHouse = (data: FetchHouseRequest) => {
   return axiosInstance.get<FetchHouseResponse>('/api/v1/houses', {
     params: {
-      jibunAddress: data.jibunAddress,
+      roadAddress: data.roadAddress,
+      danjiName: data.danjiName,
     },
   });
 };
