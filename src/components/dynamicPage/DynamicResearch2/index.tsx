@@ -46,6 +46,7 @@ const DynamicResearch2 = () => {
           apartment,
           zonecode,
           autoJibunAddress,
+          address,
         } = data;
 
         let extraAddr = '';
@@ -68,13 +69,16 @@ const DynamicResearch2 = () => {
             userSelectedType,
             jibunAddress: autoJibunAddress,
             extraAddr,
+            buildingName,
           }));
         } else {
           setAddressState((prev) => ({
             ...prev,
             userSelectedType,
             jibunAddress,
+            roadAddress: address,
             zonecode,
+            buildingName,
           }));
         }
 
@@ -116,7 +120,10 @@ const DynamicResearch2 = () => {
       <Transitions>
         <StyledAddressWrapper onClick={frameOpenClick}>
           {addressState.userSelectedType === '' ? (
-            <StyledSelectText>눌러서 아파트 검색!</StyledSelectText>
+            <>
+              <StyledSelectText>눌러서 아파트 검색!</StyledSelectText>
+              <p>(ex, 압구정 현대아파트)</p>
+            </>
           ) : addressState.userSelectedType === 'R' ? (
             <>
               <div>{addressState.roadAddress}</div>
