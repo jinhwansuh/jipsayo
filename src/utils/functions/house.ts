@@ -31,8 +31,8 @@ export const calculateEstimateTime = ({
     if (yearMoney < target) {
       target -= yearMoney;
       nextSaving *= (100 + rate) / 100;
-      yearMoney *= nextSaving * 12;
-      year += 1;
+      yearMoney = nextSaving * 12;
+      year++;
     } else {
       month = Math.round(target / nextSaving);
       break;
