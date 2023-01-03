@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
-import { Button } from '~/components/domains';
+import { Button, ImageCarousel } from '~/components/domains';
 import { PAGE_ROUTE } from '~/constants';
 
 export default function Home() {
@@ -22,38 +22,8 @@ export default function Home() {
       </Head>
 
       <Transitions>
-        <StyledContentsWrapper>
-          <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam
-            pariatur dignissimos rem eum, mollitia facilis incidunt voluptates
-            in cumque odit, possimus inventore debitis accusantium corporis,
-            quaerat ea iste. Nihil, et.
-          </div>
-          <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam
-            pariatur dignissimos rem eum, mollitia facilis incidunt voluptates
-            in cumque odit, possimus inventore debitis accusantium corporis,
-            quaerat ea iste. Nihil, et.
-          </div>
-          <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam
-            pariatur dignissimos rem eum, mollitia facilis incidunt voluptates
-            in cumque odit, possimus inventore debitis accusantium corporis,
-            quaerat ea iste. Nihil, et.
-          </div>
-          <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam
-            pariatur dignissimos rem eum, mollitia facilis incidunt voluptates
-            in cumque odit, possimus inventore debitis accusantium corporis,
-            quaerat ea iste. Nihil, et.
-          </div>
-          <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam
-            pariatur dignissimos rem eum, mollitia facilis incidunt voluptates
-            in cumque odit, possimus inventore debitis accusantium corporis,
-            quaerat ea iste. Nihil, et.
-          </div>
-        </StyledContentsWrapper>
+        <ImageCarousel />
+
         <Button content='시작하기' handleButtonClick={handleStartClick} />
       </Transitions>
     </>
