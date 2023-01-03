@@ -62,7 +62,22 @@ const ResearchResultPage = () => {
     <>
       <NextHead title='결과' />
 
-      {hasNoData ? (
+      {houseState && houseState?.estimateTime ? (
+        <>
+          <div>{houseState.danjiName}</div>
+          <div>{houseState.cost}</div>
+          <div>{houseState.estimateTime}</div>
+        </>
+      ) : houseState && !houseState?.estimateTime ? (
+        <div>
+          축하합니다 {houseState?.danjiName}을 현재 자산으로 살수 있어요!
+        </div>
+      ) : (
+        ''
+      )}
+
+      {/* 데이터를 불러오지 못했을 때 */}
+      {hasNoData && (
         <>
           <div>주소를 정확하게 입력해주세요. </div>
           <div>(ex, 압구정 현대아파트)</div>
@@ -70,21 +85,9 @@ const ResearchResultPage = () => {
             다시 입력하러 가기
           </button>
         </>
-      ) : (
-        <>
-          <div>{houseState?.danjiName}</div>
-          <div>{houseState?.cost}</div>
-          {houseState?.estimateTime ? (
-            <div>
-              {houseState.estimateTime[0]}년 {houseState.estimateTime[1]}개월
-            </div>
-          ) : (
-            <div>
-              축하합니다 {houseState?.danjiName}을 현재 자산으로 살수 있어요!
-            </div>
-          )}
-        </>
       )}
+
+      {/* 서버 에러가 발생했을 때 */}
       {isError && (
         <>
           <div>서버와 통신 오류입니다.</div>
