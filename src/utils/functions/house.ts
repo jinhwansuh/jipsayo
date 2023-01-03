@@ -35,8 +35,10 @@ export const calculateEstimateTime = ({
       year++;
     } else {
       month = Math.ceil(target / nextSaving);
-      if (month >= 12) year++;
-      month -= 12;
+      if (month >= 12) {
+        year++;
+        month -= 12;
+      }
       break;
     }
   }
