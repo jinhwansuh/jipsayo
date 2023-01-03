@@ -25,5 +25,5 @@ export interface FetchHouseResponse {
 }
 
 export interface HouseData extends FetchHouseData {
-  estimateTime: [number, number] | false;
+  estimateTime: string | false;
 }

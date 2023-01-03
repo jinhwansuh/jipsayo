@@ -9,7 +9,7 @@ interface CalculateEstimateTimeType {
 
 /**
  *
- * @returns [number 개월, number 월] | false 이미 가격보다 많음
+ * @returns 'OO년 OO개월'(string) | false: 이미 가격보다 많음
  */
 export const calculateEstimateTime = ({
   budget,
@@ -28,16 +28,20 @@ export const calculateEstimateTime = ({
   let year = 0;
 
   while (target > 0) {
-    if (yearMoney < target) {
+    if (yearMoney <= target) {
       target -= yearMoney;
       nextSaving *= (100 + rate) / 100;
       yearMoney = nextSaving * 12;
       year++;
     } else {
-      month = Math.round(target / nextSaving);
+      month = Math.ceil(target / nextSaving);
+      if (month >= 12) year++;
+      month -= 12;
       break;
     }
   }
 
-  return [year, month];
+  if (year > 0 && month > 0) return `${year}년 ${month}개월`;
+  if (month === 0) return `${year}년`;
+  return `${month}개월`;
 };
