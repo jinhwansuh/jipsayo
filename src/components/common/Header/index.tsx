@@ -11,9 +11,7 @@ const Header = () => {
 
   return (
     <Container>
-      <HeaderText>{'<'}</HeaderText>
       <HeaderText onClick={handleHomeClick}>집사요</HeaderText>
-      <HeaderText>블라블라</HeaderText>
     </Container>
   );
 };
@@ -23,12 +21,13 @@ const Container = styled.header`
   min-height: 50px;
   background-color: #d6d6ec;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 
 const HeaderText = styled.div`
   font-size: 20px;
+  cursor: pointer;
 `;
 
 export default Header;
