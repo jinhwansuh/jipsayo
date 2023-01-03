@@ -22,6 +22,7 @@ const DynamicResearch2 = () => {
   const [pageRecoilState, setPageRecoilState] =
     useRecoilState(researchIndexState);
   const [isError, setIsError] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     // ref current 정의
@@ -97,6 +98,7 @@ const DynamicResearch2 = () => {
   };
 
   const handleSubmitClick = async () => {
+    setIsSending(() => true);
     if (addressState.userSelectedType) {
       setPageRecoilState((prev) => ({ ...prev, second: true }));
       setResearchRecoilState((prev) => ({ ...prev, ...addressState }));
@@ -113,6 +115,7 @@ const DynamicResearch2 = () => {
         setIsError(true);
       }
     }
+    setIsSending(() => false);
   };
 
   return (
@@ -158,8 +161,9 @@ const DynamicResearch2 = () => {
                   duration: 2,
                 }}
                 onClick={handleSubmitClick}
+                disabled={isSending}
               >
-                다음으로
+                {isSending ? 'Loading' : '다음으로'}
               </StyledMotionButton>
             </StyleButtonWrapper>
           )}
