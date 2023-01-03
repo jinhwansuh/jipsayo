@@ -25,6 +25,9 @@ const StyledButtonWrapper = styled.div`
 const StyledButton = styled.button`
   width: 80%;
   height: 45px;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  background-color: #c9c9f8;
 `;
 
 export default Button;
