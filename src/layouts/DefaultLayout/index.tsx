@@ -31,7 +31,7 @@ const ContentWrapper = styled.main`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #f1eded;
+  background-color: ${(props) => props.theme.background.default};
 `;
 
 export default DefaultLayout;
