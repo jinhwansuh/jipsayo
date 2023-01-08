@@ -37,34 +37,38 @@ const EstimateInput = ({
 };
 
 const StyledInputContainer = styled.div`
-  width: 100%;
+  width: 95%;
   font-size: 16px;
-  margin: 5px auto;
+  margin: 10px auto;
 `;
 
 const StyledLabel = styled.label`
-  font-size: 18px;
-  margin-bottom: 10px;
   display: block;
-  padding-left: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 5px;
+  padding-left: 15px;
 `;
 
 const StyledInputWrapper = styled.div`
   display: flex;
   align-items: center;
+  border-bottom: 2px solid rgba(8, 113, 75, 0.3);
+  &:focus-within {
+    border-bottom: 2.5px solid rgba(8, 113, 75, 1);
+  }
 `;
 
 const StyledInput = styled.input`
   // font-size가 16px 아래면 ios에서 자동으로 zoom-in이 된다!
-  width: 80%;
+  width: 75%;
   height: 40px;
   font-size: 20px;
-  padding-left: 20px;
-  border: 0.5px solid grey;
-  border-radius: 20px;
+  padding-left: 15px;
+  border: none;
+  background-color: ${(props) => props.theme.background.default};
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px #e18f9a;
   }
   &::placeholder {
     color: #aaa;
@@ -78,9 +82,10 @@ const StyledInput = styled.input`
 `;
 
 const StyledTag = styled.p`
-  flex: 1;
-  padding-left: 10px;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  margin-left: 10px;
 `;
 
 export default EstimateInput;
