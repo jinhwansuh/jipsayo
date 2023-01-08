@@ -1,9 +1,10 @@
 import 'styled-components';
-import { Background, Color } from '~/styles/theme';
+import { Background, Color, Input } from '~/styles/theme';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
     color: Color;
     background: Background;
+    input: Input;
   }
 }
