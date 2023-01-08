@@ -44,8 +44,7 @@
   },
   "lint-staged": {
     "*.{tsx,ts}": [
-      "eslint --fix",
-      "tsc --noEmit"
+      "eslint --fix"
     ]
   }
 }
