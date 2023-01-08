@@ -53,9 +53,9 @@ const StyledLabel = styled.label`
 const StyledInputWrapper = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 2px solid rgba(8, 113, 75, 0.3);
+  border-bottom: ${(props) => props.theme.input.border};
   &:focus-within {
-    border-bottom: 2.5px solid rgba(8, 113, 75, 1);
+    border-bottom: ${(props) => props.theme.input.borderFocus};
   }
 `;
 

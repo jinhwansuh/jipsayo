@@ -122,12 +122,11 @@ const DynamicResearch2 = () => {
   return (
     <>
       <Transitions>
-        <StyledAddressWrapper onClick={frameOpenClick}>
+        <StyledInputWrapper onClick={frameOpenClick}>
           {addressState.userSelectedType === '' ? (
-            <>
-              <StyledSelectText>눌러서 아파트 검색!</StyledSelectText>
-              <p>(ex, 압구정 현대아파트)</p>
-            </>
+            <StyledAlertText>
+              주소 입력 ( ex, 압구정 현대아파트 )
+            </StyledAlertText>
           ) : addressState.userSelectedType === 'R' ? (
             <>
               <div>{addressState.roadAddress}</div>
@@ -136,7 +135,7 @@ const DynamicResearch2 = () => {
           ) : (
             <div>{addressState.jibunAddress}</div>
           )}
-        </StyledAddressWrapper>
+        </StyledInputWrapper>
 
         <DaumPostFrame
           isOpen={isOpen}
@@ -169,19 +168,16 @@ const DynamicResearch2 = () => {
   );
 };
 
-const StyledAddressWrapper = styled.div`
+const StyledInputWrapper = styled.div`
   height: 50px;
-  background-color: #ddd;
-  cursor: pointer;
-  &:hover {
-    background-color: #ccc;
+  border-bottom: ${(props) => props.theme.input.border};
+  &:focus-within {
+    border-bottom: ${(props) => props.theme.input.borderFocus};
   }
 `;
 
-const StyledSelectText = styled.div`
-  text-align: center;
-  font-size: 23px;
-  height: 100%;
+const StyledAlertText = styled.div`
+  font-size: 18px;
 `;
 
 const StyleButtonWrapper = styled.div`
