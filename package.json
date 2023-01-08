@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier:all": "prettier --write **/*.{tsx,ts,js,json,md,html} --ignore-unknown"
+    "prettier:all": "prettier --write **/*.{tsx,ts,js,json,md,html} --ignore-unknown",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@next/font": "13.0.7",
@@ -36,7 +37,15 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.11",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
     "typescript": "4.9.4"
+  },
+  "lint-staged": {
+    "*.{tsx,ts}": [
+      "eslint --fix",
+      "tsc --noEmit"
+    ]
   }
 }
