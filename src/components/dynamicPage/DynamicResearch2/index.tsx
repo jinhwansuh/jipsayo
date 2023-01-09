@@ -1,13 +1,17 @@
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { DaumPostFrame } from '~/components/domains';
 import { SearchAddressData, SearchResize } from '~/types/research';
+import { calculateEstimateTime } from '~/utils/functions/house';
 import { initialAddress } from '~/utils/house';
+import { getHouse } from '~/api/house';
 import { postResearch } from '~/api/research';
+import { houseState } from '~/atoms/house';
 import { researchIndexState, researchState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
@@ -23,7 +27,9 @@ const DynamicResearch2 = () => {
   const [pageRecoilState, setPageRecoilState] =
     useRecoilState(researchIndexState);
   const [isError, setIsError] = useState(false);
-  const [isSending, setIsSending] = useState(false);
+  const [isNoData, setIsNoData] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const [houseRecoilState, setHouseRecoilState] = useRecoilState(houseState);
 
   useEffect(() => {
     // ref current 정의
@@ -98,26 +104,51 @@ const DynamicResearch2 = () => {
     setIsOpen(() => true);
   };
 
-  const handleSubmitClick = async () => {
-    setIsSending(() => true);
+  const handleFetchData = async () => {
     if (addressState.userSelectedType) {
-      setPageRecoilState((prev) => ({ ...prev, second: true }));
       setResearchRecoilState((prev) => ({ ...prev, ...addressState }));
       try {
         await postResearch({
           savedMoney: +researchRecoilState.cash,
           moneyPerMonth: +researchRecoilState.saving,
-          jibunAddress: researchRecoilState.jibunAddress,
+          jibunAddress: addressState.jibunAddress,
           increaseRate: +researchRecoilState.rate,
         });
-        setIsError(false);
-        router.push(PAGE_ROUTE.RESULT);
+
+        const { data } = await getHouse({
+          roadAddress: addressState.roadAddress,
+          danjiName: addressState.buildingName,
+        });
+        if (isEmpty(data.data)) {
+          setIsNoData(() => true);
+        } else {
+          setIsNoData(() => false);
+          setHouseRecoilState(() => ({
+            ...data.data,
+            estimateTime: calculateEstimateTime({
+              budget: +researchRecoilState.cash,
+              saving: +researchRecoilState.saving,
+              rate: +researchRecoilState.rate,
+              targetPrice: data.data.cost,
+            }),
+          }));
+          setPageRecoilState((prev) => ({ ...prev, second: true }));
+          router.push(PAGE_ROUTE.RESULT);
+        }
+        setIsError(() => false);
       } catch {
-        setIsError(true);
+        setIsError(() => true);
       }
     }
-    setIsSending(() => false);
   };
+
+  useEffect(() => {
+    if (isComplete) {
+      setIsFetching(() => true);
+      handleFetchData();
+      setIsFetching(() => false);
+    }
+  }, [isComplete]);
 
   return (
     <>
@@ -143,25 +174,13 @@ const DynamicResearch2 = () => {
           frameCloseClick={frameCloseClick}
         />
 
-        <div>
-          {isComplete && (
-            <StyleButtonWrapper>
-              <StyledMotionButton
-                animate={{ scale: [1, 1.5, 1.2, 1] }}
-                transition={{
-                  ease: 'easeInOut',
-                  repeat: Infinity,
-                  duration: 2,
-                }}
-                onClick={handleSubmitClick}
-                disabled={isSending}
-              >
-                {isSending ? 'Loading' : '다음으로'}
-              </StyledMotionButton>
-            </StyleButtonWrapper>
-          )}
-        </div>
+        {/*데이터 fetching중  */}
+        {isFetching && <div>데이터 fetching중 입니다.</div>}
 
+        {/* 받아온 데이터가 없을 때 */}
+        {isNoData && <div>데이터가 없습니다.</div>}
+
+        {/* 서버에러가 발생했을 때 */}
         {isError && <div>서버와 통신 에러입니다.</div>}
       </Transitions>
     </>
@@ -169,6 +188,10 @@ const DynamicResearch2 = () => {
 };
 
 const StyledInputWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   height: 50px;
   border-bottom: ${(props) => props.theme.input.border};
   &:focus-within {
@@ -178,19 +201,6 @@ const StyledInputWrapper = styled.div`
 
 const StyledAlertText = styled.div`
   font-size: 18px;
-`;
-
-const StyleButtonWrapper = styled.div`
-  display: flex;
-  height: 200px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledMotionButton = styled(motion.button)`
-  width: 60%;
-  height: 50px;
-  cursor: pointer;
 `;
 
 export default DynamicResearch2;
