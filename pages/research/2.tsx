@@ -8,6 +8,7 @@ import { NextHead } from '~/components/common';
 import { DaumPostFrame } from '~/components/domains';
 import { SearchAddressData, SearchResize } from '~/types/research';
 import { calculateEstimateTime } from '~/utils/functions/house';
+import { fetchDaumPostAPI } from '~/utils/functions/research';
 import { initialAddress } from '~/utils/house';
 import { getHouse } from '~/api/house';
 import { postResearch } from '~/api/research';
@@ -59,64 +60,12 @@ const ResearchSecondPage = () => {
     setAddressState(() => initialAddress);
     setIsComplete(() => false);
     setIsNoData(() => false);
-    new daum.Postcode({
-      oncomplete: function (data: SearchAddressData) {
-        const {
-          userSelectedType,
-          roadAddress,
-          jibunAddress,
-          bname,
-          buildingName,
-          apartment,
-          zonecode,
-          autoJibunAddress,
-          address,
-        } = data;
-
-        let extraAddr = '';
-
-        if (userSelectedType === 'R') {
-          if (bname !== '' && /[동|로|가]$/g.test(bname)) {
-            extraAddr += bname;
-          }
-          if (buildingName !== '' && apartment === 'Y') {
-            extraAddr += extraAddr !== '' ? ', ' + buildingName : buildingName;
-          }
-          if (extraAddr !== '') {
-            extraAddr = ' (' + extraAddr + ')';
-          }
-
-          setAddressState((prev) => ({
-            ...prev,
-            roadAddress,
-            zonecode,
-            userSelectedType,
-            jibunAddress: autoJibunAddress,
-            extraAddr,
-            buildingName,
-          }));
-        } else {
-          setAddressState((prev) => ({
-            ...prev,
-            userSelectedType,
-            jibunAddress,
-            roadAddress: address,
-            zonecode,
-            buildingName,
-          }));
-        }
-
-        setIsOpen(() => false);
-        setIsComplete(() => true);
-      },
-
-      onresize: function (size: SearchResize) {
-        searchFrameRef.current!.style.height = size.height + 'px';
-      },
-      width: '100%',
-      height: '100%',
-    }).embed(searchFrameRef.current);
-
+    fetchDaumPostAPI({
+      setAddressState,
+      setIsOpen,
+      setIsComplete,
+      searchFrameRef,
+    });
     setIsOpen(() => true);
   };
 
