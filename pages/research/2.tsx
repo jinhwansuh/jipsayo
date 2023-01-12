@@ -6,7 +6,6 @@ import { useRecoilState } from 'recoil';
 import Transitions from '~/layouts/Transitions';
 import { NextHead } from '~/components/common';
 import { DaumPostFrame } from '~/components/domains';
-import { SearchAddressData, SearchResize } from '~/types/research';
 import { calculateEstimateTime } from '~/utils/functions/house';
 import { fetchDaumPostAPI } from '~/utils/functions/research';
 import { initialAddress } from '~/utils/house';
@@ -17,7 +16,7 @@ import { researchIndexState, researchState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
 const DynamicResearch2 = dynamic(
-  () => import('~/components/dynamicPage/DynamicResearch2'),
+  () => import('~/components/dynamicComponents/DynamicSearchAddress'),
   {
     ssr: false,
   },
@@ -43,7 +42,6 @@ const ResearchSecondPage = () => {
   useEffect(() => {
     if (pageRecoilState.first) {
       setHasPrevData(true);
-
       // ref current 정의
       const searchFrame = searchFrameRef.current as HTMLDivElement;
       return;

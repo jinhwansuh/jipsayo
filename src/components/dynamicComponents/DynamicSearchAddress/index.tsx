@@ -6,7 +6,7 @@ interface Props {
   addressState: typeof initialAddress;
 }
 
-const DynamicResearch2 = ({ frameOpenClick, addressState }: Props) => {
+const DynamicSearchAddress = ({ frameOpenClick, addressState }: Props) => {
   return (
     <StyledInputWrapper onClick={frameOpenClick}>
       {addressState.userSelectedType === '' ? (
@@ -39,4 +39,4 @@ const StyledAlertText = styled.div`
   font-size: 18px;
 `;
 
-export default DynamicResearch2;
+export default DynamicSearchAddress;
