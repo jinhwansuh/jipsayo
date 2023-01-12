@@ -2,6 +2,7 @@ import Script from 'next/script';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Header } from '~/components/common';
+import { KAKAO_URL } from '~/constants';
 
 interface LayoutProps {
   children: ReactNode;
@@ -10,8 +11,7 @@ interface LayoutProps {
 const DefaultLayout = ({ children }: LayoutProps) => {
   return (
     <>
-      <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' />
-
+      <Script src={KAKAO_URL.POSTCODE} />
       <Container>
         <Header />
         <ContentWrapper>{children}</ContentWrapper>
