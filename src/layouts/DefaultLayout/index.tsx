@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Script from 'next/script';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
@@ -11,7 +12,9 @@ interface LayoutProps {
 const DefaultLayout = ({ children }: LayoutProps) => {
   return (
     <>
-      <Script src={KAKAO_URL.POSTCODE} />
+      <Head>
+        <title>집사요~</title>
+      </Head>
       <Container>
         <Header />
         <ContentWrapper>{children}</ContentWrapper>
