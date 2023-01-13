@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { NextHead } from '~/components/common';
-import { Button } from '~/components/domains';
 import { KakaoMap } from '~/components/kakao';
 import { houseState } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
@@ -12,15 +12,8 @@ const ResearchResultPage = () => {
   const router = useRouter();
   const houseRecoilState = useRecoilValue(houseState);
   const [hasNoData, setHasNoData] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleButtonClick = () => {
-    router.push(PAGE_ROUTE.HOME);
-  };
-
-  const handleDrawerOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const query = router.query;
 
   useEffect(() => {
     if (!houseRecoilState.danjiName) {
@@ -29,6 +22,21 @@ const ResearchResultPage = () => {
       setHasNoData(() => false);
     }
   }, []);
+
+  useEffect(() => {
+    if (isEmpty(query)) return;
+    const isOpen = query['drawer_open'];
+    if (isOpen === 'true') setIsDrawerOpen(() => true);
+    else setIsDrawerOpen(() => false);
+  }, [query]);
+
+  const handleButtonClick = () => {
+    router.push(PAGE_ROUTE.HOME);
+  };
+
+  const handleDrawerOpen = () => {
+    router.push(`${PAGE_ROUTE.RESULT}?drawer_open=true`);
+  };
 
   return (
     <>
@@ -58,10 +66,10 @@ const ResearchResultPage = () => {
         </>
       )}
 
-      {isOpen && !hasNoData && (
+      {isDrawerOpen && (
         <KakaoMap
-          latitude={houseRecoilState.latitude}
-          longitude={houseRecoilState.longitude}
+          latitude={!hasNoData ? houseRecoilState.latitude : 33.45}
+          longitude={!hasNoData ? houseRecoilState.longitude : 126.57}
         />
       )}
 
