@@ -30,7 +30,8 @@ const ContentWrapper = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: ${(props) => props.theme.padding.default_top_bottom}
+    ${(props) => props.theme.padding.default_left_right};
   background-color: ${(props) => props.theme.background.default};
 `;
 
