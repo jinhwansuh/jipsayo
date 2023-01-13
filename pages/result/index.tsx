@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 import { NextHead } from '~/components/common';
 import { Button } from '~/components/domains';
+import { KakaoMap } from '~/components/kakao';
 import { houseState } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
 
@@ -10,9 +12,14 @@ const ResearchResultPage = () => {
   const router = useRouter();
   const houseRecoilState = useRecoilValue(houseState);
   const [hasNoData, setHasNoData] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleButtonClick = () => {
     router.push(PAGE_ROUTE.HOME);
+  };
+
+  const handleDrawerOpen = () => {
+    setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -51,9 +58,40 @@ const ResearchResultPage = () => {
         </>
       )}
 
-      <Button content='홈으로' handleButtonClick={handleButtonClick} />
+      {isOpen && !hasNoData && (
+        <KakaoMap
+          latitude={houseRecoilState.latitude}
+          longitude={houseRecoilState.longitude}
+        />
+      )}
+
+      <StyledButtonContainer>
+        <StyledButtonWrapper>
+          <StyledButton onClick={handleDrawerOpen}>지도보기</StyledButton>
+        </StyledButtonWrapper>
+      </StyledButtonContainer>
     </>
   );
 };
+
+const StyledButtonContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  height: 64px;
+  width: calc(100% - ${(props) => props.theme.padding.default_left_right} * 2);
+  z-index: 8000;
+`;
+
+const StyledButtonWrapper = styled.div`
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledButton = styled.button`
+  height: 100%;
+  width: 68px;
+`;
 
 export default ResearchResultPage;
