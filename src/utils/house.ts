@@ -28,6 +28,7 @@ export const initialHouseData = {
   createdDate: '',
   modifiedDate: '',
   estimateTime: '',
+  won: '',
 };
 
 export const houseImageData = [

@@ -47,3 +47,30 @@ export const calculateEstimateTime = ({
   if (month === 0) return `${year}년`;
   return `${month}개월`;
 };
+
+/**
+ *
+ * @param cost number
+ * @returns OO억 OO만원
+ */
+export const calculateCostToWon = (cost: number): string => {
+  const stringCost = cost.toString();
+  let prev = '';
+  let index = 1;
+  const array = [];
+
+  for (let i = stringCost.length - 1; i >= 0; i--) {
+    if (index > 4) {
+      array.push(prev);
+      index = 1;
+      prev = '';
+    }
+    prev = stringCost[i] + prev;
+    index++;
+  }
+  array.push(prev);
+
+  const UNIT = ['만원', '억', '조'];
+
+  return array.reduce((acc, curr, index) => curr + UNIT[index] + ' ' + acc, '');
+};
