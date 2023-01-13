@@ -64,7 +64,11 @@ const ResearchFirstPage = () => {
           {isError && <ErrorMessage>모든 항목을 입력해주세요</ErrorMessage>}
         </ErrorContainer>
 
-        <Button content='다음으로' handleButtonClick={handleNextClick} />
+        <Button
+          rest={true}
+          content='다음으로'
+          handleButtonClick={handleNextClick}
+        />
       </Transitions>
     </>
   );

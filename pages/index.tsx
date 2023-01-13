@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
@@ -17,7 +16,11 @@ export default function Home() {
       <Transitions>
         <ImageCarousel />
 
-        <Button content='시작하기' handleButtonClick={handleStartClick} />
+        <Button
+          rest={true}
+          content='시작하기'
+          handleButtonClick={handleStartClick}
+        />
       </Transitions>
     </>
   );
