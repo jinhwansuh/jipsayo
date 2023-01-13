@@ -6,7 +6,10 @@ import { useRecoilState } from 'recoil';
 import Transitions from '~/layouts/Transitions';
 import { NextHead } from '~/components/common';
 import { DaumPostFrame } from '~/components/domains';
-import { calculateEstimateTime } from '~/utils/functions/house';
+import {
+  calculateCostToWon,
+  calculateEstimateTime,
+} from '~/utils/functions/house';
 import { fetchDaumPostAPI } from '~/utils/functions/research';
 import { initialAddress } from '~/utils/house';
 import { getHouse } from '~/api/house';
@@ -94,6 +97,7 @@ const ResearchSecondPage = () => {
               rate: +researchRecoilState.rate,
               targetPrice: data.data.cost,
             }),
+            won: calculateCostToWon(data.data.cost),
           }));
           setPageRecoilState((prev) => ({ ...prev, second: true }));
           router.push(PAGE_ROUTE.RESULT);

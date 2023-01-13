@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 import { NextHead } from '~/components/common';
 import { DrawerOpenButton } from '~/components/domains';
 import { KakaoMap } from '~/components/kakao';
@@ -44,13 +45,24 @@ const ResearchResultPage = () => {
 
       {houseRecoilState.cost ? (
         <>
-          <div>{houseRecoilState.danjiName}</div>
-          <div>{houseRecoilState.cost}</div>
-          <div>{houseRecoilState.estimateTime}</div>
+          <div>
+            <StyledMarkText>{houseRecoilState.danjiName}</StyledMarkText>의
+          </div>
+          <div>
+            가격은 <StyledMarkText>{houseRecoilState.won}</StyledMarkText>
+            입니다.
+          </div>
+          <div>
+            지금부터{' '}
+            <StyledMarkText>{houseRecoilState.estimateTime}</StyledMarkText>{' '}
+            걸립니다.
+          </div>
         </>
       ) : houseRecoilState.estimateTime === false ? (
         <div>
-          축하합니다 {houseRecoilState?.danjiName}을 현재 자산으로 살수 있어요!
+          축하합니다!!{' '}
+          <StyledMarkText>{houseRecoilState.danjiName}</StyledMarkText> 을 현재
+          자산으로 살수 있어요!
         </div>
       ) : (
         ''
@@ -80,5 +92,11 @@ const ResearchResultPage = () => {
     </>
   );
 };
+
+const StyledMarkText = styled.span`
+  font-size: 25px;
+  color: #fb3636;
+  font-weight: 700;
+`;
 
 export default ResearchResultPage;
