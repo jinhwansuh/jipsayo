@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 import { NextHead } from '~/components/common';
+import { DrawerOpenButton } from '~/components/domains';
 import { KakaoMap } from '~/components/kakao';
 import { houseState } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
@@ -34,8 +34,8 @@ const ResearchResultPage = () => {
     router.push(PAGE_ROUTE.HOME);
   };
 
-  const handleDrawerOpen = () => {
-    router.push(`${PAGE_ROUTE.RESULT}?drawer_open=true`);
+  const handleDrawerButtonClick = () => {
+    router.push(`${PAGE_ROUTE.RESULT}?drawer_open=${!isDrawerOpen}`);
   };
 
   return (
@@ -73,33 +73,12 @@ const ResearchResultPage = () => {
         />
       )}
 
-      <StyledButtonContainer>
-        <StyledButtonWrapper>
-          <StyledButton onClick={handleDrawerOpen}>지도보기</StyledButton>
-        </StyledButtonWrapper>
-      </StyledButtonContainer>
+      <DrawerOpenButton
+        handleDrawerButtonClick={handleDrawerButtonClick}
+        isDrawerOpen={isDrawerOpen}
+      />
     </>
   );
 };
-
-const StyledButtonContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  height: 64px;
-  width: calc(100% - ${(props) => props.theme.padding.default_left_right} * 2);
-  z-index: 8000;
-`;
-
-const StyledButtonWrapper = styled.div`
-  display: flex;
-  height: 40px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledButton = styled.button`
-  height: 100%;
-  width: 68px;
-`;
 
 export default ResearchResultPage;
