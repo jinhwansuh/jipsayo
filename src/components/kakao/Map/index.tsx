@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
 }
 
-const KakaoMap = ({ latitude = 33.45, longitude = 126.57 }: Props) => {
+const KakaoMap = ({ latitude, longitude }: Props) => {
   const kakaoMapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
