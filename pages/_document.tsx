@@ -5,7 +5,9 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document';
+import Script from 'next/script';
 import { ServerStyleSheet } from 'styled-components';
+import { KAKAO_URL } from '~/constants';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -40,6 +42,11 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <Script
+            type='text/javascript'
+            src={KAKAO_URL.MAP}
+            strategy='beforeInteractive'
+          />
         </body>
       </Html>
     );
