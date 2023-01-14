@@ -1,1 +1,1 @@
-export { default as KakaoMap } from './Map';
+export { default as KakaoMapContainer } from './Map';

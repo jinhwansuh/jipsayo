@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { NextHead } from '~/components/common';
 import { DrawerOpenButton } from '~/components/domains';
-import { KakaoMap } from '~/components/kakao';
+import { KakaoMapContainer } from '~/components/kakao';
 import { houseState } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
 
@@ -79,7 +79,7 @@ const ResearchResultPage = () => {
       )}
 
       {isDrawerOpen && (
-        <KakaoMap
+        <KakaoMapContainer
           latitude={!hasNoData ? houseRecoilState.latitude : 33.45}
           longitude={!hasNoData ? houseRecoilState.longitude : 126.57}
         />
