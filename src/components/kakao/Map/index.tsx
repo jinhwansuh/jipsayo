@@ -1,45 +1,30 @@
-import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import MapHeader from './Header';
+import KakaoMap from './Map';
 
 interface Props {
   latitude: number;
   longitude: number;
 }
 
-const KakaoMap = ({ latitude, longitude }: Props) => {
-  const kakaoMapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const kakaomapCurrent = kakaoMapRef.current;
-  }, []);
-
-  useEffect(() => {
-    if (kakaoMapRef && kakaoMapRef.current) {
-      kakao.maps.load(() => {
-        const container = kakaoMapRef.current;
-        const options = {
-          center: new kakao.maps.LatLng(latitude, longitude),
-          level: 5,
-        };
-
-        const map = new kakao.maps.Map(container, options);
-        const markerPosition = new kakao.maps.LatLng(latitude, longitude);
-        const marker = new kakao.maps.Marker({
-          position: markerPosition,
-        });
-        marker.setMap(map);
-      });
-    }
-  }, [kakaoMapRef]);
-
+const KakaoMapContainer = ({ latitude, longitude }: Props) => {
   return (
-    <StyledMapContainer
-      ref={kakaoMapRef}
-      style={{ width: '100%', height: '500px' }}
-    />
+    <StyledContainer>
+      <MapHeader />
+      <KakaoMap latitude={latitude} longitude={longitude} />
+    </StyledContainer>
   );
 };
 
-const StyledMapContainer = styled.div``;
+const StyledContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 100%;
+  height: calc(100vh - 86px);
+  z-index: 7000;
+  max-width: ${(props) => props.theme.width.default_global_width};
+`;
 
-export default KakaoMap;
+export default KakaoMapContainer;
