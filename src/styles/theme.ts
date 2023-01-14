@@ -18,16 +18,28 @@ const padding = {
   default_left_right: '20px',
 } as const;
 
+const width = {
+  default_global_width: '700px',
+} as const;
+
+const height = {
+  header_height: '50px',
+} as const;
+
 export type Color = typeof color;
 export type Background = typeof background;
 export type Input = typeof input;
 export type Padding = typeof padding;
+export type Width = typeof width;
+export type Height = typeof height;
 
 const theme: DefaultTheme = {
   color,
   background,
   input,
   padding,
+  width,
+  height,
 };
 
 export default theme;

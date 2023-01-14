@@ -1,5 +1,5 @@
 import 'styled-components';
-import { Background, Color, Input, Padding } from '~/styles/theme';
+import { Background, Color, Height, Input, Padding } from '~/styles/theme';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
@@ -7,5 +7,7 @@ declare module 'styled-components' {
     background: Background;
     input: Input;
     padding: Padding;
+    width: Width;
+    height: Height;
   }
 }
