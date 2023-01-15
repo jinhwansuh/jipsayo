@@ -1,9 +1,7 @@
 import Head from 'next/head';
-import Script from 'next/script';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Header } from '~/components/common';
-import { KAKAO_URL } from '~/constants';
 
 interface LayoutProps {
   children: ReactNode;
@@ -26,6 +24,9 @@ const DefaultLayout = ({ children }: LayoutProps) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: ${(props) => props.theme.width.default_global_width};
+  width: 100%;
+  margin: 0 auto;
   height: 100%;
 `;
 

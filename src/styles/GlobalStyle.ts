@@ -7,16 +7,15 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
   html, body {
-    max-width: ${(props) => props.theme.width.default_global_width};
-    margin: 0 auto;
+    width: 100%;
     overflow-x: hidden;
     height: 100%;
   }
   #__next {
     min-height: 100vh;
     min-height: -webkit-fill-available;
-    width: 100%;
     height: 100%;
+    width: 100%;
   }
   a {
     color: inherit;
