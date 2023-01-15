@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styled from 'styled-components';
 import MapHeader from './Header';
 import KakaoMap from './Map';
@@ -27,4 +28,4 @@ const StyledContainer = styled.div`
   max-width: ${(props) => props.theme.width.default_global_width};
 `;
 
-export default KakaoMapContainer;
+export default memo(KakaoMapContainer);
