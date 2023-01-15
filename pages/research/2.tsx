@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
+import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { NextHead } from '~/components/common';
 import { DaumPostFrame } from '~/components/domains';
@@ -18,7 +19,7 @@ import { houseState } from '~/atoms/house';
 import { researchIndexState, researchState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
-const DynamicResearch2 = dynamic(
+const DynamicSearchAddress = dynamic(
   () => import('~/components/dynamicComponents/DynamicSearchAddress'),
   {
     ssr: false,
@@ -122,30 +123,33 @@ const ResearchSecondPage = () => {
       <NextHead title='주소 입력' />
 
       {hasPrevData && (
-        <Transitions>
-          <DynamicResearch2
+        <StyledTransitions>
+          <DynamicSearchAddress
             frameOpenClick={frameOpenClick}
             addressState={addressState}
           />
-
-          <DaumPostFrame
-            isOpen={isOpen}
-            searchFrameRef={searchFrameRef}
-            frameCloseClick={frameCloseClick}
-          />
-
-          {/*데이터 fetching중  */}
-          {isFetching && <div>데이터 fetching중 입니다.</div>}
-
-          {/* 받아온 데이터가 없을 때 */}
-          {isNoData && <div>데이터가 없습니다.</div>}
-
-          {/* 서버에러가 발생했을 때 */}
-          {isError && <div>서버와 통신 에러입니다.</div>}
-        </Transitions>
+        </StyledTransitions>
       )}
+
+      <DaumPostFrame
+        isOpen={isOpen}
+        searchFrameRef={searchFrameRef}
+        frameCloseClick={frameCloseClick}
+      />
+      {/*데이터 fetching중  */}
+      {isFetching && <div>데이터 fetching중 입니다.</div>}
+
+      {/* 받아온 데이터가 없을 때 */}
+      {isNoData && <div>데이터가 없습니다.</div>}
+
+      {/* 서버에러가 발생했을 때 */}
+      {isError && <div>서버와 통신 에러입니다.</div>}
     </>
   );
 };
+
+const StyledTransitions = styled(Transitions)`
+  height: auto;
+`;
 
 export default ResearchSecondPage;
