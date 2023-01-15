@@ -72,19 +72,23 @@ const ResearchSecondPage = () => {
   };
 
   const handleFetchData = async () => {
+    // 유저가 주소를 선택을 했을 때
     if (addressState.userSelectedType) {
+      const { cash, saving, rate } = researchRecoilState;
+      const { jibunAddress, roadAddress, buildingName } = addressState;
+
       setResearchRecoilState((prev) => ({ ...prev, ...addressState }));
       try {
         await postResearch({
-          savedMoney: +researchRecoilState.cash,
-          moneyPerMonth: +researchRecoilState.saving,
-          jibunAddress: addressState.jibunAddress,
-          increaseRate: +researchRecoilState.rate,
+          savedMoney: +cash,
+          moneyPerMonth: +saving,
+          jibunAddress: jibunAddress,
+          increaseRate: +rate,
         });
 
         const { data } = await getHouse({
-          roadAddress: addressState.roadAddress,
-          danjiName: addressState.buildingName,
+          roadAddress: roadAddress,
+          danjiName: buildingName,
         });
         if (isEmpty(data.data)) {
           setIsNoData(() => true);
@@ -93,9 +97,9 @@ const ResearchSecondPage = () => {
           setHouseRecoilState(() => ({
             ...data.data,
             estimateTime: calculateEstimateTime({
-              budget: +researchRecoilState.cash,
-              saving: +researchRecoilState.saving,
-              rate: +researchRecoilState.rate,
+              budget: +cash,
+              saving: +saving,
+              rate: +rate,
               targetPrice: data.data.cost,
             }),
             won: calculateCostToWon(data.data.cost),
@@ -149,7 +153,7 @@ const ResearchSecondPage = () => {
 };
 
 const StyledTransitions = styled(Transitions)`
-  height: auto;
+  height: auto !important;
 `;
 
 export default ResearchSecondPage;
