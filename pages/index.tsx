@@ -14,16 +14,22 @@ export default function Home() {
   return (
     <>
       <Transitions>
-        <ImageCarousel />
+        <Container>
+          <ImageCarousel />
 
-        <Button
-          rest={true}
-          content='시작하기'
-          handleButtonClick={handleStartClick}
-        />
+          <Button
+            rest={true}
+            content='시작하기'
+            handleButtonClick={handleStartClick}
+          />
+        </Container>
       </Transitions>
     </>
   );
 }
 
-const StyledContentsWrapper = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
