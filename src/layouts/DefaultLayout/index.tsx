@@ -22,8 +22,6 @@ const DefaultLayout = ({ children }: LayoutProps) => {
 };
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
   max-width: ${(props) => props.theme.width.default_global_width};
   width: 100%;
   margin: 0 auto;
@@ -31,9 +29,8 @@ const Container = styled.div`
 `;
 
 const ContentWrapper = styled.main`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  height: calc(100% - ${(props) => props.theme.height.header_height});
   padding: ${(props) => props.theme.padding.default_top_bottom}
     ${(props) => props.theme.padding.default_left_right};
   background-color: ${(props) => props.theme.background.default};
