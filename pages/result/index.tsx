@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { NextHead } from '~/components/common';
-import { DrawerOpenButton } from '~/components/domains';
+import { KakaoMapOpenButton } from '~/components/domains';
 import { KakaoMapContainer } from '~/components/kakao';
 import { houseState } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
@@ -13,7 +13,7 @@ const ResearchResultPage = () => {
   const router = useRouter();
   const houseRecoilState = useRecoilValue(houseState);
   const [hasNoData, setHasNoData] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isKakaoMapOpen, setIsKakaoMapOpen] = useState(false);
   const query = router.query;
 
   useEffect(() => {
@@ -27,17 +27,13 @@ const ResearchResultPage = () => {
   useEffect(() => {
     if (isEmpty(query)) return;
     const isOpen = query['drawer_open'];
-    if (isOpen === 'true') setIsDrawerOpen(() => true);
-    else setIsDrawerOpen(() => false);
+    if (isOpen === 'true') setIsKakaoMapOpen(() => true);
+    else setIsKakaoMapOpen(() => false);
   }, [query]);
 
-  const handleButtonClick = () => {
-    router.push(PAGE_ROUTE.HOME);
-  };
-
-  const handleDrawerButtonClick = () => {
-    router.push(`${PAGE_ROUTE.RESULT}?drawer_open=${!isDrawerOpen}`);
-  };
+  const handleKakaoMapButtonClick = useCallback(() => {
+    router.push(`${PAGE_ROUTE.RESULT}?drawer_open=${!isKakaoMapOpen}`);
+  }, [isKakaoMapOpen]);
 
   return (
     <>
@@ -78,16 +74,11 @@ const ResearchResultPage = () => {
         </>
       )}
 
-      {isDrawerOpen && (
-        <KakaoMapContainer
-          latitude={!hasNoData ? houseRecoilState.latitude : 33.45}
-          longitude={!hasNoData ? houseRecoilState.longitude : 126.57}
-        />
-      )}
+      {isKakaoMapOpen && <KakaoMapContainer />}
 
-      <DrawerOpenButton
-        handleDrawerButtonClick={handleDrawerButtonClick}
-        isDrawerOpen={isDrawerOpen}
+      <KakaoMapOpenButton
+        handleButtonClick={handleKakaoMapButtonClick}
+        isKakaoMapOpen={isKakaoMapOpen}
       />
     </>
   );

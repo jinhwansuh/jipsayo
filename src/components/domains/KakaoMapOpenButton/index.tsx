@@ -1,16 +1,17 @@
+import { memo } from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  handleDrawerButtonClick: () => void;
-  isDrawerOpen: boolean;
+  handleButtonClick: () => void;
+  isKakaoMapOpen: boolean;
 }
 
-const DrawerOpenButton = ({ handleDrawerButtonClick, isDrawerOpen }: Props) => {
+const KakaoMapOpenButton = ({ handleButtonClick, isKakaoMapOpen }: Props) => {
   return (
     <StyledButtonContainer>
       <StyledButtonWrapper>
-        <StyledButton onClick={handleDrawerButtonClick}>
-          {isDrawerOpen ? '지도끄기' : '지도보기'}
+        <StyledButton onClick={handleButtonClick}>
+          {isKakaoMapOpen ? '지도끄기' : '지도보기'}
         </StyledButton>
       </StyledButtonWrapper>
     </StyledButtonContainer>
@@ -45,4 +46,4 @@ const StyledButton = styled.button`
   background: rgb(67, 77, 135);
 `;
 
-export default DrawerOpenButton;
+export default memo(KakaoMapOpenButton);
