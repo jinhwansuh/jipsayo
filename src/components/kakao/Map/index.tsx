@@ -1,5 +1,7 @@
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 import styled from 'styled-components';
+import { DaumPostFrame } from '~/components/domains';
+import { useDaumPost } from '~/hooks';
 import MapHeader from './Header';
 import KakaoMap from './Map';
 
@@ -9,9 +11,20 @@ interface Props {
 }
 
 const KakaoMapContainer = ({ latitude, longitude }: Props) => {
+  const searchFrameRef = useRef(null);
+  const { isOpen, frameOpenClick, frameCloseClick } = useDaumPost({
+    searchFrameRef,
+  });
+
   return (
     <StyledContainer>
-      <MapHeader />
+      <MapHeader frameOpenClick={frameOpenClick} />
+      <DaumPostFrame
+        isOpen={isOpen}
+        searchFrameRef={searchFrameRef}
+        frameCloseClick={frameCloseClick}
+        position={'absolute'}
+      />
       <KakaoMap latitude={latitude} longitude={longitude} />
     </StyledContainer>
   );
