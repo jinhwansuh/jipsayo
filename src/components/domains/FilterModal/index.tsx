@@ -2,6 +2,9 @@ import { Dispatch, memo, SetStateAction, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Portal } from '~/components/common';
+import FilterModalContent from './Content';
+import FilterModalFooter from './Footer';
+import FilterModalHeader from './Header';
 
 interface Props {
   filterModalOpen: boolean;
@@ -23,10 +26,9 @@ const FilterModal = ({ filterModalOpen, setFilterModalOpen }: Props) => {
               animate={{ x: 0, y: 0, opacity: 1 }}
             >
               <ModalWrapper>
-                <div>
-                  <button onClick={handleCloseClick}>close</button>
-                </div>
-                <div>filter</div>
+                <FilterModalHeader handleCloseClick={handleCloseClick} />
+                <FilterModalContent />
+                <FilterModalFooter />
               </ModalWrapper>
             </StyledMotion>
           </ModalContainer>
@@ -62,7 +64,6 @@ const ModalWrapper = styled.div`
   margin: 0 auto;
   background-color: #ffffff;
   border-radius: 30px 30px 0 0;
-  padding: 20px 30px 0 30px;
 `;
 
 export default memo(FilterModal);
