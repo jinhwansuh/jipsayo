@@ -16,6 +16,8 @@ const input = {
 const padding = {
   default_top_bottom: '20px',
   default_left_right: '20px',
+  modal_default_top_bottom: '20px',
+  modal_default_left_right: '30px',
 } as const;
 
 const width = {
