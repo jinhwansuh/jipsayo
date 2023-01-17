@@ -2,26 +2,39 @@ import { Ref } from 'react';
 import styled from 'styled-components';
 
 interface Props {
+  position?: string;
   isOpen: boolean;
   searchFrameRef: Ref<HTMLDivElement>;
   frameCloseClick: () => void;
 }
 
-const DaumPostFrame = ({ isOpen, searchFrameRef, frameCloseClick }: Props) => {
+const DaumPostFrame = ({
+  isOpen,
+  searchFrameRef,
+  frameCloseClick,
+  position,
+}: Props) => {
   return (
-    <StyledFrameWrapper
-      ref={searchFrameRef}
-      style={{ display: isOpen ? 'block' : 'none' }}
-    >
-      <StyledExitImg
-        src='//t1.daumcdn.net/postcode/resource/images/close.png'
-        id='btnFoldWrap'
-        onClick={frameCloseClick}
-        alt='접기 버튼'
-      />
-    </StyledFrameWrapper>
+    <Container position={position}>
+      <StyledFrameWrapper
+        ref={searchFrameRef}
+        style={{ display: isOpen ? 'block' : 'none' }}
+      >
+        <StyledExitImg
+          src='//t1.daumcdn.net/postcode/resource/images/close.png'
+          id='btnFoldWrap'
+          onClick={frameCloseClick}
+          alt='접기 버튼'
+        />
+      </StyledFrameWrapper>
+    </Container>
   );
 };
+
+const Container = styled.div<Pick<Props, 'position'>>`
+  position: ${(props) => (props.position ? props.position : 'static')};
+  z-index: 1000;
+`;
 
 const StyledFrameWrapper = styled.div`
   display: none;
