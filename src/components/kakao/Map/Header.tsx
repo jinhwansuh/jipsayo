@@ -1,8 +1,15 @@
 import { memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { FilterModal } from '~/components/domains';
+import { initialAddress } from '~/utils/house';
 
-const MapHeader = () => {
+interface Props {
+  frameOpenClick: () => void;
+  addressState: typeof initialAddress;
+  isComplete: boolean;
+}
+
+const MapHeader = ({ frameOpenClick, addressState, isComplete }: Props) => {
   const [filterModalOpen, setFilterModalOpen] = useState(false);
 
   const handleFilterClick = useCallback(() => {
@@ -14,7 +21,13 @@ const MapHeader = () => {
       <StyledContainer>
         <StyledWrapper>
           <StyledHeader>
-            <div>filter button</div>
+            <div onClick={frameOpenClick}>
+              {isComplete
+                ? addressState.jibunAddress
+                  ? addressState.jibunAddress
+                  : addressState.roadAddress
+                : '목적지 검색'}
+            </div>
             <button onClick={handleFilterClick}>filter open</button>
           </StyledHeader>
         </StyledWrapper>
@@ -46,6 +59,10 @@ const StyledHeader = styled.div`
   min-width: 285px;
   background: #f7f7f7;
   border-radius: 1000px;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export default memo(MapHeader);
