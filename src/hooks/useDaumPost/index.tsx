@@ -41,6 +41,7 @@ const useDaumPost = ({ searchFrameRef }: Props) => {
     isComplete,
     frameCloseClick,
     isNoData,
+    setIsNoData,
   };
 };
 
