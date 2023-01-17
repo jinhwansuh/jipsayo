@@ -11,13 +11,12 @@ import {
   calculateCostToWon,
   calculateEstimateTime,
 } from '~/utils/functions/house';
-import { fetchDaumPostAPI } from '~/utils/functions/research';
-import { initialAddress } from '~/utils/house';
 import { getHouse } from '~/api/house';
 import { postResearch } from '~/api/research';
 import { houseState } from '~/atoms/house';
 import { researchIndexState, researchState } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
+import { useDaumPost } from '~/hooks';
 
 const DynamicSearchAddress = dynamic(
   () => import('~/components/dynamicComponents/DynamicSearchAddress'),
@@ -30,46 +29,33 @@ const ResearchSecondPage = () => {
   const router = useRouter();
   const searchFrameRef = useRef<HTMLDivElement>(null);
   const [hasPrevData, setHasPrevData] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [addressState, setAddressState] =
-    useState<typeof initialAddress>(initialAddress);
-  const [isComplete, setIsComplete] = useState(false);
+  const {
+    frameOpenClick,
+    isOpen,
+    addressState,
+    isComplete,
+    frameCloseClick,
+    isNoData,
+    setIsNoData,
+  } = useDaumPost({
+    searchFrameRef,
+  });
   const [researchRecoilState, setResearchRecoilState] =
     useRecoilState(researchState);
   const [pageRecoilState, setPageRecoilState] =
     useRecoilState(researchIndexState);
   const [isError, setIsError] = useState(false);
-  const [isNoData, setIsNoData] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [houseRecoilState, setHouseRecoilState] = useRecoilState(houseState);
 
   useEffect(() => {
     if (pageRecoilState.first) {
       setHasPrevData(true);
-      // ref current 정의
-      const searchFrame = searchFrameRef.current as HTMLDivElement;
       return;
     }
 
     router.replace(PAGE_ROUTE.RESEARCH_FIRST, undefined, { shallow: true });
   }, []);
-
-  const frameCloseClick = () => {
-    setIsOpen(false);
-  };
-
-  const frameOpenClick = () => {
-    setAddressState(() => initialAddress);
-    setIsComplete(() => false);
-    setIsNoData(() => false);
-    fetchDaumPostAPI({
-      setAddressState,
-      setIsOpen,
-      setIsComplete,
-      searchFrameRef,
-    });
-    setIsOpen(() => true);
-  };
 
   const handleFetchData = async () => {
     // 유저가 주소를 선택을 했을 때
