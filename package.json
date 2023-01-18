@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && tsc --noEmit",
     "prettier:all": "prettier --write **/*.{tsx,ts,js,json,md,html} --ignore-unknown",
     "prepare": "husky install"
   },
@@ -22,6 +22,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "recoil": "^0.7.6",
+    "remixicon": "^2.5.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
