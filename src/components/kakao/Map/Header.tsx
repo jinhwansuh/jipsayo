@@ -1,5 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { Remixicon } from '~/components/common';
 import { FilterModal } from '~/components/result';
 import { initialAddress } from '~/utils/house';
 
@@ -12,7 +13,7 @@ interface Props {
 const MapHeader = ({ frameOpenClick, addressState, isComplete }: Props) => {
   const [filterModalOpen, setFilterModalOpen] = useState(false);
 
-  const handleFilterClick = useCallback(() => {
+  const handleFilterButtonClick = useCallback(() => {
     setFilterModalOpen(true);
   }, []);
 
@@ -21,14 +22,16 @@ const MapHeader = ({ frameOpenClick, addressState, isComplete }: Props) => {
       <StyledContainer>
         <StyledWrapper>
           <StyledHeader>
-            <div onClick={frameOpenClick}>
+            <StyledAddressSearch onClick={frameOpenClick}>
               {isComplete
                 ? addressState.jibunAddress
                   ? addressState.jibunAddress
                   : addressState.roadAddress
                 : '목적지 검색'}
-            </div>
-            <button onClick={handleFilterClick}>filter open</button>
+            </StyledAddressSearch>
+            <StyledFilterButton onClick={handleFilterButtonClick}>
+              <Remixicon iconName='ri-equalizer-line' size='24px' />
+            </StyledFilterButton>
           </StyledHeader>
         </StyledWrapper>
       </StyledContainer>
@@ -63,6 +66,14 @@ const StyledHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const StyledAddressSearch = styled.div`
+  flex: 1;
+`;
+
+const StyledFilterButton = styled.div`
+  cursor: pointer;
 `;
 
 export default memo(MapHeader);
