@@ -19,6 +19,7 @@ const StyledFooterWrapper = styled.footer`
   padding: 0 ${(props) => props.theme.padding.modal_default_left_right};
   justify-content: flex-end;
   border-top: 1px solid rgb(235, 235, 235);
+  background: #ffffff;
 `;
 
 const StyledFooterButton = styled.button`
