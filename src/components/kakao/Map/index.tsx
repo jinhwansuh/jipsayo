@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { DaumPostFrame } from '~/components/domains';
+import { DaumPostFrame } from '~/components/common';
 import { getHouse } from '~/api/house';
 import { houseState } from '~/atoms/house';
 import { useDaumPost } from '~/hooks';

@@ -4,8 +4,8 @@ import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { NextHead } from '~/components/common';
-import { KakaoMapOpenButton } from '~/components/domains';
 import { KakaoMapContainer } from '~/components/kakao';
+import { KakaoMapOpenButton } from '~/components/result';
 import { houseState } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
 

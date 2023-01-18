@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { FilterModal } from '~/components/domains';
+import { FilterModal } from '~/components/result';
 import { initialAddress } from '~/utils/house';
 
 interface Props {

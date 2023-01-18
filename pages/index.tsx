@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
-import { Button, ImageCarousel } from '~/components/domains';
+import { Button } from '~/components/common';
+import { ImageCarousel } from '~/components/home';
 import { PAGE_ROUTE } from '~/constants';
 
 export default function Home() {

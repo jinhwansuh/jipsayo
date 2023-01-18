@@ -5,8 +5,7 @@ import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
-import { NextHead } from '~/components/common';
-import { DaumPostFrame } from '~/components/domains';
+import { DaumPostFrame, NextHead } from '~/components/common';
 import {
   calculateCostToWon,
   calculateEstimateTime,
@@ -19,7 +18,7 @@ import { PAGE_ROUTE } from '~/constants';
 import { useDaumPost } from '~/hooks';
 
 const DynamicSearchAddress = dynamic(
-  () => import('~/components/dynamicComponents/DynamicSearchAddress'),
+  () => import('~/components/dynamic/DynamicSearchAddress'),
   {
     ssr: false,
   },
