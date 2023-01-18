@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { NextHead } from '~/components/common';
 import { KakaoMapContainer } from '~/components/kakao';
-import { KakaoMapOpenButton } from '~/components/result';
+import { HouseTooltip, KakaoMapOpenButton } from '~/components/result';
 import { houseState } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
 
@@ -40,12 +40,16 @@ const ResearchResultPage = () => {
       <NextHead title='결과' />
 
       {houseRecoilState.cost ? (
-        <>
+        <div>
           <div>
             <StyledMarkText>{houseRecoilState.danjiName}</StyledMarkText>의
           </div>
           <div>
             가격은 <StyledMarkText>{houseRecoilState.won}</StyledMarkText>
+            <HouseTooltip
+              HouseSize={'82m2'}
+              HouseMarketPriceDate={'2022-10-31'}
+            />
             입니다.
           </div>
           <div>
@@ -53,7 +57,7 @@ const ResearchResultPage = () => {
             <StyledMarkText>{houseRecoilState.estimateTime}</StyledMarkText>{' '}
             걸립니다.
           </div>
-        </>
+        </div>
       ) : houseRecoilState.estimateTime === false ? (
         <div>
           축하합니다!!{' '}
