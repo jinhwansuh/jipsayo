@@ -6,19 +6,31 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
-  body {
-    max-width: 700px;
-    margin: 0 auto;
+  html, body {
+    width: 100%;
     overflow-x: hidden;
+    height: 100%;
   }
   #__next {
-    background-color: #eee;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
+    height: 100%;
     width: 100%;
   }
   a {
     color: inherit;
     text-decoration: none;
+  }
+  input, textarea, button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+  }
+  button {
+    cursor: pointer;
   }
 `;
 

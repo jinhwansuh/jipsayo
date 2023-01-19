@@ -19,6 +19,7 @@
     "^@emotion/(.*)$",
     "<THIRD_PARTY_MODULES>",
     "^~/pages/(.*)$",
+    "^~/layouts/(.*)$",
     "^~/components",
     "^~/components/(.*)$",
     "^~/hooks/(.*)$",
