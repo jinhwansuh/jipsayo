@@ -6,3 +6,8 @@ export const houseState = atom<HouseData>({
   key: 'houseStateKey',
   default: { ...initialHouseData },
 });
+
+export const filteredHouseState = atom<HouseData[]>({
+  key: 'filteredHouseStateKey',
+  default: [],
+});
