@@ -4,3 +4,4 @@ export { default as Portal } from './Portal';
 export { default as Button } from './Button';
 export { default as DaumPostFrame } from './DaumPostFrame';
 export { default as Remixicon } from './Remixicon';
+export { default as GoogleAnalytics } from './GoogleAnalytics';
