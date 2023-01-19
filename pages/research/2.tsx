@@ -119,12 +119,14 @@ const ResearchSecondPage = () => {
           />
         </StyledTransitions>
       )}
+      <div style={{ margin: '5px 0' }}>
+        <DaumPostFrame
+          isOpen={isOpen}
+          searchFrameRef={searchFrameRef}
+          frameCloseClick={frameCloseClick}
+        />
+      </div>
 
-      <DaumPostFrame
-        isOpen={isOpen}
-        searchFrameRef={searchFrameRef}
-        frameCloseClick={frameCloseClick}
-      />
       {/*데이터 fetching중  */}
       {isFetching && <div>데이터 fetching중 입니다.</div>}
 

@@ -41,7 +41,6 @@ const StyledFrameWrapper = styled.div`
   border: 1px solid;
   width: 500px;
   height: 466px;
-  margin: 5px 0;
   position: relative;
   min-height: 400px;
   max-height: 500px;
