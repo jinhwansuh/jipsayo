@@ -32,12 +32,9 @@ const KakaoMapContainer = () => {
       // noData
     } else {
       setLocationState({
-        latitude: +data.data.longitude,
-        longitude: +data.data.latitude,
+        latitude: data.data.latitude,
+        longitude: data.data.longitude,
       });
-
-      // latitude: data.data.latitude,
-      //   longitude: data.data.longitude,
     }
   };
 
