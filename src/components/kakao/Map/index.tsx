@@ -68,7 +68,7 @@ const StyledContainer = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   width: 100%;
-  height: calc(100vh - 86px);
+  height: calc(100% - 86px);
   z-index: 7000;
   max-width: ${(props) => props.theme.width.default_global_width};
 `;

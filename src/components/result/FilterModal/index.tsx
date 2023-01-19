@@ -42,7 +42,7 @@ const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 8000;
 `;
