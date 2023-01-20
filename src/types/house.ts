@@ -30,7 +30,7 @@ export interface FetchHouseResponse extends APIResponse {
 }
 
 export interface HouseData extends FetchHouseData {
-  estimateTime: string | false;
+  estimateTime: string | boolean;
   won: string;
 }
 

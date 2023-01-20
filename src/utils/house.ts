@@ -29,7 +29,7 @@ export const initialHouseData: HouseData = {
   longitude: 0,
   createdDate: '',
   modifiedDate: '',
-  estimateTime: '',
+  estimateTime: true,
   won: '',
   dedicatedArea: 0,
   dealDate: '',
