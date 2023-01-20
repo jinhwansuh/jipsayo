@@ -1,9 +1,15 @@
+export interface APIResponse {
+  errors: string;
+  message: string;
+  timestamp: string;
+}
+
 export interface FetchHouseRequest {
   roadAddress: string;
   danjiName: string;
 }
 
-interface FetchHouseData {
+export interface FetchHouseData {
   id: number;
   jibunAddress: string;
   roadAddress: string;
@@ -13,18 +19,33 @@ interface FetchHouseData {
   latitude: number;
   longitude: number;
   postCode: number;
-  createdDate: string;
-  modifiedDate: string;
+  dedicatedArea: number;
+  dealDate: string; // 2023-01-15T14:53:58
+  createdDate: string; // 2023-01-15T14:53:58
+  modifiedDate: string; // 2023-01-15T14:53:58
 }
 
-export interface FetchHouseResponse {
+export interface FetchHouseResponse extends APIResponse {
   data: FetchHouseData;
-  errors: string;
-  message: string;
-  timestamp: string;
 }
 
 export interface HouseData extends FetchHouseData {
   estimateTime: string | false;
   won: string;
+}
+
+export interface FilteredFetchHouseDate {
+  id: number;
+  jibunAddress: string;
+  danjiName: string;
+  cost: number;
+  latitude: number;
+  longitude: number;
+  time: number;
+  dealDate: string;
+  dedicatedArea: number;
+}
+
+export interface FetchFilteredResponse extends APIResponse {
+  data: FilteredFetchHouseDate[];
 }

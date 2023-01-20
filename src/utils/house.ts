@@ -1,3 +1,5 @@
+import { HouseData } from '~/types/house';
+
 export const initialAddress = {
   userSelectedType: '',
   roadAddress: '',
@@ -15,7 +17,7 @@ export const initialResearch = {
   rate: '',
 };
 
-export const initialHouseData = {
+export const initialHouseData: HouseData = {
   id: 0,
   jibunAddress: '',
   roadAddress: '',
@@ -29,6 +31,8 @@ export const initialHouseData = {
   modifiedDate: '',
   estimateTime: '',
   won: '',
+  dedicatedArea: 0,
+  dealDate: '',
 };
 
 export const houseImageData = [
