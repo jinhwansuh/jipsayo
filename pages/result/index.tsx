@@ -32,7 +32,12 @@ const ResearchResultPage = () => {
   }, [query]);
 
   const handleKakaoMapButtonClick = useCallback(() => {
-    router.push(`${PAGE_ROUTE.RESULT}?drawer_open=${!isKakaoMapOpen}`);
+    router.push({
+      pathname: PAGE_ROUTE.RESULT,
+      query: {
+        drawer_open: !isKakaoMapOpen,
+      },
+    });
   }, [isKakaoMapOpen]);
 
   return (
