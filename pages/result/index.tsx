@@ -47,8 +47,9 @@ const ResearchResultPage = () => {
           <div>
             가격은 <StyledMarkText>{houseRecoilState.won}</StyledMarkText>
             <HouseTooltip
-              HouseSize={'82m2'}
-              HouseMarketPriceDate={'2022-10-31'}
+              content={`${houseRecoilState.dedicatedArea}m2 ${
+                houseRecoilState.dealDate.split('T')[0]
+              }`}
             />
             입니다.
           </div>
