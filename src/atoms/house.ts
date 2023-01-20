@@ -1,22 +1,26 @@
 import { atom, selector } from 'recoil';
-import { HouseData, FetchHouseData } from '~/types/house';
+import {
+  HouseData,
+  FetchHouseData,
+  FilteredFetchHouseDate,
+} from '~/types/house';
 import {
   calculateCostToWon,
   calculateEstimateTime,
 } from '~/utils/functions/house';
 import { initialHouseData } from '~/utils/house';
-import { researchState } from './research';
+import { researchStateAtom } from './research';
 
-export const fetchHouseState = atom<FetchHouseData>({
-  key: 'fetchHouseStateKey',
+export const fetchHouseStateAtom = atom<FetchHouseData>({
+  key: 'fetchHouseStateAtomKey',
   default: { ...initialHouseData },
 });
 
-export const houseState = selector<HouseData>({
-  key: 'houseStateKey',
+export const houseStateSelector = selector<HouseData>({
+  key: 'houseStateSelectorKey',
   get: ({ get }) => {
-    const houseRecoilState = get(fetchHouseState);
-    const researchRecoilState = get(researchState);
+    const houseRecoilState = get(fetchHouseStateAtom);
+    const researchRecoilState = get(researchStateAtom);
     const { cost } = houseRecoilState;
     const { cash, saving, rate } = researchRecoilState;
 
@@ -36,7 +40,7 @@ export const houseState = selector<HouseData>({
   },
 });
 
-export const filteredHouseState = atom<HouseData[]>({
+export const fetchFilteredHouseAtom = atom<FilteredFetchHouseDate[]>({
   key: 'filteredHouseStateKey',
   default: [],
 });

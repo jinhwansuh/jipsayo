@@ -7,7 +7,7 @@ import { DaumPostFrame } from '~/components/common';
 import { FetchFilterRequest, FilteredFetchHouseDate } from '~/types/house';
 import { KakaoMapAddressResponse, KakaoMapAddressStatus } from '~/types/kakao';
 import { getFilteredHouses } from '~/api/house';
-import { houseState } from '~/atoms/house';
+import { houseStateSelector } from '~/atoms/house';
 import { useDaumPost } from '~/hooks';
 import MapHeader from './Header';
 import KakaoMap from './Map';
@@ -15,7 +15,7 @@ import KakaoMap from './Map';
 const KakaoMapContainer = () => {
   const router = useRouter();
   const query = router.query;
-  const houseRecoilState = useRecoilValue(houseState);
+  const houseRecoilState = useRecoilValue(houseStateSelector);
   const [locationState, setLocationState] = useState({
     latitude: houseRecoilState.latitude || 33.45,
     longitude: houseRecoilState.longitude || 126.57,

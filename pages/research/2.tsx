@@ -8,8 +8,8 @@ import Transitions from '~/layouts/Transitions';
 import { DaumPostFrame, NextHead } from '~/components/common';
 import { getHouse } from '~/api/house';
 import { postResearch } from '~/api/research';
-import { fetchHouseState } from '~/atoms/house';
-import { researchIndexState, researchState } from '~/atoms/research';
+import { fetchHouseStateAtom } from '~/atoms/house';
+import { researchIndexStateAtom, researchStateAtom } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 import { useDaumPost } from '~/hooks';
 
@@ -36,12 +36,13 @@ const ResearchSecondPage = () => {
     searchFrameRef,
   });
   const [researchRecoilState, setResearchRecoilState] =
-    useRecoilState(researchState);
-  const [pageRecoilState, setPageRecoilState] =
-    useRecoilState(researchIndexState);
+    useRecoilState(researchStateAtom);
+  const [pageRecoilState, setPageRecoilState] = useRecoilState(
+    researchIndexStateAtom,
+  );
   const [isError, setIsError] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const setHouseRecoilState = useSetRecoilState(fetchHouseState);
+  const setHouseRecoilState = useSetRecoilState(fetchHouseStateAtom);
 
   useEffect(() => {
     if (pageRecoilState.first) {

@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import { NextHead } from '~/components/common';
 import { KakaoMapContainer } from '~/components/kakao';
 import { HouseTooltip, KakaoMapOpenButton } from '~/components/result';
-import { houseState } from '~/atoms/house';
+import { houseStateSelector } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
 
 const ResearchResultPage = () => {
   const router = useRouter();
-  const houseRecoilState = useRecoilValue(houseState);
+  const houseRecoilState = useRecoilValue(houseStateSelector);
   const [hasNoData, setHasNoData] = useState(false);
   const [isKakaoMapOpen, setIsKakaoMapOpen] = useState(false);
   const query = router.query;
