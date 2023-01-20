@@ -4,7 +4,7 @@ import { isEmpty, isNull, isString } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { DaumPostFrame } from '~/components/common';
-import { FetchFilterRequest, FilteredFetchHouseDate } from '~/types/house';
+import { FetchFilterRequest, FetchFilteredHouseDate } from '~/types/house';
 import { KakaoMapAddressResponse, KakaoMapAddressStatus } from '~/types/kakao';
 import { getFilteredHouses } from '~/api/house';
 import { houseStateSelector } from '~/atoms/house';
@@ -26,7 +26,7 @@ const KakaoMapContainer = () => {
       searchFrameRef,
     });
   const [filteredHouseData, setFilteredHouseData] = useState<
-    FilteredFetchHouseDate[]
+    FetchFilteredHouseDate[]
   >([]);
 
   const handleSearchNewHouse = async () => {

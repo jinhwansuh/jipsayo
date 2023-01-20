@@ -46,7 +46,7 @@ export interface FetchFilterRequest {
   time: string;
 }
 
-export interface FilteredFetchHouseDate {
+export interface FetchFilteredHouseDate {
   id: number;
   jibunAddress: string;
   danjiName: string;
@@ -59,5 +59,5 @@ export interface FilteredFetchHouseDate {
 }
 
 export interface FetchFilteredResponse extends APIResponse {
-  data: FilteredFetchHouseDate[];
+  data: FetchFilteredHouseDate[];
 }

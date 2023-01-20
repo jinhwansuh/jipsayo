@@ -2,7 +2,7 @@ import { atom, selector } from 'recoil';
 import {
   HouseData,
   FetchHouseData,
-  FilteredFetchHouseDate,
+  FetchFilteredHouseDate,
 } from '~/types/house';
 import {
   calculateCostToWon,
@@ -40,7 +40,7 @@ export const houseStateSelector = selector<HouseData>({
   },
 });
 
-export const fetchFilteredHouseAtom = atom<FilteredFetchHouseDate[]>({
+export const fetchFilteredHouseAtom = atom<FetchFilteredHouseDate[]>({
   key: 'filteredHouseStateKey',
   default: [],
 });
