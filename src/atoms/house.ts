@@ -41,6 +41,33 @@ export const houseStateSelector = selector<HouseData>({
 });
 
 export const fetchFilteredHouseAtom = atom<FetchFilteredHouseDate[]>({
-  key: 'filteredHouseStateKey',
+  key: 'fetchFilteredHouseAtomKey',
   default: [],
+});
+
+export const filteredHouseSelector = selector<FetchFilteredHouseDate[]>({
+  key: 'filteredHouseSelectorKey',
+  get: ({ get }) => {
+    const filteredHouseRecoilState = get(fetchFilteredHouseAtom);
+    const researchRecoilState = get(researchStateAtom);
+
+    return filteredHouseRecoilState.map((houseRecoilState) => {
+      const { cost } = houseRecoilState;
+      const { cash, saving, rate } = researchRecoilState;
+
+      const estimateTime = calculateEstimateTime({
+        budget: +cash,
+        saving: +saving,
+        rate: +rate,
+        targetPrice: cost,
+      });
+      const won = calculateCostToWon(cost);
+
+      return {
+        ...houseRecoilState,
+        estimateTime,
+        won,
+      };
+    });
+  },
 });
