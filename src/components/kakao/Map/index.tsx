@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { isEmpty, isNull, isString } from 'lodash-es';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { DaumPostFrame } from '~/components/common';
-import { FetchFilterRequest, FetchFilteredHouseDate } from '~/types/house';
+import { FetchFilteredHouseDate, FetchFilterRequest } from '~/types/house';
 import { KakaoMapAddressResponse, KakaoMapAddressStatus } from '~/types/kakao';
 import { getFilteredHouses } from '~/api/house';
-import { houseStateSelector } from '~/atoms/house';
+import { fetchFilteredHouseAtom, houseStateSelector } from '~/atoms/house';
+import { PAGE_ROUTE } from '~/constants';
 import { useDaumPost } from '~/hooks';
 import MapHeader from './Header';
 import KakaoMap from './Map';
@@ -25,15 +26,16 @@ const KakaoMapContainer = () => {
     useDaumPost({
       searchFrameRef,
     });
-  const [filteredHouseData, setFilteredHouseData] = useState<
+  const setFilteredHouseRecoilState = useSetRecoilState(fetchFilteredHouseAtom);
+  const [filteredHouseState, setFilteredHouseState] = useState<
     FetchFilteredHouseDate[]
   >([]);
 
   const handleSearchNewHouse = async () => {
+    // 주소로 위도 경도를 받아온다
     const { roadAddress } = addressState;
     const geocoder = new kakao.maps.services.Geocoder();
 
-    // 주소로 좌표를 검색합니다
     geocoder.addressSearch(
       roadAddress,
       function (
@@ -41,9 +43,13 @@ const KakaoMapContainer = () => {
         status: KakaoMapAddressStatus,
       ) {
         if (status === kakao.maps.services.Status.OK) {
-          setLocationState({
-            latitude: +result[0].y,
-            longitude: +result[0].x,
+          router.push({
+            pathname: PAGE_ROUTE.RESULT,
+            query: {
+              ...router.query,
+              latitude: result[0].y,
+              longitude: result[0].x,
+            },
           });
         }
       },
@@ -62,20 +68,33 @@ const KakaoMapContainer = () => {
       cost,
       time,
     });
-    console.log(data);
     if (isNull(data.errors)) {
+      // data.errors가 없다면 성공
       if (isEmpty(data.data)) {
         // No Data
       } else {
-        setFilteredHouseData([...data.data]);
+        setFilteredHouseState([...data.data]);
+        setFilteredHouseRecoilState([...data.data]);
       }
     }
   };
+
   useEffect(() => {
     if (isComplete) {
       handleSearchNewHouse();
     }
   }, [isComplete]);
+
+  useEffect(() => {
+    const latitude = query['latitude'];
+    const longitude = query['longitude'];
+    if (isString(latitude) && isString(longitude)) {
+      setLocationState({
+        latitude: +latitude,
+        longitude: +longitude,
+      });
+    }
+  }, [query.latitude]);
 
   useEffect(() => {
     const latitude = query['latitude'];
@@ -107,7 +126,10 @@ const KakaoMapContainer = () => {
         frameCloseClick={frameCloseClick}
         position={'absolute'}
       />
-      <KakaoMap location={locationState} />
+      <KakaoMap
+        location={locationState}
+        filteredHouseState={filteredHouseState}
+      />
     </StyledContainer>
   );
 };
