@@ -40,10 +40,10 @@ export interface HouseData extends FetchHouseData {
 }
 
 export interface FetchFilterRequest {
-  latitude: number;
-  longitude: number;
-  cost: number;
-  time: number;
+  latitude: string;
+  longitude: string;
+  cost: string;
+  time: string;
 }
 
 export interface FilteredFetchHouseDate {
