@@ -4,6 +4,11 @@ export interface APIResponse {
   timestamp: string;
 }
 
+export interface LocationState {
+  latitude: number;
+  longitude: number;
+}
+
 export interface FetchHouseRequest {
   roadAddress: string;
   danjiName: string;

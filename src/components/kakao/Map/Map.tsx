@@ -2,12 +2,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import styled from 'styled-components';
+import { LocationState } from '~/types/house';
 
 interface Props {
-  location: {
-    latitude: number;
-    longitude: number;
-  };
+  location: LocationState;
 }
 
 const KakaoMap = ({ location }: Props) => {

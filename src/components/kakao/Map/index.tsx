@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
@@ -10,6 +11,8 @@ import MapHeader from './Header';
 import KakaoMap from './Map';
 
 const KakaoMapContainer = () => {
+  const router = useRouter();
+  const query = router.query;
   const houseRecoilState = useRecoilValue(houseState);
   const [locationState, setLocationState] = useState({
     latitude: houseRecoilState.latitude || 33.45,
@@ -44,12 +47,17 @@ const KakaoMapContainer = () => {
     }
   }, [isComplete]);
 
+  useEffect(() => {
+    console.log(query);
+  }, [query]);
+
   return (
     <StyledContainer>
       <MapHeader
         frameOpenClick={frameOpenClick}
         addressState={addressState}
         isComplete={isComplete}
+        locationState={locationState}
       />
       <DaumPostFrame
         isOpen={isOpen}

@@ -2,15 +2,22 @@ import { memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Remixicon } from '~/components/common';
 import { FilterModal } from '~/components/result';
+import { LocationState } from '~/types/house';
 import { initialAddress } from '~/utils/house';
 
 interface Props {
   frameOpenClick: () => void;
   addressState: typeof initialAddress;
   isComplete: boolean;
+  locationState: LocationState;
 }
 
-const MapHeader = ({ frameOpenClick, addressState, isComplete }: Props) => {
+const MapHeader = ({
+  frameOpenClick,
+  addressState,
+  isComplete,
+  locationState,
+}: Props) => {
   const [filterModalOpen, setFilterModalOpen] = useState(false);
 
   const handleFilterButtonClick = useCallback(() => {
@@ -39,6 +46,7 @@ const MapHeader = ({ frameOpenClick, addressState, isComplete }: Props) => {
       <FilterModal
         filterModalOpen={filterModalOpen}
         setFilterModalOpen={setFilterModalOpen}
+        locationState={locationState}
       />
     </>
   );
