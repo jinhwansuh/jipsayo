@@ -33,8 +33,8 @@ const FilterModal = ({
         ...router.query,
         latitude: locationState.latitude,
         longitude: locationState.longitude,
-        cost: 567,
-        time: 23,
+        cost: 300000,
+        time: 60,
       },
     });
     setFilterModalOpen(false);
