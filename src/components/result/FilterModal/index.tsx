@@ -1,7 +1,10 @@
+import { useRouter } from 'next/router';
 import { Dispatch, memo, SetStateAction, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Portal } from '~/components/common';
+import { LocationState } from '~/types/house';
+import { PAGE_ROUTE } from '~/constants';
 import FilterModalContent from './Content';
 import FilterModalFooter from './Footer';
 import FilterModalHeader from './Header';
@@ -9,12 +12,33 @@ import FilterModalHeader from './Header';
 interface Props {
   filterModalOpen: boolean;
   setFilterModalOpen: Dispatch<SetStateAction<boolean>>;
+  locationState: LocationState;
 }
 
-const FilterModal = ({ filterModalOpen, setFilterModalOpen }: Props) => {
+const FilterModal = ({
+  filterModalOpen,
+  setFilterModalOpen,
+  locationState,
+}: Props) => {
+  const router = useRouter();
+
   const handleCloseClick = useCallback(() => {
     setFilterModalOpen(false);
   }, []);
+
+  const handleFilterClick = useCallback(() => {
+    router.push({
+      pathname: PAGE_ROUTE.RESULT,
+      query: {
+        ...router.query,
+        latitude: locationState.latitude,
+        longitude: locationState.longitude,
+        cost: 567,
+        time: 23,
+      },
+    });
+    setFilterModalOpen(false);
+  }, [locationState]);
 
   return (
     <>
@@ -28,7 +52,7 @@ const FilterModal = ({ filterModalOpen, setFilterModalOpen }: Props) => {
               <ModalWrapper>
                 <FilterModalHeader handleCloseClick={handleCloseClick} />
                 <FilterModalContent />
-                <FilterModalFooter />
+                <FilterModalFooter handleFilterClick={handleFilterClick} />
               </ModalWrapper>
             </StyledMotion>
           </ModalContainer>
