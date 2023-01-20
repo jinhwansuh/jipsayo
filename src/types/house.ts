@@ -34,6 +34,13 @@ export interface HouseData extends FetchHouseData {
   won: string;
 }
 
+export interface FetchFilterRequest {
+  latitude: number;
+  longitude: number;
+  cost: number;
+  time: number;
+}
+
 export interface FilteredFetchHouseDate {
   id: number;
   jibunAddress: string;
