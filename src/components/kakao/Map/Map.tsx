@@ -11,10 +11,11 @@ interface Props {
 const KakaoMap = ({ location }: Props) => {
   const router = useRouter();
   const [kakaoMap, setKakaoMap] = useState<any>(null);
-  const [mapOptions, setMapOptions] = useState({
-    location,
-    level: 5,
-  });
+  // const [mapOptions, setMapOptions] = useState({
+  //   location,
+  //   level: 5,
+  // });
+  const [centerMarker, setCenterMarker] = useState<any>();
   const kakaoMapRef = useRef<HTMLDivElement>(null);
   const query = router.query;
 
@@ -31,11 +32,8 @@ const KakaoMap = ({ location }: Props) => {
       kakao.maps.load(() => {
         const container = kakaoMapRef.current;
         const options = {
-          center: new kakao.maps.LatLng(
-            mapOptions.location.latitude,
-            mapOptions.location.longitude,
-          ),
-          level: mapOptions.level,
+          center: new kakao.maps.LatLng(location.latitude, location.longitude),
+          level: 5,
         };
 
         const map = new kakao.maps.Map(container, options);
@@ -57,7 +55,6 @@ const KakaoMap = ({ location }: Props) => {
     if (kakaoMap === null) {
       return;
     }
-    setMapOptions((prev) => ({ ...prev, location }));
 
     const markerPosition = new kakao.maps.LatLng(
       location.latitude,
@@ -68,6 +65,15 @@ const KakaoMap = ({ location }: Props) => {
     });
     kakaoMap.relayout();
     kakaoMap.setCenter(markerPosition);
+
+    // 기존의 센터 마커가 있다면 지운다.
+    if (centerMarker) {
+      centerMarker.setMap(null);
+    }
+
+    setCenterMarker(marker);
+
+    // 새로운 마커를 찍는다.
     marker.setMap(kakaoMap);
   }, [kakaoMap, location]);
 
