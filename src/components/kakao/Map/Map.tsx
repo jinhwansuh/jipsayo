@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { isEmpty } from 'lodash-es';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { LocationState } from '~/types/house';
+import { filteredHouseSelector } from '~/atoms/house';
 
 interface Props {
   location: LocationState;
@@ -10,13 +12,11 @@ interface Props {
 
 const KakaoMap = ({ location }: Props) => {
   const router = useRouter();
-  const [kakaoMap, setKakaoMap] = useState<any>(null);
-  // const [mapOptions, setMapOptions] = useState({
-  //   location,
-  //   level: 5,
-  // });
-  const [centerMarker, setCenterMarker] = useState<any>();
   const kakaoMapRef = useRef<HTMLDivElement>(null);
+  const filteredHouseState = useRecoilValue(filteredHouseSelector);
+  const [kakaoMap, setKakaoMap] = useState<any>(null);
+  const [, setCenterMarker] = useState<any>();
+  const [, setMarkers] = useState<any>([]);
   const query = router.query;
 
   useEffect(() => {
@@ -51,6 +51,7 @@ const KakaoMap = ({ location }: Props) => {
     }
   }, [kakaoMapRef]);
 
+  // 지도의 중심이 바뀌었을 때,
   useEffect(() => {
     if (kakaoMap === null) {
       return;
@@ -60,22 +61,47 @@ const KakaoMap = ({ location }: Props) => {
       location.latitude,
       location.longitude,
     );
-    const marker = new kakao.maps.Marker({
-      position: markerPosition,
+
+    setCenterMarker((prev: any) => {
+      if (prev) prev.setMap(null);
+      return new kakao.maps.Marker({ map: kakaoMap, position: markerPosition });
     });
+
     kakaoMap.relayout();
     kakaoMap.setCenter(markerPosition);
+  }, [kakaoMap, location]);
 
-    // 기존의 센터 마커가 있다면 지운다.
-    if (centerMarker) {
-      centerMarker.setMap(null);
+  console.log(location);
+
+  // 필터링된 데이터가 바뀌었을 때,
+  useEffect(() => {
+    if (kakaoMap === null) {
+      return;
     }
 
-    setCenterMarker(marker);
+    const positions = filteredHouseState.map(
+      (state) => new kakao.maps.LatLng(state.latitude, state.longitude),
+    );
 
-    // 새로운 마커를 찍는다.
-    marker.setMap(kakaoMap);
-  }, [kakaoMap, location]);
+    setMarkers((markers: any) => {
+      // clear prev markers
+      markers.forEach((marker: any) => marker.setMap(null));
+
+      // assign new markers
+      return positions.map(
+        (position) => new kakao.maps.Marker({ map: kakaoMap, position }),
+      );
+    });
+
+    if (positions.length > 0) {
+      const bounds = positions.reduce(
+        (bounds, latlng) => bounds.extend(latlng),
+        new kakao.maps.LatLngBounds(),
+      );
+
+      kakaoMap.setBounds(bounds);
+    }
+  }, [kakaoMap, filteredHouseState]);
 
   return (
     <Container>
