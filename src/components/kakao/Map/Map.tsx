@@ -64,7 +64,7 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
       if (prev) prev.setMap(null);
       return new kakao.maps.Marker({ map: kakaoMap, position: markerPosition });
     });
-
+    kakaoMap.setLevel(5);
     kakaoMap.relayout();
     kakaoMap.setCenter(markerPosition);
   }, [kakaoMap, locationState]);
