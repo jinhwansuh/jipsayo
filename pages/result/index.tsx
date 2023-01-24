@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { NextHead } from '~/components/common';
@@ -14,7 +13,6 @@ const ResearchResultPage = () => {
   const houseRecoilState = useRecoilValue(houseStateSelector);
   const [hasNoData, setHasNoData] = useState(false);
   const [isKakaoMapOpen, setIsKakaoMapOpen] = useState(false);
-  const query = router.query;
 
   useEffect(() => {
     if (!houseRecoilState.danjiName) {
@@ -24,21 +22,9 @@ const ResearchResultPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (isEmpty(query)) return;
-    const isOpen = query['drawer_open'];
-    if (isOpen === 'true') setIsKakaoMapOpen(() => true);
-    else setIsKakaoMapOpen(() => false);
-  }, [query]);
-
   const handleKakaoMapButtonClick = useCallback(() => {
-    router.push({
-      pathname: PAGE_ROUTE.RESULT,
-      query: {
-        drawer_open: !isKakaoMapOpen,
-      },
-    });
-  }, [isKakaoMapOpen]);
+    setIsKakaoMapOpen((prev) => !prev);
+  }, []);
 
   return (
     <>
