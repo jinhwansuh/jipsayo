@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { FetchFilteredHouseDate, LocationState } from '~/types/house';
 
 interface Props {
-  location: LocationState;
+  locationState: LocationState;
   filteredHouseState: FetchFilteredHouseDate[];
 }
 
-const KakaoMap = ({ location, filteredHouseState }: Props) => {
+const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
   const router = useRouter();
   const kakaoMapRef = useRef<HTMLDivElement>(null);
   const [kakaoMap, setKakaoMap] = useState<any>(null);
@@ -31,7 +31,10 @@ const KakaoMap = ({ location, filteredHouseState }: Props) => {
       kakao.maps.load(() => {
         const container = kakaoMapRef.current;
         const options = {
-          center: new kakao.maps.LatLng(location.latitude, location.longitude),
+          center: new kakao.maps.LatLng(
+            locationState.latitude,
+            locationState.longitude,
+          ),
           level: 5,
         };
 
@@ -53,8 +56,8 @@ const KakaoMap = ({ location, filteredHouseState }: Props) => {
     }
 
     const markerPosition = new kakao.maps.LatLng(
-      location.latitude,
-      location.longitude,
+      locationState.latitude,
+      locationState.longitude,
     );
 
     setCenterMarker((prev: any) => {
@@ -64,7 +67,7 @@ const KakaoMap = ({ location, filteredHouseState }: Props) => {
 
     kakaoMap.relayout();
     kakaoMap.setCenter(markerPosition);
-  }, [kakaoMap, location]);
+  }, [kakaoMap, locationState]);
 
   // 필터링된 데이터가 바뀌었을 때,
   useEffect(() => {

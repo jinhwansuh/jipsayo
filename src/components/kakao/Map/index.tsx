@@ -31,7 +31,7 @@ const KakaoMapContainer = () => {
     FetchFilteredHouseDate[]
   >([]);
 
-  const handleSearchNewHouse = async () => {
+  const fetchSearchNewHouse = async () => {
     // 주소로 위도 경도를 받아온다
     const { roadAddress } = addressState;
     const geocoder = new kakao.maps.services.Geocoder();
@@ -56,7 +56,7 @@ const KakaoMapContainer = () => {
     );
   };
 
-  const handleFetchFilterHouse = async ({
+  const fetchFilterHouses = async ({
     latitude,
     longitude,
     cost,
@@ -81,7 +81,7 @@ const KakaoMapContainer = () => {
 
   useEffect(() => {
     if (isComplete) {
-      handleSearchNewHouse();
+      fetchSearchNewHouse();
     }
   }, [isComplete]);
 
@@ -108,7 +108,7 @@ const KakaoMapContainer = () => {
       isString(cost) &&
       isString(time)
     ) {
-      handleFetchFilterHouse({ latitude, longitude, cost, time });
+      fetchFilterHouses({ latitude, longitude, cost, time });
     }
   }, [query]);
 
@@ -127,7 +127,7 @@ const KakaoMapContainer = () => {
         position={'absolute'}
       />
       <KakaoMap
-        location={locationState}
+        locationState={locationState}
         filteredHouseState={filteredHouseState}
       />
     </StyledContainer>

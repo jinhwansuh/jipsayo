@@ -34,7 +34,7 @@ const GoogleAnalytics = () => {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
+              page_path: window.locationState.pathname,
             });
           `,
         }}
