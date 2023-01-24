@@ -1,5 +1,12 @@
 import { useRouter } from 'next/router';
-import { Dispatch, memo, SetStateAction, useCallback } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  memo,
+  SetStateAction,
+  useCallback,
+  useState,
+} from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Portal } from '~/components/common';
@@ -21,9 +28,17 @@ const FilterModal = ({
   locationState,
 }: Props) => {
   const router = useRouter();
+  const [filterState, setFilterState] = useState({
+    cost: '',
+    time: '',
+  });
 
   const handleCloseClick = useCallback(() => {
     setFilterModalOpen(false);
+  }, []);
+
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFilterState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }, []);
 
   const handleFilterClick = useCallback(() => {
@@ -33,12 +48,12 @@ const FilterModal = ({
         ...router.query,
         latitude: locationState.latitude,
         longitude: locationState.longitude,
-        cost: 300000,
-        time: 60,
+        cost: filterState.cost,
+        time: filterState.time,
       },
     });
     setFilterModalOpen(false);
-  }, [locationState]);
+  }, [locationState, filterState]);
 
   return (
     <>
@@ -51,7 +66,7 @@ const FilterModal = ({
             >
               <ModalWrapper>
                 <FilterModalHeader handleCloseClick={handleCloseClick} />
-                <FilterModalContent />
+                <FilterModalContent handleInputChange={handleInputChange} />
                 <FilterModalFooter handleFilterClick={handleFilterClick} />
               </ModalWrapper>
             </StyledMotion>
