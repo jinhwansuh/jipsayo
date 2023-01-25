@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { isEmpty, isNull, isString } from 'lodash-es';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -30,6 +30,7 @@ const KakaoMapContainer = () => {
   const [filteredHouseState, setFilteredHouseState] = useState<
     FetchFilteredHouseDate[]
   >([]);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   const fetchSearchNewHouse = async () => {
     // 주소로 위도 경도를 받아온다
@@ -46,7 +47,6 @@ const KakaoMapContainer = () => {
           router.push({
             pathname: PAGE_ROUTE.RESULT,
             query: {
-              ...router.query,
               latitude: result[0].y,
               longitude: result[0].x,
             },
@@ -75,12 +75,24 @@ const KakaoMapContainer = () => {
       } else {
         setFilteredHouseState([...data.data]);
         setFilteredHouseRecoilState([...data.data]);
+        setIsFiltered(true);
       }
     }
   };
 
+  const handleClearFilter = useCallback(() => {
+    // TODO: replace, push 둘 중에 어떤 것을 적용해야할지 고민
+    router.push({
+      pathname: PAGE_ROUTE.RESULT,
+    });
+    setFilteredHouseState([]);
+    setIsFiltered(false);
+  }, []);
+
   useEffect(() => {
+    // 새로운 주소를 검색했을 때,
     if (isComplete) {
+      setFilteredHouseState([]);
       fetchSearchNewHouse();
     }
   }, [isComplete]);
@@ -88,20 +100,19 @@ const KakaoMapContainer = () => {
   useEffect(() => {
     const latitude = query['latitude'];
     const longitude = query['longitude'];
+    const cost = query['cost'];
+    const time = query['time'];
+
+    // 주소값만 바뀌었을 때,
     if (isString(latitude) && isString(longitude)) {
       setLocationState({
         latitude: +latitude,
         longitude: +longitude,
       });
+      setIsFiltered(false);
     }
-  }, [query.latitude]);
 
-  useEffect(() => {
-    const latitude = query['latitude'];
-    const longitude = query['longitude'];
-    const cost = query['cost'];
-    const time = query['time'];
-
+    // 필터가 적용되었을 때,
     if (
       isString(latitude) &&
       isString(longitude) &&
@@ -126,6 +137,11 @@ const KakaoMapContainer = () => {
         frameCloseClick={frameCloseClick}
         position={'absolute'}
       />
+      {isFiltered && (
+        <StyledSetFilterCloseButton onClick={handleClearFilter}>
+          clear filter
+        </StyledSetFilterCloseButton>
+      )}
       <KakaoMap
         locationState={locationState}
         filteredHouseState={filteredHouseState}
@@ -143,6 +159,11 @@ const StyledContainer = styled.div`
   height: calc(100% - 86px);
   z-index: 7000;
   max-width: ${(props) => props.theme.width.default_global_width};
+`;
+
+const StyledSetFilterCloseButton = styled.button`
+  position: absolute;
+  z-index: 8000;
 `;
 
 export default KakaoMapContainer;
