@@ -15,6 +15,7 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
   const [kakaoMap, setKakaoMap] = useState<any>(null);
   const [, setCenterMarker] = useState<any>();
   const [, setMarkers] = useState<any[]>([]);
+  const [, setPrevCenter] = useState<any>();
   const query = router.query;
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
         };
 
         const map = new kakao.maps.Map(container, options);
+
         setKakaoMap(map);
 
         // 확대 축소 true, false
@@ -64,6 +66,9 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
       if (prev) prev.setMap(null);
       return new kakao.maps.Marker({ map: kakaoMap, position: markerPosition });
     });
+
+    setPrevCenter(markerPosition);
+
     kakaoMap.setLevel(5);
     kakaoMap.relayout();
     kakaoMap.setCenter(markerPosition);
@@ -79,20 +84,32 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
       (state) => new kakao.maps.LatLng(state.latitude, state.longitude),
     );
 
-    setMarkers((markers: any) => {
-      markers.forEach((marker: any) => marker.setMap(null));
+    setMarkers((markers: any[]) => {
+      markers.forEach((marker) => marker.setMap(null));
       return positions.map(
         (position) => new kakao.maps.Marker({ map: kakaoMap, position }),
       );
     });
 
     if (positions.length > 0) {
+      setPrevCenter((prev: any) => {
+        positions.push(prev);
+        return prev;
+      });
       const bounds = positions.reduce(
         (bounds, latlng) => bounds.extend(latlng),
         new kakao.maps.LatLngBounds(),
       );
 
       kakaoMap.setBounds(bounds);
+    } else {
+      // filter정보가 초기화 되었을 때,
+      setPrevCenter((prev: any) => {
+        kakaoMap.setLevel(5);
+        kakaoMap.relayout();
+        kakaoMap.setCenter(prev);
+        return prev;
+      });
     }
   }, [kakaoMap, filteredHouseState]);
 
