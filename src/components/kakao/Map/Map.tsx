@@ -1,8 +1,7 @@
-import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { isEmpty } from 'lodash-es';
 import styled from 'styled-components';
 import { FetchFilteredHouseDate, LocationState } from '~/types/house';
+import { KAKAO_URL } from '~/constants';
 
 interface Props {
   locationState: LocationState;
@@ -10,21 +9,15 @@ interface Props {
 }
 
 const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
-  const router = useRouter();
   const kakaoMapRef = useRef<HTMLDivElement>(null);
   const [kakaoMap, setKakaoMap] = useState<any>(null);
-  const [, setCenterMarker] = useState<any>();
+  const [centerMarker, setCenterMarker] = useState<any>();
   const [, setMarkers] = useState<any[]>([]);
   const [, setPrevCenter] = useState<any>();
-  const query = router.query;
 
   useEffect(() => {
     const kakaomapCurrent = kakaoMapRef.current;
   }, []);
-
-  useEffect(() => {
-    if (isEmpty(query)) return;
-  }, [query]);
 
   // init map 정의
   useEffect(() => {
@@ -40,13 +33,7 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
         };
 
         const map = new kakao.maps.Map(container, options);
-
         setKakaoMap(map);
-
-        // 확대 축소 true, false
-        // map.setZoomable(false);
-        // 이동 true, false
-        // map.setDraggable(true);
       });
     }
   }, [kakaoMapRef]);
@@ -62,15 +49,28 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
       locationState.longitude,
     );
 
-    setCenterMarker((prev: any) => {
-      if (prev) prev.setMap(null);
-      return new kakao.maps.Marker({ map: kakaoMap, position: markerPosition });
+    setPrevCenter(() => markerPosition);
+
+    // 마커 이미지를 생성
+    const imageSize = new kakao.maps.Size(24, 35);
+    const markerImage = new kakao.maps.MarkerImage(
+      KAKAO_URL.CENTER_IMAGE,
+      imageSize,
+    );
+
+    const marker = new kakao.maps.Marker({
+      map: kakaoMap,
+      position: markerPosition,
+      image: markerImage,
     });
 
-    setPrevCenter(markerPosition);
+    if (centerMarker) {
+      centerMarker.setMap(null);
+    }
 
-    kakaoMap.setLevel(5);
-    kakaoMap.relayout();
+    setCenterMarker(marker);
+
+    marker.setMap(kakaoMap);
     kakaoMap.setCenter(markerPosition);
   }, [kakaoMap, locationState]);
 
