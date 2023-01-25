@@ -1,20 +1,18 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import { isEmpty } from 'lodash-es';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { NextHead } from '~/components/common';
 import { KakaoMapContainer } from '~/components/kakao';
 import { HouseTooltip, KakaoMapOpenButton } from '~/components/result';
-import { houseState } from '~/atoms/house';
+import { houseStateSelector } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
 
 const ResearchResultPage = () => {
   const router = useRouter();
-  const houseRecoilState = useRecoilValue(houseState);
+  const houseRecoilState = useRecoilValue(houseStateSelector);
   const [hasNoData, setHasNoData] = useState(false);
   const [isKakaoMapOpen, setIsKakaoMapOpen] = useState(false);
-  const query = router.query;
 
   useEffect(() => {
     if (!houseRecoilState.danjiName) {
@@ -24,16 +22,9 @@ const ResearchResultPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (isEmpty(query)) return;
-    const isOpen = query['drawer_open'];
-    if (isOpen === 'true') setIsKakaoMapOpen(() => true);
-    else setIsKakaoMapOpen(() => false);
-  }, [query]);
-
   const handleKakaoMapButtonClick = useCallback(() => {
-    router.push(`${PAGE_ROUTE.RESULT}?drawer_open=${!isKakaoMapOpen}`);
-  }, [isKakaoMapOpen]);
+    setIsKakaoMapOpen((prev) => !prev);
+  }, []);
 
   return (
     <>
@@ -47,8 +38,9 @@ const ResearchResultPage = () => {
           <div>
             가격은 <StyledMarkText>{houseRecoilState.won}</StyledMarkText>
             <HouseTooltip
-              HouseSize={'82m2'}
-              HouseMarketPriceDate={'2022-10-31'}
+              content={`${houseRecoilState.dedicatedArea}m2 ${
+                houseRecoilState.dealDate.split('T')[0]
+              }`}
             />
             입니다.
           </div>

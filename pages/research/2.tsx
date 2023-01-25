@@ -2,18 +2,14 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { isEmpty } from 'lodash-es';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { DaumPostFrame, NextHead } from '~/components/common';
-import {
-  calculateCostToWon,
-  calculateEstimateTime,
-} from '~/utils/functions/house';
 import { getHouse } from '~/api/house';
 import { postResearch } from '~/api/research';
-import { houseState } from '~/atoms/house';
-import { researchIndexState, researchState } from '~/atoms/research';
+import { fetchHouseStateAtom } from '~/atoms/house';
+import { researchIndexStateAtom, researchStateAtom } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 import { useDaumPost } from '~/hooks';
 
@@ -40,12 +36,13 @@ const ResearchSecondPage = () => {
     searchFrameRef,
   });
   const [researchRecoilState, setResearchRecoilState] =
-    useRecoilState(researchState);
-  const [pageRecoilState, setPageRecoilState] =
-    useRecoilState(researchIndexState);
+    useRecoilState(researchStateAtom);
+  const [pageRecoilState, setPageRecoilState] = useRecoilState(
+    researchIndexStateAtom,
+  );
   const [isError, setIsError] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const [houseRecoilState, setHouseRecoilState] = useRecoilState(houseState);
+  const setHouseRecoilState = useSetRecoilState(fetchHouseStateAtom);
 
   useEffect(() => {
     if (pageRecoilState.first) {
@@ -81,13 +78,6 @@ const ResearchSecondPage = () => {
           setIsNoData(() => false);
           setHouseRecoilState(() => ({
             ...data.data,
-            estimateTime: calculateEstimateTime({
-              budget: +cash,
-              saving: +saving,
-              rate: +rate,
-              targetPrice: data.data.cost,
-            }),
-            won: calculateCostToWon(data.data.cost),
           }));
           setPageRecoilState((prev) => ({ ...prev, second: true }));
           router.push(PAGE_ROUTE.RESULT);

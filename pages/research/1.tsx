@@ -1,19 +1,18 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { Button, NextHead } from '~/components/common';
 import { EstimateInput } from '~/components/research';
 import { initialResearch } from '~/utils/house';
-import { researchIndexState, researchState } from '~/atoms/research';
+import { researchIndexStateAtom, researchStateAtom } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 
 const ResearchFirstPage = () => {
   const router = useRouter();
-  const setResearchIndex = useSetRecoilState(researchIndexState);
-  const [researchRecoilState, setResearchRecoilState] =
-    useRecoilState(researchState);
+  const setResearchIndex = useSetRecoilState(researchIndexStateAtom);
+  const setResearchRecoilState = useSetRecoilState(researchStateAtom);
   const [isError, setIsError] = useState(false);
   const [inputState, setInputState] = useState(initialResearch);
 

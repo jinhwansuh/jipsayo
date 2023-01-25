@@ -1,10 +1,16 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-const FilterModalFooter = () => {
+interface Props {
+  handleFilterClick: () => void;
+}
+
+const FilterModalFooter = ({ handleFilterClick }: Props) => {
   return (
     <StyledFooterWrapper>
-      <StyledFooterButton>필터적용</StyledFooterButton>
+      <StyledFooterButton onClick={handleFilterClick}>
+        필터적용
+      </StyledFooterButton>
     </StyledFooterWrapper>
   );
 };

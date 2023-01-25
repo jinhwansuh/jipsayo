@@ -1,13 +1,12 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, ReactNode, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Remixicon } from '~/components/common';
 
 interface Props {
-  HouseSize: string;
-  HouseMarketPriceDate: string;
+  content: ReactNode;
 }
 
-const HouseTooltip = ({ HouseSize, HouseMarketPriceDate }: Props) => {
+const HouseTooltip = ({ content }: Props) => {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   useEffect(() => {
@@ -27,18 +26,12 @@ const HouseTooltip = ({ HouseSize, HouseMarketPriceDate }: Props) => {
   return (
     <>
       <Container>
-        <StyledOpenButton
-          onClick={handleTooltipClick}
-          onMouseEnter={() => setIsTooltipOpen(true)}
-          onMouseLeave={() => setIsTooltipOpen(false)}
-        >
+        <StyledOpenButton onClick={handleTooltipClick}>
           <Remixicon iconName='ri-question-line' size='18px' />
         </StyledOpenButton>
         {isTooltipOpen && (
           <StyledTooltipContainer>
-            <StyledContent>
-              {HouseSize} {HouseMarketPriceDate}
-            </StyledContent>
+            <StyledContent>{content}</StyledContent>
             <StyledPointer />
           </StyledTooltipContainer>
         )}
@@ -58,12 +51,10 @@ const StyledOpenButton = styled.div`
 const StyledTooltipContainer = styled.div`
   position: absolute;
   transform: translate(-90px, -85px);
-  width: 150px;
   height: 40px;
 `;
 
 const StyledContent = styled.div`
-  width: 100%;
   height: 100%;
   background: #fff;
   border-radius: 20px;

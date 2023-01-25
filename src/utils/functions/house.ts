@@ -9,7 +9,7 @@ interface CalculateEstimateTimeType {
 
 /**
  *
- * @returns 'OO년 OO개월'(string) | false: 이미 가격보다 많음
+ * @returns 'OO년 OO개월'(string) | false: 이미 가격보다 많음 | true: 잘못된 접근
  */
 export const calculateEstimateTime = ({
   budget,
@@ -17,6 +17,7 @@ export const calculateEstimateTime = ({
   rate,
   targetPrice,
 }: CalculateEstimateTimeType): HouseData['estimateTime'] => {
+  if (budget < 0 || saving < 0 || rate <= 0 || targetPrice <= 0) return true;
   if (budget >= targetPrice) {
     return false;
   }

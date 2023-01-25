@@ -1,7 +1,17 @@
-import { Dispatch, memo, SetStateAction, useCallback } from 'react';
+import { useRouter } from 'next/router';
+import {
+  ChangeEvent,
+  Dispatch,
+  memo,
+  SetStateAction,
+  useCallback,
+  useState,
+} from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Portal } from '~/components/common';
+import { LocationState } from '~/types/house';
+import { PAGE_ROUTE } from '~/constants';
 import FilterModalContent from './Content';
 import FilterModalFooter from './Footer';
 import FilterModalHeader from './Header';
@@ -9,12 +19,40 @@ import FilterModalHeader from './Header';
 interface Props {
   filterModalOpen: boolean;
   setFilterModalOpen: Dispatch<SetStateAction<boolean>>;
+  locationState: LocationState;
 }
 
-const FilterModal = ({ filterModalOpen, setFilterModalOpen }: Props) => {
+const FilterModal = ({
+  filterModalOpen,
+  setFilterModalOpen,
+  locationState,
+}: Props) => {
+  const router = useRouter();
+  const [filterState, setFilterState] = useState({
+    cost: '',
+    time: '',
+  });
+
   const handleCloseClick = useCallback(() => {
     setFilterModalOpen(false);
   }, []);
+
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFilterState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }, []);
+
+  const handleFilterClick = useCallback(() => {
+    router.push({
+      pathname: PAGE_ROUTE.RESULT,
+      query: {
+        latitude: locationState.latitude,
+        longitude: locationState.longitude,
+        cost: filterState.cost,
+        time: filterState.time,
+      },
+    });
+    setFilterModalOpen(false);
+  }, [locationState, filterState]);
 
   return (
     <>
@@ -27,8 +65,8 @@ const FilterModal = ({ filterModalOpen, setFilterModalOpen }: Props) => {
             >
               <ModalWrapper>
                 <FilterModalHeader handleCloseClick={handleCloseClick} />
-                <FilterModalContent />
-                <FilterModalFooter />
+                <FilterModalContent handleInputChange={handleInputChange} />
+                <FilterModalFooter handleFilterClick={handleFilterClick} />
               </ModalWrapper>
             </StyledMotion>
           </ModalContainer>

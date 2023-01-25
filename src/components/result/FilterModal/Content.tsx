@@ -1,53 +1,35 @@
-import { memo } from 'react';
+import { ChangeEvent, memo } from 'react';
 import styled from 'styled-components';
 
-const FilterModalContent = () => {
+interface Props {
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const FilterModalContent = ({ handleInputChange }: Props) => {
   return (
     <StyledContentContainer>
       <StyledContentWrapper>
         <StyledTitleText>가격</StyledTitleText>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum ad
-          porro fugit nobis vitae. Molestiae est, qui numquam iste repellendus
-          autem. Sit modi neque pariatur rerum debitis dolores dolorem
-          repellat.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Illum ad porro fugit nobis vitae. Molestiae est, qui numquam iste
-          repellendus autem. Sit modi neque pariatur rerum debitis dolores
-          dolorem repellat.Lorem ipsum dolor sit amet consectetur adipisicing
-          elit.
-        </div>
-      </StyledContentWrapper>
-      <StyledContentWrapper>
-        <StyledTitleText>이동 수단</StyledTitleText>
-        <StyledMoveSelect>
-          <div>도보</div>
-          <div>대중교통</div>
-          <div>자가용</div>
-        </StyledMoveSelect>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum ad
-          porro fugit nobis vitae. Molestiae est, qui numquam iste repellendus
-          autem. Sit modi neque pariatur rerum debitis dolores dolorem
-          repellat.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Illum ad porro fugit nobis vitae. Molestiae est, qui numquam iste
-          repellendus autem. Sit modi neque pariatur rerum debitis dolores
-          dolorem repellat.Lorem ipsum dolor sit amet consectetur adipisicing
-          elit.
-        </div>
+        <input
+          name={'cost'}
+          type='number'
+          onChange={handleInputChange}
+          pattern='\\d*'
+          inputMode='decimal'
+          placeholder={'3000'}
+        />
       </StyledContentWrapper>
 
       <StyledContentWrapper>
         <StyledTitleText>시간</StyledTitleText>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum ad
-          porro fugit nobis vitae. Molestiae est, qui numquam iste repellendus
-          autem. Sit modi neque pariatur rerum debitis dolores dolorem
-          repellat.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Illum ad porro fugit nobis vitae. Molestiae est, qui numquam iste
-          repellendus autem. Sit modi neque pariatur rerum debitis dolores
-          dolorem repellat.Lorem ipsum dolor sit amet consectetur adipisicing
-          elit.
-        </div>
+        <input
+          name={'time'}
+          type='number'
+          onChange={handleInputChange}
+          pattern='\\d*'
+          inputMode='decimal'
+          placeholder={'30'}
+        />
       </StyledContentWrapper>
     </StyledContentContainer>
   );
