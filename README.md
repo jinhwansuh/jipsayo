@@ -15,4 +15,4 @@
 - framer-motion
 - Recoil
 - styled-components
-
+- Kakao Map Web API
