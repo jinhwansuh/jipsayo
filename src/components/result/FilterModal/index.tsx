@@ -45,7 +45,6 @@ const FilterModal = ({
     router.push({
       pathname: PAGE_ROUTE.RESULT,
       query: {
-        ...router.query,
         latitude: locationState.latitude,
         longitude: locationState.longitude,
         cost: filterState.cost,
