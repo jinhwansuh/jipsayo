@@ -21,15 +21,17 @@ const FilterModalContent = ({ handleInputChange, filterState }: Props) => {
 
       <StyledContentWrapper>
         <StyledTitleText>시간</StyledTitleText>
-        <input
-          name={'time'}
-          type='number'
-          onChange={handleInputChange}
-          pattern='\\d*'
-          inputMode='decimal'
-          placeholder={'30'}
-          value={filterState.time}
-        />
+        <StyledInputWrapper>
+          <StyledInput
+            name={'time'}
+            type={'number'}
+            onChange={handleInputChange}
+            pattern='\\d*'
+            inputMode='decimal'
+            placeholder={'30'}
+            value={filterState.time}
+          />
+        </StyledInputWrapper>
       </StyledContentWrapper>
     </StyledContentContainer>
   );
@@ -54,6 +56,37 @@ const StyledTitleText = styled.h2`
   line-height: 22px;
   font-weight: 600;
   margin-bottom: 8px;
+`;
+
+const StyledInputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border-bottom: ${(props) => props.theme.input.border};
+  &:focus-within {
+    border-bottom: ${(props) => props.theme.input.borderFocus};
+  }
+`;
+
+const StyledInput = styled.input`
+  // font-size가 16px 아래면 ios에서 자동으로 zoom-in이 된다!
+  width: 75%;
+  height: 40px;
+  font-size: 20px;
+  padding-left: 15px;
+  border: none;
+  background-color: #ffffff;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: #aaa;
+  }
+  &::-webkit-input-placeholder {
+    color: #aaa;
+  }
+  &:-ms-input-placeholder {
+    color: #aaa;
+  }
 `;
 
 export default memo(FilterModalContent);

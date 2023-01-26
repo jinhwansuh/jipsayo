@@ -123,7 +123,7 @@ const StyledRange = styled.div`
 const StyledTrack = styled.div`
   position: absolute;
   height: 100%;
-  background: #64a8ff;
+  background: ${(props) => props.theme.color.green};
   will-change: left, right;
   border-radius: 5px;
 `;
