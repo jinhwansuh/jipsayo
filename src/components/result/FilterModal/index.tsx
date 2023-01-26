@@ -36,7 +36,7 @@ const FilterModal = ({
   const handleCloseClick = useCallback(() => {
     setFilterModalOpen(false);
   }, []);
-  console.log(filterState);
+
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFilterState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }, []);
