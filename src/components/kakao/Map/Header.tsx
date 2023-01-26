@@ -54,7 +54,7 @@ const MapHeader = ({
 
 const StyledContainer = styled.div`
   position: relative;
-  height: 86px;
+  height: ${(props) => props.theme.height.kakao_map_header};
   background: #fff;
   padding-bottom: 16px;
   box-shadow: 0 8px 6px -8px black;

@@ -137,11 +137,14 @@ const KakaoMapContainer = () => {
         frameCloseClick={frameCloseClick}
         position={'absolute'}
       />
-      {isFiltered && (
+      {/* {isFiltered && (
         <StyledSetFilterCloseButton onClick={handleClearFilter}>
           clear filter
         </StyledSetFilterCloseButton>
-      )}
+      )} */}
+      <StyledSetFilterCloseButton onClick={handleClearFilter}>
+        clear filter
+      </StyledSetFilterCloseButton>
       <KakaoMap
         locationState={locationState}
         filteredHouseState={filteredHouseState}
@@ -156,7 +159,7 @@ const StyledContainer = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   width: 100%;
-  height: calc(100% - 86px);
+  height: calc(100% - ${(props) => props.theme.height.kakao_map_header});
   z-index: 7000;
   max-width: ${(props) => props.theme.width.default_global_width};
 `;
@@ -164,6 +167,9 @@ const StyledContainer = styled.div`
 const StyledSetFilterCloseButton = styled.button`
   position: absolute;
   z-index: 8000;
+  top: calc(${(props) => props.theme.height.kakao_map_header} + 20px);
+  left: 50%;
+  transform: translate(-50%, 0);
 `;
 
 export default KakaoMapContainer;

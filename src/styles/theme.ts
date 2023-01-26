@@ -29,6 +29,7 @@ const width = {
 
 const height = {
   header_height: '50px',
+  kakao_map_header: '86px',
 } as const;
 
 export type Color = typeof color;
