@@ -1,7 +1,7 @@
 import { ChangeEvent, memo } from 'react';
 import styled from 'styled-components';
-import { Slider } from '~/components/common';
 import { FilterState } from '~/types/house';
+import Slider from '../Slider';
 
 interface Props {
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;

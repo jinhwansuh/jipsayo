@@ -1,8 +1,8 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { Remixicon } from '~/components/common';
 import { FilterState } from '~/types/house';
 import { calculateCostToWon } from '~/utils/functions/house';
-import Remixicon from '../Remixicon';
 
 // left보다 translateX를 사용하는 것이 더 부드럽다. (모바일 환경)
 // https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/

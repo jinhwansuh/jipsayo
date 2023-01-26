@@ -1,9 +1,9 @@
 import { memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Remixicon } from '~/components/common';
-import { FilterModal } from '~/components/result';
 import { LocationState } from '~/types/house';
 import { initialAddress } from '~/utils/house';
+import FilterModal from '../FilterModal';
 
 interface Props {
   frameOpenClick: () => void;
