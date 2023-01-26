@@ -9,6 +9,7 @@ import GlobalStyle from '~/styles/GlobalStyle';
 import theme from '~/styles/theme';
 import { defaultSEO } from '~/constants/seo';
 import { DefaultLayout } from '~/layouts';
+import '../src/styles/infoOverlay.css';
 
 export default function App({ Component, pageProps, router }: AppProps) {
   return (

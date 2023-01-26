@@ -7,7 +7,7 @@ const color = {
 } as const;
 
 const background = {
-  default: '#f1eded',
+  default: '#ffffff',
 } as const;
 
 const input = {

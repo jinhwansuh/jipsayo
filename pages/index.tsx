@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { Button } from '~/components/common';
@@ -6,26 +6,15 @@ import { ImageCarousel } from '~/components/home';
 import { PAGE_ROUTE } from '~/constants';
 
 export default function Home() {
-  const router = useRouter();
-
-  const handleStartClick = () => {
-    router.push(PAGE_ROUTE.RESEARCH_FIRST);
-  };
-
   return (
-    <>
-      <Transitions>
-        <Container>
-          <ImageCarousel />
-
-          <Button
-            rest={true}
-            content='시작하기'
-            handleButtonClick={handleStartClick}
-          />
-        </Container>
-      </Transitions>
-    </>
+    <Transitions>
+      <Container>
+        <ImageCarousel />
+        <Link href={PAGE_ROUTE.RESEARCH_FIRST}>
+          <Button rest={true} content='시작하기' />
+        </Link>
+      </Container>
+    </Transitions>
   );
 }
 

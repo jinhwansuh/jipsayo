@@ -8,14 +8,13 @@ import { FetchFilteredHouseDate, FetchFilterRequest } from '~/types/house';
 import { KakaoMapAddressResponse, KakaoMapAddressStatus } from '~/types/kakao';
 import { getFilteredHouses } from '~/api/house';
 import { fetchFilteredHouseAtom, houseStateSelector } from '~/atoms/house';
-import { PAGE_ROUTE } from '~/constants';
 import { useDaumPost } from '~/hooks';
 import MapHeader from './Header';
 import KakaoMap from './Map';
 
 const KakaoMapContainer = () => {
   const router = useRouter();
-  const query = router.query;
+  const { query, pathname } = router;
   const houseRecoilState = useRecoilValue(houseStateSelector);
   const [locationState, setLocationState] = useState({
     latitude: houseRecoilState.latitude || 33.45,
@@ -30,7 +29,6 @@ const KakaoMapContainer = () => {
   const [filteredHouseState, setFilteredHouseState] = useState<
     FetchFilteredHouseDate[]
   >([]);
-  const [isFiltered, setIsFiltered] = useState(false);
 
   const fetchSearchNewHouse = async () => {
     // 주소로 위도 경도를 받아온다
@@ -45,7 +43,7 @@ const KakaoMapContainer = () => {
       ) {
         if (status === kakao.maps.services.Status.OK) {
           router.push({
-            pathname: PAGE_ROUTE.RESULT,
+            pathname: pathname,
             query: {
               latitude: result[0].y,
               longitude: result[0].x,
@@ -75,7 +73,6 @@ const KakaoMapContainer = () => {
       } else {
         setFilteredHouseState([...data.data]);
         setFilteredHouseRecoilState([...data.data]);
-        setIsFiltered(true);
       }
     }
   };
@@ -83,10 +80,9 @@ const KakaoMapContainer = () => {
   const handleClearFilter = useCallback(() => {
     // TODO: replace, push 둘 중에 어떤 것을 적용해야할지 고민
     router.push({
-      pathname: PAGE_ROUTE.RESULT,
+      pathname: pathname,
     });
     setFilteredHouseState([]);
-    setIsFiltered(false);
   }, []);
 
   useEffect(() => {
@@ -109,7 +105,6 @@ const KakaoMapContainer = () => {
         latitude: +latitude,
         longitude: +longitude,
       });
-      setIsFiltered(false);
     }
 
     // 필터가 적용되었을 때,
@@ -138,7 +133,7 @@ const KakaoMapContainer = () => {
         position={'absolute'}
       />
 
-      {isFiltered && (
+      {filteredHouseState.length > 0 && (
         <StyledSetFilterCloseButton onClick={handleClearFilter}>
           <Remixicon iconName='ri-filter-off-line' size='100%' />
           clear filter
@@ -171,7 +166,6 @@ const StyledSetFilterCloseButton = styled.button`
   left: 50%;
   transform: translate(-50%, 0);
   border: none;
-  /* width: 90px; */
   height: 35px;
   border-radius: 20px;
   background: #ffffff;

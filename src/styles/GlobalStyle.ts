@@ -11,6 +11,9 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     height: 100%;
   }
+  body {
+    background: #f2f4f6;
+  }
   #__next {
     min-height: 100vh;
     min-height: -webkit-fill-available;

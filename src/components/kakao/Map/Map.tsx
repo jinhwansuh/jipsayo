@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FetchFilteredHouseDate, LocationState } from '~/types/house';
+import { makeOverlayContent } from '~/utils/functions/kakao';
 import { KAKAO_URL } from '~/constants';
 
 interface Props {
@@ -9,6 +11,8 @@ interface Props {
 }
 
 const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
+  const router = useRouter();
+  const { pathname } = router;
   const kakaoMapRef = useRef<HTMLDivElement>(null);
   const [kakaoMap, setKakaoMap] = useState<any>(null);
   const [centerMarker, setCenterMarker] = useState<any>();
@@ -35,6 +39,21 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
 
         const map = new kakao.maps.Map(container, options);
         setKakaoMap(map);
+
+        kakao.maps.event.addListener(map, 'click', function (mouseEvent: any) {
+          const latlng = mouseEvent.latLng;
+
+          const latitude = latlng.getLat();
+          const longitude = latlng.getLng();
+
+          router.push({
+            pathname: pathname,
+            query: {
+              latitude,
+              longitude,
+            },
+          });
+        });
       });
     }
   }, [kakaoMapRef]);
@@ -90,29 +109,32 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
       const position = new kakao.maps.LatLng(state.latitude, state.longitude);
       const marker = new kakao.maps.Marker({
         map: kakaoMap,
-        position,
+        position: position,
         clickable: true,
       });
 
       setMarkers((prev) => [...prev, marker]);
 
-      const iwContent =
-        `<div style="padding:5px;">` +
-        `<div>${state.danjiName}</div>` +
-        `<div>${state.jibunAddress}</div>` +
-        `</div>`;
-      const infowindow = new kakao.maps.InfoWindow({
-        content: iwContent,
-        removable: true,
+      const overlay = new kakao.maps.CustomOverlay({
+        position: marker.getPosition(),
+        clickable: true,
+      });
+
+      const content = makeOverlayContent({
+        customOverlay: overlay,
+        danjiName: state.danjiName,
+        jibunAddress: state.jibunAddress,
       });
 
       kakao.maps.event.addListener(marker, 'click', function () {
-        setClickedMarker((prevInfoWindow: any) => {
+        setClickedMarker((prevInfoOverlay: any) => {
           // 이전 open된 값이 있다면 close
-          if (prevInfoWindow) prevInfoWindow.close();
-          infowindow.open(kakaoMap, marker);
-          return infowindow;
+          if (prevInfoOverlay) prevInfoOverlay.setMap(null);
+          return overlay;
         });
+
+        overlay.setContent(content);
+        overlay.setMap(kakaoMap);
       });
 
       return position;
