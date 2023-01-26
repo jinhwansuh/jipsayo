@@ -1,9 +1,9 @@
 import { memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Remixicon } from '~/components/common';
-import { FilterModal } from '~/components/result';
 import { LocationState } from '~/types/house';
 import { initialAddress } from '~/utils/house';
+import FilterModal from '../FilterModal';
 
 interface Props {
   frameOpenClick: () => void;
@@ -54,7 +54,7 @@ const MapHeader = ({
 
 const StyledContainer = styled.div`
   position: relative;
-  height: 86px;
+  height: ${(props) => props.theme.height.kakao_map_header};
   background: #fff;
   padding-bottom: 16px;
   box-shadow: 0 8px 6px -8px black;

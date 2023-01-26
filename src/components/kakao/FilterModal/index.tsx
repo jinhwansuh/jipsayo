@@ -10,7 +10,7 @@ import {
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Portal } from '~/components/common';
-import { LocationState } from '~/types/house';
+import { FilterState, LocationState } from '~/types/house';
 import { PAGE_ROUTE } from '~/constants';
 import FilterModalContent from './Content';
 import FilterModalFooter from './Footer';
@@ -28,8 +28,8 @@ const FilterModal = ({
   locationState,
 }: Props) => {
   const router = useRouter();
-  const [filterState, setFilterState] = useState({
-    cost: '',
+  const [filterState, setFilterState] = useState<FilterState>({
+    cost: '600000',
     time: '',
   });
 
@@ -42,16 +42,20 @@ const FilterModal = ({
   }, []);
 
   const handleFilterClick = useCallback(() => {
-    router.push({
-      pathname: PAGE_ROUTE.RESULT,
-      query: {
-        latitude: locationState.latitude,
-        longitude: locationState.longitude,
-        cost: filterState.cost,
-        time: filterState.time,
-      },
-    });
-    setFilterModalOpen(false);
+    const { cost, time } = filterState;
+
+    if (cost && time) {
+      router.push({
+        pathname: PAGE_ROUTE.RESULT,
+        query: {
+          latitude: locationState.latitude,
+          longitude: locationState.longitude,
+          cost: filterState.cost,
+          time: filterState.time,
+        },
+      });
+      setFilterModalOpen(false);
+    }
   }, [locationState, filterState]);
 
   return (
@@ -65,7 +69,10 @@ const FilterModal = ({
             >
               <ModalWrapper>
                 <FilterModalHeader handleCloseClick={handleCloseClick} />
-                <FilterModalContent handleInputChange={handleInputChange} />
+                <FilterModalContent
+                  handleInputChange={handleInputChange}
+                  filterState={filterState}
+                />
                 <FilterModalFooter handleFilterClick={handleFilterClick} />
               </ModalWrapper>
             </StyledMotion>

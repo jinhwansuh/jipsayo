@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { isEmpty, isNull, isString } from 'lodash-es';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { DaumPostFrame } from '~/components/common';
+import { DaumPostFrame, Remixicon } from '~/components/common';
 import { FetchFilteredHouseDate, FetchFilterRequest } from '~/types/house';
 import { KakaoMapAddressResponse, KakaoMapAddressStatus } from '~/types/kakao';
 import { getFilteredHouses } from '~/api/house';
@@ -137,11 +137,14 @@ const KakaoMapContainer = () => {
         frameCloseClick={frameCloseClick}
         position={'absolute'}
       />
+
       {isFiltered && (
         <StyledSetFilterCloseButton onClick={handleClearFilter}>
+          <Remixicon iconName='ri-filter-off-line' size='100%' />
           clear filter
         </StyledSetFilterCloseButton>
       )}
+
       <KakaoMap
         locationState={locationState}
         filteredHouseState={filteredHouseState}
@@ -156,7 +159,7 @@ const StyledContainer = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   width: 100%;
-  height: calc(100% - 86px);
+  height: calc(100% - ${(props) => props.theme.height.kakao_map_header});
   z-index: 7000;
   max-width: ${(props) => props.theme.width.default_global_width};
 `;
@@ -164,6 +167,16 @@ const StyledContainer = styled.div`
 const StyledSetFilterCloseButton = styled.button`
   position: absolute;
   z-index: 8000;
+  top: calc(${(props) => props.theme.height.kakao_map_header} + 15px);
+  left: 50%;
+  transform: translate(-50%, 0);
+  border: none;
+  /* width: 90px; */
+  height: 35px;
+  border-radius: 20px;
+  background: #ffffff;
+  font-size: 15px;
+  padding: 5px 12px;
 `;
 
 export default KakaoMapContainer;

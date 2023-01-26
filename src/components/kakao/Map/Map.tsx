@@ -14,6 +14,7 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
   const [centerMarker, setCenterMarker] = useState<any>();
   const [, setMarkers] = useState<any[]>([]);
   const [, setPrevCenter] = useState<any>();
+  const [, setClickedMarker] = useState<any>();
 
   useEffect(() => {
     const kakaomapCurrent = kakaoMapRef.current;
@@ -80,15 +81,41 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
       return;
     }
 
-    const positions = filteredHouseState.map(
-      (state) => new kakao.maps.LatLng(state.latitude, state.longitude),
-    );
-
     setMarkers((markers: any[]) => {
       markers.forEach((marker) => marker.setMap(null));
-      return positions.map(
-        (position) => new kakao.maps.Marker({ map: kakaoMap, position }),
-      );
+      return [];
+    });
+
+    const positions = filteredHouseState.map((state) => {
+      const position = new kakao.maps.LatLng(state.latitude, state.longitude);
+      const marker = new kakao.maps.Marker({
+        map: kakaoMap,
+        position,
+        clickable: true,
+      });
+
+      setMarkers((prev) => [...prev, marker]);
+
+      const iwContent =
+        `<div style="padding:5px;">` +
+        `<div>${state.danjiName}</div>` +
+        `<div>${state.jibunAddress}</div>` +
+        `</div>`;
+      const infowindow = new kakao.maps.InfoWindow({
+        content: iwContent,
+        removable: true,
+      });
+
+      kakao.maps.event.addListener(marker, 'click', function () {
+        setClickedMarker((prevInfoWindow: any) => {
+          // 이전 open된 값이 있다면 close
+          if (prevInfoWindow) prevInfoWindow.close();
+          infowindow.open(kakaoMap, marker);
+          return infowindow;
+        });
+      });
+
+      return position;
     });
 
     if (positions.length > 0) {
