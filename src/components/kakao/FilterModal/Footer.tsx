@@ -29,7 +29,12 @@ const StyledFooterWrapper = styled.footer`
 `;
 
 const StyledFooterButton = styled.button`
-  background: #888888;
+  background: ${(props) => props.theme.color.green_light};
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 18px;
+  border: none;
 `;
 
 export default memo(FilterModalFooter);
