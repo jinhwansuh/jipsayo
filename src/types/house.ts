@@ -61,3 +61,8 @@ export interface FetchFilteredHouseDate {
 export interface FetchFilteredResponse extends APIResponse {
   data: FetchFilteredHouseDate[];
 }
+
+export interface FilterState {
+  cost: string;
+  time: string;
+}
