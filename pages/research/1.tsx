@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
+import { ErrorNoInputValue } from '~/components/Error';
 import { Button, NextHead } from '~/components/common';
 import { EstimateInput } from '~/components/research';
 import { initialResearch } from '~/utils/house';
@@ -60,9 +61,7 @@ const ResearchFirstPage = () => {
               placeholder={'5.5'}
             />
           </InputWrapper>
-          <ErrorContainer>
-            {isError && <ErrorMessage>모든 항목을 입력해주세요</ErrorMessage>}
-          </ErrorContainer>
+          {isError && <ErrorNoInputValue />}
 
           <Button
             rest={true}
@@ -86,15 +85,6 @@ const InputWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const ErrorContainer = styled.div`
-  height: 20px;
-  margin-top: 5px;
-`;
-
-const ErrorMessage = styled.div`
-  color: red;
 `;
 
 export default ResearchFirstPage;
