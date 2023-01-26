@@ -29,7 +29,7 @@ const FilterModal = ({
 }: Props) => {
   const router = useRouter();
   const [filterState, setFilterState] = useState<FilterState>({
-    cost: '',
+    cost: '600000',
     time: '',
   });
 
@@ -43,6 +43,7 @@ const FilterModal = ({
 
   const handleFilterClick = useCallback(() => {
     const { cost, time } = filterState;
+
     if (cost && time) {
       router.push({
         pathname: PAGE_ROUTE.RESULT,
