@@ -29,7 +29,6 @@ const KakaoMapContainer = () => {
   const [filteredHouseState, setFilteredHouseState] = useState<
     FetchFilteredHouseDate[]
   >([]);
-  const [isFiltered, setIsFiltered] = useState(false);
 
   const fetchSearchNewHouse = async () => {
     // 주소로 위도 경도를 받아온다
@@ -74,7 +73,6 @@ const KakaoMapContainer = () => {
       } else {
         setFilteredHouseState([...data.data]);
         setFilteredHouseRecoilState([...data.data]);
-        setIsFiltered(true);
       }
     }
   };
@@ -85,7 +83,6 @@ const KakaoMapContainer = () => {
       pathname: pathname,
     });
     setFilteredHouseState([]);
-    setIsFiltered(false);
   }, []);
 
   useEffect(() => {
@@ -108,7 +105,6 @@ const KakaoMapContainer = () => {
         latitude: +latitude,
         longitude: +longitude,
       });
-      setIsFiltered(false);
     }
 
     // 필터가 적용되었을 때,
@@ -137,7 +133,7 @@ const KakaoMapContainer = () => {
         position={'absolute'}
       />
 
-      {isFiltered && (
+      {filteredHouseState.length > 0 && (
         <StyledSetFilterCloseButton onClick={handleClearFilter}>
           <Remixicon iconName='ri-filter-off-line' size='100%' />
           clear filter
@@ -170,7 +166,6 @@ const StyledSetFilterCloseButton = styled.button`
   left: 50%;
   transform: translate(-50%, 0);
   border: none;
-  /* width: 90px; */
   height: 35px;
   border-radius: 20px;
   background: #ffffff;
