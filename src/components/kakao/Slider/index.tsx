@@ -142,6 +142,7 @@ const StyledMaxInput = styled.input`
   padding: 0;
   pointer-events: none;
   cursor: pointer;
+  left: -0.5px;
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
