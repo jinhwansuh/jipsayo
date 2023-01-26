@@ -5,3 +5,4 @@ export { default as Button } from './Button';
 export { default as DaumPostFrame } from './DaumPostFrame';
 export { default as Remixicon } from './Remixicon';
 export { default as GoogleAnalytics } from './GoogleAnalytics';
+export { default as Slider } from './Slider';
