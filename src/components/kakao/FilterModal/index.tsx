@@ -28,6 +28,7 @@ const FilterModal = ({
   locationState,
 }: Props) => {
   const router = useRouter();
+  const { pathname } = router;
   const [filterState, setFilterState] = useState<FilterState>({
     cost: '600000',
     time: '',
@@ -46,7 +47,7 @@ const FilterModal = ({
 
     if (cost && time) {
       router.push({
-        pathname: PAGE_ROUTE.RESULT,
+        pathname: pathname,
         query: {
           latitude: locationState.latitude,
           longitude: locationState.longitude,

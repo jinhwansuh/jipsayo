@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FetchFilteredHouseDate, LocationState } from '~/types/house';
-import { KAKAO_URL, PAGE_ROUTE } from '~/constants';
+import { KAKAO_URL } from '~/constants';
 
 interface Props {
   locationState: LocationState;
@@ -11,6 +11,7 @@ interface Props {
 
 const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
   const router = useRouter();
+  const { pathname } = router;
   const kakaoMapRef = useRef<HTMLDivElement>(null);
   const [kakaoMap, setKakaoMap] = useState<any>(null);
   const [centerMarker, setCenterMarker] = useState<any>();
@@ -45,7 +46,7 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
           const longitude = latlng.getLng();
 
           router.push({
-            pathname: PAGE_ROUTE.RESULT,
+            pathname: pathname,
             query: {
               latitude,
               longitude,
