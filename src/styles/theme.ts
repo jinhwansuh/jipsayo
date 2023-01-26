@@ -2,6 +2,8 @@ import { DefaultTheme } from 'styled-components';
 
 const color = {
   red_700: '#D32F2F',
+  green: 'rgba(8, 113, 75, 1)',
+  green_light: 'rgba(8, 113, 75, 0.3)',
 } as const;
 
 const background = {
