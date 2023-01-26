@@ -10,7 +10,7 @@ import {
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Portal } from '~/components/common';
-import { LocationState } from '~/types/house';
+import { FilterState, LocationState } from '~/types/house';
 import { PAGE_ROUTE } from '~/constants';
 import FilterModalContent from './Content';
 import FilterModalFooter from './Footer';
@@ -28,7 +28,7 @@ const FilterModal = ({
   locationState,
 }: Props) => {
   const router = useRouter();
-  const [filterState, setFilterState] = useState({
+  const [filterState, setFilterState] = useState<FilterState>({
     cost: '',
     time: '',
   });
@@ -36,7 +36,7 @@ const FilterModal = ({
   const handleCloseClick = useCallback(() => {
     setFilterModalOpen(false);
   }, []);
-
+  console.log(filterState);
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFilterState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }, []);
@@ -65,7 +65,10 @@ const FilterModal = ({
             >
               <ModalWrapper>
                 <FilterModalHeader handleCloseClick={handleCloseClick} />
-                <FilterModalContent handleInputChange={handleInputChange} />
+                <FilterModalContent
+                  handleInputChange={handleInputChange}
+                  filterState={filterState}
+                />
                 <FilterModalFooter handleFilterClick={handleFilterClick} />
               </ModalWrapper>
             </StyledMotion>

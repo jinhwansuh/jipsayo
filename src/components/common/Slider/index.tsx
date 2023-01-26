@@ -1,5 +1,6 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { FilterState } from '~/types/house';
 import { calculateCostToWon } from '~/utils/functions/house';
 import Remixicon from '../Remixicon';
 
@@ -11,6 +12,8 @@ interface Props {
   maxValue?: number;
   step?: number;
   gap?: number;
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  filterState: FilterState;
 }
 
 const Slider = ({
@@ -18,11 +21,17 @@ const Slider = ({
   maxValue = 600000,
   gap = 50000,
   step = 10000,
+  filterState,
+  handleInputChange,
 }: Props) => {
   const [minState, setMinState] = useState(minValue);
-  const [maxState, setMaxState] = useState(maxValue);
-  const [leftProgress, setLeftProgress] = useState(0);
-  const [rightProgress, setRightProgress] = useState(0);
+  const [maxState, setMaxState] = useState(
+    Number(filterState.cost) || maxValue,
+  );
+  const [leftProgress, setLeftProgress] = useState((minState / maxValue) * 100);
+  const [rightProgress, setRightProgress] = useState(
+    100 - (maxState / maxValue) * 100,
+  );
   const [priceState, setPriceState] = useState({
     left: calculateCostToWon(minState),
     right: calculateCostToWon(maxState),
@@ -46,6 +55,7 @@ const Slider = ({
       setMaxState(value);
       setRightProgress(percent);
       setPriceState((prev) => ({ ...prev, right: calculateCostToWon(value) }));
+      handleInputChange(e);
     },
     [minState],
   );
@@ -62,7 +72,7 @@ const Slider = ({
 
       <StyledInputWrapper>
         {/* 현재 버전은 최소값 수정 불가능 */}
-        <StyledInput
+        <StyledMinInput
           type='range'
           min={minValue}
           max={maxValue}
@@ -71,8 +81,9 @@ const Slider = ({
           step={step}
           disabled={true}
         />
-        <StyledInput
+        <StyledMaxInput
           type='range'
+          name='cost'
           min={minValue}
           max={maxValue}
           value={maxState}
@@ -112,7 +123,7 @@ const StyledRange = styled.div`
 const StyledTrack = styled.div`
   position: absolute;
   height: 100%;
-  background: black;
+  background: #64a8ff;
   will-change: left, right;
   border-radius: 5px;
 `;
@@ -122,7 +133,7 @@ const StyledInputWrapper = styled.div`
   top: -4px;
 `;
 
-const StyledInput = styled.input`
+const StyledMaxInput = styled.input`
   position: absolute;
   -webkit-appearance: none;
   height: 100%;
@@ -137,13 +148,21 @@ const StyledInput = styled.input`
     height: 18px;
     width: 18px;
     border-radius: 100%;
-    background-color: blue;
+    background-color: #0f2957;
+    box-shadow: 0 0 0 1px rgba(0, 27, 55, 0.1),
+      0 8px 8px 0 rgba(0, 29, 58, 0.18), 0 2px 3px 0 rgba(0, 29, 58, 0.18);
     border: none;
     pointer-events: auto;
   }
 
   &:focus {
     outline: none;
+  }
+`;
+
+const StyledMinInput = styled(StyledMaxInput)`
+  &::-webkit-slider-thumb {
+    background-color: #bbb;
   }
 `;
 

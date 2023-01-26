@@ -1,22 +1,21 @@
 import { ChangeEvent, memo } from 'react';
 import styled from 'styled-components';
+import { Slider } from '~/components/common';
+import { FilterState } from '~/types/house';
 
 interface Props {
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  filterState: FilterState;
 }
 
-const FilterModalContent = ({ handleInputChange }: Props) => {
+const FilterModalContent = ({ handleInputChange, filterState }: Props) => {
   return (
     <StyledContentContainer>
       <StyledContentWrapper>
-        <StyledTitleText>가격</StyledTitleText>
-        <input
-          name={'cost'}
-          type='number'
-          onChange={handleInputChange}
-          pattern='\\d*'
-          inputMode='decimal'
-          placeholder={'3000'}
+        <StyledTitleText>가격 범위</StyledTitleText>
+        <Slider
+          handleInputChange={handleInputChange}
+          filterState={filterState}
         />
       </StyledContentWrapper>
 
@@ -29,6 +28,7 @@ const FilterModalContent = ({ handleInputChange }: Props) => {
           pattern='\\d*'
           inputMode='decimal'
           placeholder={'30'}
+          value={filterState.time}
         />
       </StyledContentWrapper>
     </StyledContentContainer>
@@ -43,6 +43,7 @@ const StyledContentContainer = styled.div`
 `;
 
 const StyledContentWrapper = styled.section`
+  position: relative;
   padding-top: 16px;
   padding-bottom: 12px;
   border-bottom: 1px solid rgb(235, 235, 235);
@@ -53,11 +54,6 @@ const StyledTitleText = styled.h2`
   line-height: 22px;
   font-weight: 600;
   margin-bottom: 8px;
-`;
-
-const StyledMoveSelect = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 export default memo(FilterModalContent);
