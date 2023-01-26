@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 interface Props {
   content: string;
-  handleButtonClick: () => void;
+  handleButtonClick?: () => void;
   rest: boolean;
 }
 
-const Button = ({ content, handleButtonClick, rest }: Props) => {
+const Button = ({ content, handleButtonClick, rest, ...props }: Props) => {
   return (
-    <StyledButtonWrapper rest={rest}>
+    <StyledButtonWrapper rest={rest} {...props}>
       <StyledButton onClick={handleButtonClick}>{content}</StyledButton>
     </StyledButtonWrapper>
   );
