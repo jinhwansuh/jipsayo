@@ -42,16 +42,19 @@ const FilterModal = ({
   }, []);
 
   const handleFilterClick = useCallback(() => {
-    router.push({
-      pathname: PAGE_ROUTE.RESULT,
-      query: {
-        latitude: locationState.latitude,
-        longitude: locationState.longitude,
-        cost: filterState.cost,
-        time: filterState.time,
-      },
-    });
-    setFilterModalOpen(false);
+    const { cost, time } = filterState;
+    if (cost && time) {
+      router.push({
+        pathname: PAGE_ROUTE.RESULT,
+        query: {
+          latitude: locationState.latitude,
+          longitude: locationState.longitude,
+          cost: filterState.cost,
+          time: filterState.time,
+        },
+      });
+      setFilterModalOpen(false);
+    }
   }, [locationState, filterState]);
 
   return (
