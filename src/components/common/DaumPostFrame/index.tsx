@@ -26,8 +26,8 @@ const DaumPostFrame = ({ isOpen, searchFrameRef, frameCloseClick }: Props) => {
   );
 };
 
-const Container = styled.div<Pick<Props, 'position'>>`
-  position: ${(props) => (props.position ? props.position : 'static')};
+const Container = styled.div`
+  position: absolute;
   z-index: 1000;
 `;
 
