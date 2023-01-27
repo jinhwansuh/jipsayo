@@ -8,14 +8,9 @@ interface Props {
   frameCloseClick: () => void;
 }
 
-const DaumPostFrame = ({
-  isOpen,
-  searchFrameRef,
-  frameCloseClick,
-  position,
-}: Props) => {
+const DaumPostFrame = ({ isOpen, searchFrameRef, frameCloseClick }: Props) => {
   return (
-    <Container position={position}>
+    <Container>
       <StyledFrameWrapper
         ref={searchFrameRef}
         style={{ display: isOpen ? 'block' : 'none' }}
@@ -31,8 +26,8 @@ const DaumPostFrame = ({
   );
 };
 
-const Container = styled.div<Pick<Props, 'position'>>`
-  position: ${(props) => (props.position ? props.position : 'static')};
+const Container = styled.div`
+  position: absolute;
   z-index: 1000;
 `;
 
@@ -44,7 +39,7 @@ const StyledFrameWrapper = styled.div`
   position: relative;
   min-height: 400px;
   max-height: 500px;
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
     width: 90%;
   }
 `;

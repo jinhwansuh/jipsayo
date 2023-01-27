@@ -56,13 +56,12 @@ const StyledContainer = styled.div`
   position: relative;
   height: ${(props) => props.theme.height.kakao_map_header};
   background: #fff;
-  padding-bottom: 16px;
   box-shadow: 0 8px 6px -8px black;
   z-index: 2;
 `;
 
 const StyledWrapper = styled.div`
-  padding: 14px 24px 0 24px;
+  padding: 5px 24px 5px 24px;
 `;
 
 const StyledHeader = styled.div`

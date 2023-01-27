@@ -1,9 +1,12 @@
 import { DefaultTheme } from 'styled-components';
 
 const color = {
-  red_700: '#D32F2F',
   green: 'rgba(8, 113, 75, 1)',
   green_light: 'rgba(8, 113, 75, 0.3)',
+  main_content_background: '#4983EF',
+  button_select: '#BFD9FA',
+  default_header: 'rgba(73, 131, 239, 0.7)',
+  blue_default: '#4983EF',
 } as const;
 
 const background = {
@@ -11,8 +14,8 @@ const background = {
 } as const;
 
 const input = {
-  border: '2px solid rgba(8, 113, 75, 0.3)',
-  borderFocus: '2.5px solid rgba(8, 113, 75, 1)',
+  border: '2px solid rgba(73, 131, 239, 0.3)',
+  borderFocus: '2.5px solid rgba(73, 131, 239, 1)',
   track_border_radius: '10px',
 } as const;
 
@@ -29,7 +32,7 @@ const width = {
 
 const height = {
   header_height: '50px',
-  kakao_map_header: '86px',
+  kakao_map_header: '66px',
 } as const;
 
 export type Color = typeof color;

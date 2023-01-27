@@ -19,7 +19,7 @@ const Header = () => {
 const Container = styled.header`
   z-index: 5000;
   min-height: ${(props) => props.theme.height.header_height};
-  background-color: #d6d6ec;
+  background-color: ${(props) => props.theme.color.default_header};
   display: flex;
   justify-content: center;
   align-items: center;

@@ -33,6 +33,7 @@ export const initialHouseData: HouseData = {
   won: '',
   dedicatedArea: 0,
   dealDate: '',
+  estimateTimeArray: [0, 0],
 };
 
 export const houseImageData = [
