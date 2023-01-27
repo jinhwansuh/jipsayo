@@ -1,13 +1,17 @@
-import Image from 'next/image';
 import styled from 'styled-components';
+import { NextImage } from '~/components/common';
 
 const Title = () => {
   return (
     <StyledContainer>
       <StyledTitle>집사기 위한 최고의 서비스</StyledTitle>
-      <StyledImageWrapper>
-        <Image src='/image/logo.png' alt='content image' fill={true} />
-      </StyledImageWrapper>
+
+      <NextImage
+        imageSrc={'/image/logo.png'}
+        alt='logo'
+        width={'120px'}
+        height={'70px'}
+      />
     </StyledContainer>
   );
 };
@@ -27,9 +31,4 @@ const StyledTitle = styled.div`
   line-height: 36px;
 `;
 
-const StyledImageWrapper = styled.div`
-  position: relative;
-  width: 120px;
-  height: 70px;
-`;
 export default Title;

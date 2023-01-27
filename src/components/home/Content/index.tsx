@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { NextImage } from '~/components/common';
 
 interface Props {
   title: string;
@@ -18,9 +18,11 @@ const Content = ({ title, pageTo, imageSrc, story1, stroy2 }: Props) => {
           <div>집값을 계산하세요</div>
         </StyledTitleWrapper>
 
-        <StyledImageWrapper>
-          <Image src='/image/result.png' alt='content image' fill={true} />
-        </StyledImageWrapper>
+        <NextImage
+          imageSrc={'/image/result.png'}
+          alt={'content image'}
+          width={'90%'}
+        />
 
         <StyledStoryWrapper>
           <StyledStory>
@@ -63,11 +65,6 @@ const StyledTitleWrapper = styled.div`
   font-size: 30px;
 `;
 
-const StyledImageWrapper = styled.div`
-  position: relative;
-  width: 90%;
-  height: 170px;
-`;
 const StyledStoryWrapper = styled.div`
   font-weight: 500;
   font-size: 20px;
