@@ -1,20 +1,26 @@
-import Link from 'next/link';
 import styled from 'styled-components';
-import Transitions from '~/layouts/Transitions';
-import { Button } from '~/components/common';
-import { ImageCarousel } from '~/components/home';
+import { Content, Title } from '~/components/home';
 import { PAGE_ROUTE } from '~/constants';
 
 export default function Home() {
   return (
-    <Transitions>
-      <Container>
-        <ImageCarousel />
-        <Link href={PAGE_ROUTE.RESEARCH_FIRST}>
-          <Button rest={true} content='시작하기' />
-        </Link>
-      </Container>
-    </Transitions>
+    <>
+      <Title />
+      <Content
+        title='집값을 계산하세요'
+        pageTo={PAGE_ROUTE.RESEARCH_FIRST}
+        imageSrc={'/image/result.png'}
+      >
+        내 연봉으로 원하는 집을 언제쯤 살 수 있을지 테스트 해보세요!
+      </Content>
+      <Content
+        title='거리를 계산하세요'
+        pageTo={PAGE_ROUTE.MAP}
+        imageSrc={'/image/map.png'}
+      >
+        내 직장 주변에 조건에 맞는 어떤 집이 있을까 찾아보세요!
+      </Content>
+    </>
   );
 }
 
@@ -23,3 +29,5 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
 `;
+
+// /image/result.png
