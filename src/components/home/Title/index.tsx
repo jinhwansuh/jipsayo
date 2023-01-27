@@ -7,7 +7,7 @@ const Title = () => {
       <StyledTitle>집사기 위한 최고의 서비스</StyledTitle>
 
       <NextImage
-        imageSrc={'/image/logo.png'}
+        imageSrc={'/image/logo.PNG'}
         alt='logo'
         width={'120px'}
         height={'70px'}
