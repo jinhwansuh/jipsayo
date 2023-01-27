@@ -29,6 +29,7 @@ const Container = styled.div`
 `;
 
 const ContentWrapper = styled.main`
+  position: relative;
   width: 100%;
   height: calc(100% - ${(props) => props.theme.height.header_height});
   padding: ${(props) => props.theme.padding.default_top_bottom}
