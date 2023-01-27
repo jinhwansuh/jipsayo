@@ -32,8 +32,6 @@ const ContentWrapper = styled.main`
   position: relative;
   width: 100%;
   height: calc(100% - ${(props) => props.theme.height.header_height});
-  padding: ${(props) => props.theme.padding.default_top_bottom}
-    ${(props) => props.theme.padding.default_left_right};
   background-color: ${(props) => props.theme.background.default};
 `;
 
