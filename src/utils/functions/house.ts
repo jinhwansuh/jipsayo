@@ -75,3 +75,12 @@ export const calculateCostToWon = (cost: number): string => {
 
   return array.reduce((acc, curr, index) => curr + UNIT[index] + ' ' + acc, '');
 };
+
+/**
+ *
+ * @param cost number 천만원 단위
+ * @returns string ￦100,000,000
+ */
+export const convertCostToFullWon = (cost: number): string => {
+  return '￦' + (String(cost) + '0000').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
