@@ -10,6 +10,7 @@ export const PAGE_ROUTE = {
   RESEARCH_FIRST: '/research/1',
   RESEARCH_SECOND: '/research/2',
   RESULT: '/result',
+  MAP: '/map',
 } as const;
 
 export const KAKAO_URL = {
