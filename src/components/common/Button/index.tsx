@@ -6,9 +6,9 @@ interface Props {
   rest: boolean;
 }
 
-const Button = ({ content, handleButtonClick, rest, ...props }: Props) => {
+const Button = ({ content, handleButtonClick, ...props }: Props) => {
   return (
-    <StyledButtonWrapper rest={rest} {...props}>
+    <StyledButtonWrapper {...props}>
       <StyledButton onClick={handleButtonClick}>{content}</StyledButton>
     </StyledButtonWrapper>
   );
@@ -25,9 +25,9 @@ const StyledButtonWrapper = styled.div<Pick<Props, 'rest'>>`
 const StyledButton = styled.button`
   width: 296px;
   height: 48px;
-  border: 1px solid #222222;
+  border: none;
   border-radius: 8px;
-  background-color: #c9c9f8;
+  background-color: ${(props) => props.theme.color.button_select};
   padding: 13px 23px;
   font-size: 16px;
   font-weight: 600;

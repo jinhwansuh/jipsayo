@@ -81,6 +81,7 @@ const StyledButtonWrapper = styled.div`
 const StyledButton = styled.button`
   width: 296px;
   height: 48px;
+  border: none;
   border-radius: 30px;
   background: ${(props) => props.theme.color.button_select};
   padding: 13px 23px;
