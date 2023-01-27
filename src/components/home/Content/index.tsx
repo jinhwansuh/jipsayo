@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { NextImage } from '~/components/common';
 
@@ -6,37 +7,32 @@ interface Props {
   title: string;
   pageTo: string;
   imageSrc: string;
-  story1: string;
-  stroy2: string;
+  children: ReactNode;
 }
 
-const Content = ({ title, pageTo, imageSrc, story1, stroy2 }: Props) => {
+const Content = ({ title, pageTo, imageSrc, children }: Props) => {
   return (
     <StyledContainer>
       <StyledWrapper>
         <StyledTitleWrapper>
-          <div>집값을 계산하세요</div>
+          <div>{title}</div>
         </StyledTitleWrapper>
 
         <NextImage
-          imageSrc={'/image/result.png'}
+          imageSrc={imageSrc}
           alt={'content image'}
-          width={'90%'}
+          width={'280px'}
+          height={'170px'}
         />
 
         <StyledStoryWrapper>
-          <StyledStory>
-            하늘 높은줄 모르고 오르는 집값.과연 내가 집을 살 수는 있을까??
-          </StyledStory>
-          <StyledStory>
-            내 연봉으로 원하는 집을 언제쯤 살 수 있을지 테스트 해보세요!
-          </StyledStory>
+          <StyledStory>{children}</StyledStory>
         </StyledStoryWrapper>
 
         <StyledButtonWrapper>
-          <StyledButton type='button'>
-            <Link href={'/research/1'}>테스트 시작</Link>
-          </StyledButton>
+          <Link href={pageTo}>
+            <StyledButton type='button'>테스트 시작</StyledButton>
+          </Link>
         </StyledButtonWrapper>
       </StyledWrapper>
     </StyledContainer>
@@ -63,12 +59,15 @@ const StyledWrapper = styled.div`
 const StyledTitleWrapper = styled.div`
   font-weight: 700;
   font-size: 30px;
+  margin: 10px 0;
+  margin-bottom: 20px;
 `;
 
 const StyledStoryWrapper = styled.div`
   font-weight: 500;
   font-size: 20px;
   line-height: 22px;
+  margin-top: 20px;
 `;
 const StyledStory = styled.div``;
 
