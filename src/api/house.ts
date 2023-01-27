@@ -23,6 +23,7 @@ export const getFilteredHouses = (data: FetchFilterRequest) => {
       longitude,
       cost,
       time,
+      count: 500,
     },
   });
 };
