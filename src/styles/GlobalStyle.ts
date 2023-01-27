@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     background: #f2f4f6;
+    word-break: keep-all;
   }
   #__next {
     min-height: 100vh;
