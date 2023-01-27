@@ -14,8 +14,8 @@ const background = {
 } as const;
 
 const input = {
-  border: '2px solid rgba(8, 113, 75, 0.3)',
-  borderFocus: '2.5px solid rgba(8, 113, 75, 1)',
+  border: '2px solid rgba(73, 131, 239, 0.3)',
+  borderFocus: '2.5px solid rgba(73, 131, 239, 1)',
   track_border_radius: '10px',
 } as const;
 
