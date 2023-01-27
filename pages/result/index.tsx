@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { NextHead } from '~/components/common';
-import { HouseTooltip } from '~/components/result';
+import { HasHouseData } from '~/components/result';
 import { houseStateSelector } from '~/atoms/house';
 import { PAGE_ROUTE } from '~/constants';
 
@@ -27,47 +27,34 @@ const ResearchResultPage = () => {
   return (
     <>
       <NextHead title='결과' />
+      <StyledContainer>
+        {houseRecoilState.cost ? (
+          <HasHouseData houseState={houseRecoilState} />
+        ) : houseRecoilState.estimateTime === false ? (
+          <div>
+            축하합니다!!{' '}
+            <StyledMarkText>{houseRecoilState.danjiName}</StyledMarkText> 을
+            현재 자산으로 살수 있어요!
+          </div>
+        ) : null}
 
-      {houseRecoilState.cost ? (
-        <div>
-          <div>
-            <StyledMarkText>{houseRecoilState.danjiName}</StyledMarkText>의
-          </div>
-          <div>
-            가격은 <StyledMarkText>{houseRecoilState.won}</StyledMarkText>
-            <HouseTooltip
-              content={`${houseRecoilState.dedicatedArea}m2 ${
-                houseRecoilState.dealDate.split('T')[0]
-              }`}
-            />
-            입니다.
-          </div>
-          <div>
-            지금부터{' '}
-            <StyledMarkText>{houseRecoilState.estimateTime}</StyledMarkText>{' '}
-            걸립니다.
-          </div>
-        </div>
-      ) : houseRecoilState.estimateTime === false ? (
-        <div>
-          축하합니다!!{' '}
-          <StyledMarkText>{houseRecoilState.danjiName}</StyledMarkText> 을 현재
-          자산으로 살수 있어요!
-        </div>
-      ) : null}
-
-      {/* 데이터가 없을 때 */}
-      {hasNoData && (
-        <>
-          <div>잘못된 접근입니다. </div>
-          <button onClick={handlePushPrevPage}>
-            먼저 데이터를 입력해주세요!
-          </button>
-        </>
-      )}
+        {/* 데이터가 없을 때 */}
+        {hasNoData && (
+          <>
+            <div>잘못된 접근입니다. </div>
+            <button onClick={handlePushPrevPage}>
+              먼저 데이터를 입력해주세요!
+            </button>
+          </>
+        )}
+      </StyledContainer>
     </>
   );
 };
+
+const StyledContainer = styled.div`
+  padding: 20px 20px;
+`;
 
 const StyledMarkText = styled.span`
   font-size: 25px;
