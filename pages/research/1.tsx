@@ -37,7 +37,7 @@ const ResearchFirstPage = () => {
       <NextHead title='자산 입력' />
 
       <Transitions>
-        <Container>
+        <StyledContainer>
           <InputWrapper>
             <EstimateInput
               handleInputChange={handleInputChange}
@@ -68,16 +68,18 @@ const ResearchFirstPage = () => {
             content='다음으로'
             handleButtonClick={handleNextClick}
           />
-        </Container>
+        </StyledContainer>
       </Transitions>
     </>
   );
 };
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: ${(props) => props.theme.padding.default_top_bottom}
+    ${(props) => props.theme.padding.default_left_right};
 `;
 
 const InputWrapper = styled.div`

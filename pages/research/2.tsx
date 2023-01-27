@@ -100,34 +100,42 @@ const ResearchSecondPage = () => {
   return (
     <>
       <NextHead title='주소 입력' />
-
-      {hasPrevData && (
-        <StyledTransitions>
-          <DynamicSearchAddress
-            frameOpenClick={frameOpenClick}
-            addressState={addressState}
+      <StyledContainer>
+        {hasPrevData && (
+          <StyledTransitions>
+            <DynamicSearchAddress
+              frameOpenClick={frameOpenClick}
+              addressState={addressState}
+            />
+          </StyledTransitions>
+        )}
+        <div style={{ margin: '5px 0' }}>
+          <DaumPostFrame
+            isOpen={isOpen}
+            searchFrameRef={searchFrameRef}
+            frameCloseClick={frameCloseClick}
           />
-        </StyledTransitions>
-      )}
-      <div style={{ margin: '5px 0' }}>
-        <DaumPostFrame
-          isOpen={isOpen}
-          searchFrameRef={searchFrameRef}
-          frameCloseClick={frameCloseClick}
-        />
-      </div>
+        </div>
 
-      {/*데이터 fetching중  */}
-      {isFetching && <div>데이터 fetching중 입니다.</div>}
+        {/*데이터 fetching중  */}
+        {isFetching && <div>데이터 fetching중 입니다.</div>}
 
-      {/* 받아온 데이터가 없을 때 */}
-      {isNoData && <div>데이터가 없습니다.</div>}
+        {/* 받아온 데이터가 없을 때 */}
+        {isNoData && <div>데이터가 없습니다.</div>}
 
-      {/* 서버에러가 발생했을 때 */}
-      {isError && <div>서버와 통신 에러입니다.</div>}
+        {/* 서버에러가 발생했을 때 */}
+        {isError && <div>서버와 통신 에러입니다.</div>}
+      </StyledContainer>
     </>
   );
 };
+
+const StyledContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: ${(props) => props.theme.padding.default_top_bottom}
+    ${(props) => props.theme.padding.default_left_right};
+`;
 
 const StyledTransitions = styled(Transitions)`
   height: auto !important;
