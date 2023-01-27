@@ -1,5 +1,36 @@
 import { HouseData } from '~/types/house';
 
+export const calculateEstimateTimeArray = ({
+  budget,
+  saving,
+  rate,
+  targetPrice,
+}: CalculateEstimateTimeType): [number, number] => {
+  let target = targetPrice - budget;
+  let nextSaving = saving;
+  let yearMoney = saving * 12;
+  let month = 0;
+  let year = 0;
+
+  while (target > 0) {
+    if (yearMoney <= target) {
+      target -= yearMoney;
+      nextSaving *= (100 + rate) / 100;
+      yearMoney = nextSaving * 12;
+      year++;
+    } else {
+      month = Math.ceil(target / nextSaving);
+      if (month >= 12) {
+        year++;
+        month -= 12;
+      }
+      break;
+    }
+  }
+
+  return [year, month];
+};
+
 interface CalculateEstimateTimeType {
   budget: number;
   saving: number;
@@ -22,27 +53,12 @@ export const calculateEstimateTime = ({
     return false;
   }
 
-  let target = targetPrice - budget;
-  let nextSaving = saving;
-  let yearMoney = saving * 12;
-  let month = 0;
-  let year = 0;
-
-  while (target > 0) {
-    if (yearMoney <= target) {
-      target -= yearMoney;
-      nextSaving *= (100 + rate) / 100;
-      yearMoney = nextSaving * 12;
-      year++;
-    } else {
-      month = Math.ceil(target / nextSaving);
-      if (month >= 12) {
-        year++;
-        month -= 12;
-      }
-      break;
-    }
-  }
+  const [year, month] = calculateEstimateTimeArray({
+    budget,
+    saving,
+    rate,
+    targetPrice,
+  });
 
   if (year > 0 && month > 0) return `${year}년 ${month}개월`;
   if (month === 0) return `${year}년`;

@@ -7,6 +7,7 @@ import {
 import {
   calculateCostToWon,
   calculateEstimateTime,
+  calculateEstimateTimeArray,
 } from '~/utils/functions/house';
 import { initialHouseData } from '~/utils/house';
 import { researchStateAtom } from './research';
@@ -31,11 +32,18 @@ export const houseStateSelector = selector<HouseData>({
       targetPrice: cost,
     });
     const won = calculateCostToWon(cost);
+    const estimateTimeArray = calculateEstimateTimeArray({
+      budget: +cash,
+      saving: +saving,
+      rate: +rate,
+      targetPrice: cost,
+    });
 
     return {
       ...houseRecoilState,
       estimateTime,
       won,
+      estimateTimeArray,
     };
   },
 });
