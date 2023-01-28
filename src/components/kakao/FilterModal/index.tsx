@@ -30,7 +30,8 @@ const FilterModal = ({
   const router = useRouter();
   const { pathname } = router;
   const [filterState, setFilterState] = useState<FilterState>({
-    cost: '600000',
+    minPrice: '0',
+    maxPrice: '600000',
     time: '',
   });
 
@@ -43,15 +44,15 @@ const FilterModal = ({
   }, []);
 
   const handleFilterClick = useCallback(() => {
-    const { cost, time } = filterState;
+    const { maxPrice, time } = filterState;
 
-    if (cost && time) {
+    if (maxPrice && time) {
       router.push({
         pathname: pathname,
         query: {
           latitude: locationState.latitude,
           longitude: locationState.longitude,
-          cost: filterState.cost,
+          cost: filterState.maxPrice,
           time: filterState.time,
         },
       });

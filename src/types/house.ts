@@ -64,6 +64,7 @@ export interface FetchFilteredResponse extends APIResponse {
 }
 
 export interface FilterState {
-  cost: string;
+  minPrice: string;
+  maxPrice: string;
   time: string;
 }
