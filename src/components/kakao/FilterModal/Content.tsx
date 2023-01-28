@@ -36,7 +36,7 @@ const FilterModalContent = ({
       <StyledContentWrapper>
         <StyledTitleText>시간 (OO분 이내)</StyledTitleText>
         <SingleRangeSlider
-          maxValue={150}
+          maxValue={120}
           step={2}
           timeState={timeState}
           handleInputChange={handleTimeInputChange}
