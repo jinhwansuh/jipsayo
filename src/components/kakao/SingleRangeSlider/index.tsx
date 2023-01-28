@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { FilterTimeState } from '~/types/house';
 
@@ -124,4 +124,4 @@ const StyledStateWrapper = styled.div`
   padding-bottom: 10px;
 `;
 
-export default SingleRangeSlider;
+export default memo(SingleRangeSlider);

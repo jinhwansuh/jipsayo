@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Remixicon } from '~/components/common';
 import { FilterPriceState } from '~/types/house';
@@ -184,4 +184,4 @@ const StyledState = styled.div`
   height: 100%;
 `;
 
-export default MultiRangeSlider;
+export default memo(MultiRangeSlider);
