@@ -1,21 +1,35 @@
 import { ChangeEvent, memo } from 'react';
 import styled from 'styled-components';
-import { FilterState } from '~/types/house';
+import { FilterPriceState, FilterTimeState } from '~/types/house';
 import MultiRangeSlider from '../MultiRangeSlider';
+import Slider from '../Slider';
 
 interface Props {
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  filterState: FilterState;
+  handlePriceInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleTimeInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  priceState: FilterPriceState;
+  timeState: FilterTimeState;
 }
 
-const FilterModalContent = ({ handleInputChange, filterState }: Props) => {
+const FilterModalContent = ({
+  handlePriceInputChange,
+  handleTimeInputChange,
+  priceState,
+  timeState,
+}: Props) => {
   return (
     <StyledContentContainer>
       <StyledContentWrapper>
         <StyledTitleText>가격 범위</StyledTitleText>
         <MultiRangeSlider
-          handleInputChange={handleInputChange}
-          filterState={filterState}
+          minName={'minPrice'}
+          maxName={'maxPrice'}
+          minValue={0} // 추후 min값을 받게된다면 추가 필요
+          maxValue={600000}
+          gap={50000}
+          step={10000}
+          handleInputChange={handlePriceInputChange}
+          value={priceState}
         />
       </StyledContentWrapper>
 
@@ -25,11 +39,11 @@ const FilterModalContent = ({ handleInputChange, filterState }: Props) => {
           <StyledInput
             name={'time'}
             type={'number'}
-            onChange={handleInputChange}
+            onChange={handleTimeInputChange}
             pattern='\\d*'
             inputMode='decimal'
             placeholder={'30'}
-            value={filterState.time}
+            value={timeState.time}
           />
         </StyledInputWrapper>
       </StyledContentWrapper>
