@@ -16,7 +16,7 @@ interface Props {
   filterState: FilterState;
 }
 
-const Slider = ({
+const MultiRangeSlider = ({
   minValue = 0,
   maxValue = 600000,
   gap = 50000,
@@ -179,4 +179,4 @@ const StyledState = styled.div`
   height: 100%;
 `;
 
-export default Slider;
+export default MultiRangeSlider;

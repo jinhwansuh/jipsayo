@@ -1,7 +1,7 @@
 import { ChangeEvent, memo } from 'react';
 import styled from 'styled-components';
 import { FilterState } from '~/types/house';
-import Slider from '../Slider';
+import MultiRangeSlider from '../MultiRangeSlider';
 
 interface Props {
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -13,7 +13,7 @@ const FilterModalContent = ({ handleInputChange, filterState }: Props) => {
     <StyledContentContainer>
       <StyledContentWrapper>
         <StyledTitleText>가격 범위</StyledTitleText>
-        <Slider
+        <MultiRangeSlider
           handleInputChange={handleInputChange}
           filterState={filterState}
         />
