@@ -1,33 +1,37 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Remixicon } from '~/components/common';
-import { FilterState } from '~/types/house';
+import { FilterPriceState } from '~/types/house';
 import { calculateCostToWon } from '~/utils/functions/house';
 
 // left보다 translateX를 사용하는 것이 더 부드럽다. (모바일 환경)
 // https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/
 
 interface Props {
-  minValue?: number;
-  maxValue?: number;
-  step?: number;
-  gap?: number;
+  minName: string;
+  maxName: string;
+  minValue: number;
+  maxValue: number;
+  step: number;
+  gap: number;
+  value: FilterPriceState;
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  filterState: FilterState;
 }
 
-const Slider = ({
-  minValue = 0,
-  maxValue = 600000,
-  gap = 50000,
-  step = 10000,
-  filterState,
+const MultiRangeSlider = ({
+  minName,
+  maxName,
+  minValue,
+  maxValue,
+  gap,
+  step,
+  value,
   handleInputChange,
 }: Props) => {
-  const [minState, setMinState] = useState(minValue);
-  const [maxState, setMaxState] = useState(
-    Number(filterState.cost) || maxValue,
-  );
+  // string값을 number로 다루기 위해 number state를 생성
+  const [minState, setMinState] = useState(Number(value.minPrice));
+  const [maxState, setMaxState] = useState(Number(value.maxPrice));
+
   const [leftProgress, setLeftProgress] = useState((minState / maxValue) * 100);
   const [rightProgress, setRightProgress] = useState(
     100 - (maxState / maxValue) * 100,
@@ -74,6 +78,7 @@ const Slider = ({
         {/* 현재 버전은 최소값 수정 불가능 */}
         <StyledMinInput
           type='range'
+          name={minName}
           min={minValue}
           max={maxValue}
           value={minState}
@@ -83,7 +88,7 @@ const Slider = ({
         />
         <StyledMaxInput
           type='range'
-          name='cost'
+          name={maxName}
           min={minValue}
           max={maxValue}
           value={maxState}
@@ -123,7 +128,7 @@ const StyledRange = styled.div`
 const StyledTrack = styled.div`
   position: absolute;
   height: 100%;
-  background: ${(props) => props.theme.color.green};
+  background: ${(props) => props.theme.color.blue_default};
   will-change: left, right;
   border-radius: 5px;
 `;
@@ -179,4 +184,4 @@ const StyledState = styled.div`
   height: 100%;
 `;
 
-export default Slider;
+export default memo(MultiRangeSlider);
