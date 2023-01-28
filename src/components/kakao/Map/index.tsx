@@ -17,8 +17,8 @@ const KakaoMapContainer = () => {
   const { query, pathname } = router;
   const houseRecoilState = useRecoilValue(houseStateSelector);
   const [locationState, setLocationState] = useState({
-    latitude: houseRecoilState.latitude || 33.45,
-    longitude: houseRecoilState.longitude || 126.57,
+    latitude: houseRecoilState.latitude || 37.52678,
+    longitude: houseRecoilState.longitude || 127.0244,
   });
   const searchFrameRef = useRef(null);
   const { isOpen, frameOpenClick, frameCloseClick, isComplete, addressState } =
