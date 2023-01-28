@@ -1,8 +1,8 @@
-import { ChangeEvent, memo } from 'react';
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { FilterPriceState, FilterTimeState } from '~/types/house';
 import MultiRangeSlider from '../MultiRangeSlider';
-import Slider from '../Slider';
+import SingleRangeSlider from '../SingleRangeSlider';
 
 interface Props {
   handlePriceInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -34,18 +34,13 @@ const FilterModalContent = ({
       </StyledContentWrapper>
 
       <StyledContentWrapper>
-        <StyledTitleText>시간</StyledTitleText>
-        <StyledInputWrapper>
-          <StyledInput
-            name={'time'}
-            type={'number'}
-            onChange={handleTimeInputChange}
-            pattern='\\d*'
-            inputMode='decimal'
-            placeholder={'30'}
-            value={timeState.time}
-          />
-        </StyledInputWrapper>
+        <StyledTitleText>시간 (OO분 이내)</StyledTitleText>
+        <SingleRangeSlider
+          maxValue={150}
+          step={2}
+          timeState={timeState}
+          handleInputChange={handleTimeInputChange}
+        />
       </StyledContentWrapper>
     </StyledContentContainer>
   );
@@ -72,35 +67,4 @@ const StyledTitleText = styled.h2`
   margin-bottom: 8px;
 `;
 
-const StyledInputWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  border-bottom: ${(props) => props.theme.input.border};
-  &:focus-within {
-    border-bottom: ${(props) => props.theme.input.borderFocus};
-  }
-`;
-
-const StyledInput = styled.input`
-  // font-size가 16px 아래면 ios에서 자동으로 zoom-in이 된다!
-  width: 75%;
-  height: 40px;
-  font-size: 20px;
-  padding-left: 15px;
-  border: none;
-  background: none;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: #aaa;
-  }
-  &::-webkit-input-placeholder {
-    color: #aaa;
-  }
-  &:-ms-input-placeholder {
-    color: #aaa;
-  }
-`;
-
-export default memo(FilterModalContent);
+export default FilterModalContent;
