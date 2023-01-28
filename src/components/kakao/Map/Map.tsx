@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FetchFilteredHouseDate, LocationState } from '~/types/house';
+import { convertCostToFullWon } from '~/utils/functions/house';
 import { makeOverlayContent } from '~/utils/functions/kakao';
 import { KAKAO_URL } from '~/constants';
 
@@ -124,6 +125,8 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
         customOverlay: overlay,
         danjiName: state.danjiName,
         jibunAddress: state.jibunAddress,
+        fullWon: convertCostToFullWon(state.cost),
+        time: state.time,
       });
 
       kakao.maps.event.addListener(marker, 'click', function () {

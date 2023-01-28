@@ -1,26 +1,32 @@
+import { FetchFilteredHouseDate } from '~/types/house';
+
 interface Overlay {
   customOverlay: any;
-  danjiName: string;
-  jibunAddress: string;
+  danjiName: FetchFilteredHouseDate['danjiName'];
+  jibunAddress: FetchFilteredHouseDate['jibunAddress'];
+  fullWon: string;
+  time: FetchFilteredHouseDate['time'];
 }
 
 export const makeOverlayContent = ({
   customOverlay,
   danjiName,
   jibunAddress,
+  fullWon,
+  time,
 }: Overlay) => {
   const containerEl = document.createElement('div');
-  containerEl.className = 'wrap';
+  containerEl.className = 'info__container';
 
   const wrapperEl = document.createElement('div');
-  wrapperEl.className = 'info';
+  wrapperEl.className = 'info__wrapper';
 
   const headerEl = document.createElement('div');
-  headerEl.className = 'title';
+  headerEl.className = 'info__title';
   headerEl.appendChild(document.createTextNode(danjiName));
 
   const closeButtonEl = document.createElement('div');
-  closeButtonEl.className = 'close';
+  closeButtonEl.className = 'info__close';
   closeButtonEl.title = '닫기';
   closeButtonEl.onclick = function () {
     customOverlay.setMap(null);
@@ -28,17 +34,21 @@ export const makeOverlayContent = ({
   headerEl.appendChild(closeButtonEl);
 
   const bodyEl = document.createElement('div');
-  bodyEl.className = 'body';
+  bodyEl.className = 'info__body';
 
-  bodyEl.innerHTML = `<div class="img"> 
-                    <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70"> 
-               </div> 
-                <div class="desc"> 
-                    <div class="ellipsis">${jibunAddress}</div> 
-                    <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div> 
-                    <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div> 
-                </div> 
-            </div>`;
+  bodyEl.innerHTML = `
+    <div class="info__text">${jibunAddress}</div>
+    <div class="info__detail">
+      <div class="info__header">
+        <div class="info__text">최근 실거래가 기준</div>
+        <div class="info__text">목적지와의 거리</div>
+      </div>
+      <div class="info__value">
+        <div class="info__highlight">${fullWon}</div>
+        <div class="info__highlight">${time}분</div>
+      </div>
+    </div>
+  `;
 
   wrapperEl.appendChild(headerEl);
   wrapperEl.appendChild(bodyEl);
