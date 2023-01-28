@@ -29,7 +29,7 @@ const StyledFooterWrapper = styled.footer`
 `;
 
 const StyledFooterButton = styled.button`
-  background: ${(props) => props.theme.color.green_light};
+  background: ${(props) => props.theme.color.button_select};
   width: 100px;
   height: 40px;
   font-size: 15px;
