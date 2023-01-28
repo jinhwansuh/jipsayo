@@ -10,8 +10,11 @@ import {
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Portal } from '~/components/common';
-import { FilterState, LocationState } from '~/types/house';
-import { PAGE_ROUTE } from '~/constants';
+import {
+  FilterPriceState,
+  FilterTimeState,
+  LocationState,
+} from '~/types/house';
 import FilterModalContent from './Content';
 import FilterModalFooter from './Footer';
 import FilterModalHeader from './Header';
@@ -29,22 +32,35 @@ const FilterModal = ({
 }: Props) => {
   const router = useRouter();
   const { pathname } = router;
-  const [filterState, setFilterState] = useState<FilterState>({
+  const [priceState, setPriceState] = useState<FilterPriceState>({
     minPrice: '0',
     maxPrice: '600000',
-    time: '',
+  });
+  const [timeState, setTimeState] = useState<FilterTimeState>({
+    time: '50',
   });
 
   const handleCloseClick = useCallback(() => {
     setFilterModalOpen(false);
   }, []);
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setFilterState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }, []);
+  const handlePriceInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setPriceState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    },
+    [],
+  );
+
+  const handleTimeInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setTimeState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    },
+    [],
+  );
 
   const handleFilterClick = useCallback(() => {
-    const { maxPrice, time } = filterState;
+    const { maxPrice, minPrice } = priceState;
+    const { time } = timeState;
 
     if (maxPrice && time) {
       router.push({
@@ -52,13 +68,13 @@ const FilterModal = ({
         query: {
           latitude: locationState.latitude,
           longitude: locationState.longitude,
-          cost: filterState.maxPrice,
-          time: filterState.time,
+          cost: maxPrice,
+          time: time,
         },
       });
       setFilterModalOpen(false);
     }
-  }, [locationState, filterState]);
+  }, [locationState, priceState, timeState]);
 
   return (
     <>
@@ -72,8 +88,10 @@ const FilterModal = ({
               <ModalWrapper>
                 <FilterModalHeader handleCloseClick={handleCloseClick} />
                 <FilterModalContent
-                  handleInputChange={handleInputChange}
-                  filterState={filterState}
+                  handlePriceInputChange={handlePriceInputChange}
+                  handleTimeInputChange={handleTimeInputChange}
+                  priceState={priceState}
+                  timeState={timeState}
                 />
                 <FilterModalFooter handleFilterClick={handleFilterClick} />
               </ModalWrapper>
