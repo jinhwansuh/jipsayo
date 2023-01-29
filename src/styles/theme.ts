@@ -7,6 +7,7 @@ const color = {
   button_select: '#BFD9FA',
   default_header: '#559FFF',
   blue_default: '#4983EF',
+  result_highlight_text: '#609FF2',
 } as const;
 
 const background = {
