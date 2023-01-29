@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { ErrorNoResultData } from '~/components/Error';
 import { NextHead } from '~/components/common';
 import { HasHouseData } from '~/components/result';
 import { houseStateSelector } from '~/atoms/house';
@@ -42,14 +43,7 @@ const ResearchResultPage = () => {
         ) : null}
 
         {/* 데이터가 없을 때 */}
-        {hasNoData && (
-          <>
-            <div>잘못된 접근입니다. </div>
-            <button onClick={handlePushPrevPage}>
-              먼저 데이터를 입력해주세요!
-            </button>
-          </>
-        )}
+        {hasNoData && <ErrorNoResultData />}
       </StyledContainer>
     </>
   );
