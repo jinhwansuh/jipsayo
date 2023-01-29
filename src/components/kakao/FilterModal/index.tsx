@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Portal } from '~/components/common';
 import {
+  FetchFilterRequest,
   FilterPriceState,
   FilterTimeState,
   LocationState,
@@ -61,14 +62,22 @@ const FilterModal = ({
   const handleFilterClick = useCallback(() => {
     const { maxPrice, minPrice } = priceState;
     const { time } = timeState;
+    const queryString: FetchFilterRequest = {
+      latitude: String(locationState.latitude),
+      longitude: String(locationState.longitude),
+      lowCost: minPrice,
+      highCost: maxPrice,
+      time: time,
+    };
 
     if (maxPrice && time) {
       router.push({
         pathname: pathname,
         query: {
-          latitude: locationState.latitude,
-          longitude: locationState.longitude,
-          cost: maxPrice,
+          latitude: queryString.latitude,
+          longitude: queryString.longitude,
+          lowCost: queryString.lowCost,
+          highCost: queryString.highCost,
           time: time,
         },
       });
