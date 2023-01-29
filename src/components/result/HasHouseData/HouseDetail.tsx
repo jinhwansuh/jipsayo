@@ -60,7 +60,9 @@ const StyledTitleWrapper = styled.div`
   padding-top: 10px;
 `;
 
-const StyledDanji = styled.div``;
+const StyledDanji = styled.div`
+  overflow-wrap: anywhere;
+`;
 const StyledDanjiText = styled.div`
   font-weight: 800;
   font-size: 28px;
