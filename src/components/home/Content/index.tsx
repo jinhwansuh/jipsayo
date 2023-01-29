@@ -18,12 +18,14 @@ const Content = ({ title, pageTo, imageSrc, children }: Props) => {
           <div>{title}</div>
         </StyledTitleWrapper>
 
-        <NextImage
-          imageSrc={imageSrc}
-          alt={'content image'}
-          width={'280px'}
-          height={'170px'}
-        />
+        <StyledImageWrapper>
+          <NextImage
+            imageSrc={imageSrc}
+            alt={'content image'}
+            width={'280px'}
+            height={'170px'}
+          />
+        </StyledImageWrapper>
 
         <StyledStoryWrapper>
           <StyledStory>{children}</StyledStory>
@@ -44,8 +46,13 @@ const StyledContainer = styled.section`
   height: 450px;
   background: ${(props) => props.theme.color.main_content_background};
   color: #ffffff;
-  border-radius: 30px;
   padding: 15px 25px;
+  &:first-child {
+    border-radius: 20px 20px 0 0;
+  }
+  &:last-child {
+    border-radius: 0 0 20px 20px;
+  }
 `;
 
 const StyledWrapper = styled.div`
@@ -63,11 +70,17 @@ const StyledTitleWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
+const StyledImageWrapper = styled.div`
+  filter: drop-shadow(3px 4px 4px rgba(0, 0, 0, 0.25));
+  color: transparent;
+`;
+
 const StyledStoryWrapper = styled.div`
   font-weight: 500;
   font-size: 20px;
   line-height: 22px;
   margin-top: 20px;
+  padding: 0 10px;
 `;
 const StyledStory = styled.div``;
 
