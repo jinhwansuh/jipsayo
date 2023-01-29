@@ -4,7 +4,7 @@ const color = {
   green: 'rgba(8, 113, 75, 1)',
   green_light: 'rgba(8, 113, 75, 0.3)',
   main_content_background: '#559FFF',
-  button_select: '#BFD9FA',
+  button_select: '#559FFF',
   default_header: '#559FFF',
   blue_default: '#4983EF',
   result_highlight_text: '#609FF2',
