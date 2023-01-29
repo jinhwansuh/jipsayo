@@ -8,6 +8,7 @@ interface Props {
   type?: string;
   name: string;
   placeholder?: string;
+  value: string;
 }
 
 const EstimateInput = ({
@@ -16,6 +17,7 @@ const EstimateInput = ({
   type = 'number',
   tag,
   name,
+  value,
   placeholder,
 }: Props) => {
   return (
@@ -29,6 +31,7 @@ const EstimateInput = ({
           pattern='\\d*'
           inputMode='decimal'
           placeholder={placeholder}
+          value={value}
         />
         <StyledTag>{tag}</StyledTag>
       </StyledInputWrapper>
