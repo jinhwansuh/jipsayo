@@ -9,9 +9,16 @@ interface Props {
   pageTo: ValueOf<typeof PAGE_ROUTE>;
   imageSrc: string;
   children: ReactNode;
+  imagePriority?: boolean;
 }
 
-const Content = ({ title, pageTo, imageSrc, children }: Props) => {
+const Content = ({
+  title,
+  pageTo,
+  imageSrc,
+  imagePriority,
+  children,
+}: Props) => {
   return (
     <StyledContainer>
       <StyledWrapper>
@@ -25,6 +32,7 @@ const Content = ({ title, pageTo, imageSrc, children }: Props) => {
             alt={'content image'}
             width={'280px'}
             height={'170px'}
+            priority={imagePriority}
           />
         </StyledImageWrapper>
 

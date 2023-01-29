@@ -1,17 +1,29 @@
 import styled from 'styled-components';
-import { Content, Title } from '~/components/home';
+import { NextImage } from '~/components/common';
+import { Content } from '~/components/home';
 import { PAGE_ROUTE } from '~/constants';
 
 export default function Home() {
   return (
     <>
-      <Title />
+      <StyledTitleWrapper>
+        <StyledTitle>집사기 위한 최고의 서비스</StyledTitle>
+
+        <NextImage
+          imageSrc={'/image/logo.PNG'}
+          alt='logo'
+          width={'120px'}
+          height={'70px'}
+          priority={true}
+        />
+      </StyledTitleWrapper>
 
       <StyledContentWrapper>
         <Content
           title='집값을 계산하세요'
           pageTo={PAGE_ROUTE.RESEARCH_FIRST}
           imageSrc={'/image/result.png'}
+          imagePriority={true}
         >
           내 연봉으로 원하는 집을 언제쯤 살 수 있을지 테스트 해보세요!
         </Content>
@@ -28,6 +40,19 @@ export default function Home() {
   );
 }
 
-const StyledContentWrapper = styled.div``;
+const StyledTitleWrapper = styled.div`
+  width: 100%;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-// /image/result.png
+const StyledTitle = styled.div`
+  width: 220px;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 36px;
+`;
+
+const StyledContentWrapper = styled.div``;
