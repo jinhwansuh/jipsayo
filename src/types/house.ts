@@ -43,7 +43,8 @@ export interface HouseData extends FetchHouseData {
 export interface FetchFilterRequest {
   latitude: string;
   longitude: string;
-  cost: string;
+  lowCost: string;
+  highCost: string;
   time: string;
 }
 
