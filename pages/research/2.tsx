@@ -1,11 +1,15 @@
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import { promises } from 'fs';
 import { isEmpty } from 'lodash-es';
+import path from 'path';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { DaumPostFrame, NextHead } from '~/components/common';
+import { prefetchedHouse } from '~/types/research';
 import { getHouse } from '~/api/house';
 import { postResearch } from '~/api/research';
 import { fetchHouseStateAtom } from '~/atoms/house';
@@ -20,8 +24,13 @@ const DynamicSearchAddress = dynamic(
   },
 );
 
-const ResearchSecondPage = () => {
+const ResearchSecondPage = ({
+  highEnd,
+  bigName,
+  spacious,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const searchFrameRef = useRef<HTMLDivElement>(null);
   const [hasPrevData, setHasPrevData] = useState(false);
   const {
@@ -47,6 +56,7 @@ const ResearchSecondPage = () => {
   useEffect(() => {
     if (pageRecoilState.first) {
       setHasPrevData(true);
+      setIsLoading(false);
       return;
     }
 
@@ -119,12 +129,15 @@ const ResearchSecondPage = () => {
 
         {/*데이터 fetching중  */}
         {isFetching && <div>데이터 fetching중 입니다.</div>}
-
         {/* 받아온 데이터가 없을 때 */}
         {isNoData && <div>데이터가 없습니다.</div>}
-
         {/* 서버에러가 발생했을 때 */}
         {isError && <div>서버와 통신 에러입니다.</div>}
+
+        {!isLoading &&
+          highEnd.data.map((ap, index) => (
+            <div key={index}>{ap.danjiName}</div>
+          ))}
       </StyledContainer>
     </>
   );
@@ -140,5 +153,37 @@ const StyledContainer = styled.div`
 const StyledTransitions = styled(Transitions)`
   height: auto !important;
 `;
+
+// local json파일을 promise로 읽기 위한 함수
+const fetchLocalJSONFile = async (src: string) => {
+  const filePath = path.join(process.cwd(), src);
+  const jsonData = await promises.readFile(filePath);
+  return jsonData.toString();
+};
+
+export const getStaticProps: GetStaticProps<{
+  highEnd: prefetchedHouse;
+  bigName: prefetchedHouse;
+  spacious: prefetchedHouse;
+}> = async () => {
+  const highEndJSON = await fetchLocalJSONFile('/src/utils/data/highEnd.json');
+  const bigNameJSON = await fetchLocalJSONFile('/src/utils/data/bigName.json');
+  const spaciousJSON = await fetchLocalJSONFile(
+    '/src/utils/data/spacious.json',
+  );
+
+  const highEnd = JSON.parse(highEndJSON.toString());
+  const bigName = JSON.parse(bigNameJSON.toString());
+  const spacious = JSON.parse(spaciousJSON.toString());
+
+  return {
+    props: {
+      highEnd: highEnd,
+      bigName: bigName,
+      spacious: spacious,
+    },
+    revalidate: 60 * 30,
+  };
+};
 
 export default ResearchSecondPage;
