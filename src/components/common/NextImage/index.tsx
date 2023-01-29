@@ -6,12 +6,13 @@ interface Props {
   alt: string;
   width?: string | number;
   height?: string | number;
+  priority?: boolean;
 }
 
-const NextImage = ({ imageSrc, alt, ...props }: Props) => {
+const NextImage = ({ imageSrc, alt, priority, ...props }: Props) => {
   return (
     <StyledImageWrapper {...props}>
-      <Image src={imageSrc} alt={alt} fill={true} />
+      <Image src={imageSrc} alt={alt} fill={true} priority={priority} />
     </StyledImageWrapper>
   );
 };
