@@ -1,0 +1,9 @@
+{
+  "data": [
+    {"roadAddress": "서울 강남구 압구정로79길 88", "danjiName" : "PH129"},
+    {"roadAddress": "서울 서초구 명달로 97-14", "danjiName" : "트라움하우스3"},
+    {"roadAddress": "서울 서초구 동광로27길 15", "danjiName" : "방배롯데캐슬오스카"},
+    {"roadAddress": "서울 용산구 한남대로10길 16", "danjiName" : "르가든더메인한남"},
+    {"roadAddress": "서울 성동구 왕십리로 83-21", "danjiName" : "아크로 서울포레스트"}
+  ]
+}
