@@ -1,6 +1,5 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { Remixicon } from '~/components/common';
 import { FilterPriceState } from '~/types/house';
 import { calculateCostToWon } from '~/utils/functions/house';
 
@@ -48,6 +47,7 @@ const MultiRangeSlider = ({
       setMinState(value);
       setLeftProgress(percent);
       setPriceState((prev) => ({ ...prev, left: calculateCostToWon(value) }));
+      handleInputChange(e);
     },
     [maxState],
   );
@@ -75,7 +75,6 @@ const MultiRangeSlider = ({
       </StyledRangeWrapper>
 
       <StyledInputWrapper>
-        {/* 현재 버전은 최소값 수정 불가능 */}
         <StyledMinInput
           type='range'
           name={minName}
@@ -84,7 +83,6 @@ const MultiRangeSlider = ({
           value={minState}
           onChange={handleMinInputChange}
           step={step}
-          disabled={true}
         />
         <StyledMaxInput
           type='range'
@@ -98,10 +96,7 @@ const MultiRangeSlider = ({
       </StyledInputWrapper>
 
       <StyledStateWrapper>
-        <StyledState>
-          {priceState.left}
-          <Remixicon iconName='ri-forbid-line' size='100%' color='red' />
-        </StyledState>
+        <StyledState>{priceState.left}</StyledState>
         <StyledState>{priceState.right}</StyledState>
       </StyledStateWrapper>
     </StyledContainer>
@@ -166,11 +161,7 @@ const StyledMaxInput = styled.input`
   }
 `;
 
-const StyledMinInput = styled(StyledMaxInput)`
-  &::-webkit-slider-thumb {
-    background-color: #bbb;
-  }
-`;
+const StyledMinInput = styled(StyledMaxInput)``;
 
 const StyledStateWrapper = styled.div`
   display: flex;
