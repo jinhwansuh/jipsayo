@@ -16,12 +16,13 @@ export const getHouse = (data: FetchHouseRequest) => {
 };
 
 export const getFilteredHouses = (data: FetchFilterRequest) => {
-  const { latitude, longitude, cost, time } = data;
+  const { latitude, longitude, lowCost, highCost, time } = data;
   return axiosInstance.get<FetchFilteredResponse>('/api/v1/houses/filter', {
     params: {
       latitude,
       longitude,
-      cost,
+      lowCost,
+      highCost,
       time,
       count: 500,
     },

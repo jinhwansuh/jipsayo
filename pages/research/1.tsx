@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useCallback, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
@@ -32,6 +32,10 @@ const ResearchFirstPage = () => {
     }
   };
 
+  const handleInputClick = useCallback((e: FocusEvent<HTMLInputElement>) => {
+    setInputState((prev) => ({ ...prev, [e.target.name]: '' }));
+  }, []);
+
   return (
     <>
       <NextHead title='자산 입력' />
@@ -44,21 +48,27 @@ const ResearchFirstPage = () => {
               title={'보유 현금'}
               tag={'만원'}
               name={'cash'}
-              placeholder={'4000'}
+              placeholder={'5000'}
+              value={inputState.cash}
+              onFocus={handleInputClick}
             />
             <EstimateInput
               handleInputChange={handleInputChange}
               title={'한달 저축 가능 금액'}
               tag={'만원'}
               name={'saving'}
-              placeholder={'200'}
+              placeholder={'250'}
+              value={inputState.saving}
+              onFocus={handleInputClick}
             />
             <EstimateInput
               handleInputChange={handleInputChange}
               title={'연봉 인상률 (%)'}
               tag={'%'}
               name={'rate'}
-              placeholder={'5.5'}
+              placeholder={'4'}
+              value={inputState.rate}
+              onFocus={handleInputClick}
             />
           </InputWrapper>
           {isError && <ErrorNoInputValue />}

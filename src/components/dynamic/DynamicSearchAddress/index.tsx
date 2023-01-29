@@ -10,7 +10,7 @@ const DynamicSearchAddress = ({ frameOpenClick, addressState }: Props) => {
   return (
     <StyledInputWrapper onClick={frameOpenClick}>
       {addressState.userSelectedType === '' ? (
-        <StyledAlertText>주소 입력 ( ex, 압구정 현대아파트 )</StyledAlertText>
+        <StyledAlertText>주소 입력 ( e.g. 압구정 현대아파트 )</StyledAlertText>
       ) : addressState.userSelectedType === 'R' ? (
         <>
           <div>{addressState.roadAddress}</div>

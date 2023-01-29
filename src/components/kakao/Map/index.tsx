@@ -54,18 +54,8 @@ const KakaoMapContainer = () => {
     );
   };
 
-  const fetchFilterHouses = async ({
-    latitude,
-    longitude,
-    cost,
-    time,
-  }: FetchFilterRequest) => {
-    const { data } = await getFilteredHouses({
-      latitude,
-      longitude,
-      cost,
-      time,
-    });
+  const fetchFilterHouses = async (requestData: FetchFilterRequest) => {
+    const { data } = await getFilteredHouses(requestData);
     if (isNull(data.errors)) {
       // data.errors가 없다면 성공
       if (isEmpty(data.data)) {
@@ -96,7 +86,8 @@ const KakaoMapContainer = () => {
   useEffect(() => {
     const latitude = query['latitude'];
     const longitude = query['longitude'];
-    const cost = query['cost'];
+    const lowCost = query['lowCost'];
+    const highCost = query['highCost'];
     const time = query['time'];
 
     // 주소값만 바뀌었을 때,
@@ -111,10 +102,11 @@ const KakaoMapContainer = () => {
     if (
       isString(latitude) &&
       isString(longitude) &&
-      isString(cost) &&
+      isString(lowCost) &&
+      isString(highCost) &&
       isString(time)
     ) {
-      fetchFilterHouses({ latitude, longitude, cost, time });
+      fetchFilterHouses({ latitude, longitude, lowCost, highCost, time });
     }
   }, [query]);
 

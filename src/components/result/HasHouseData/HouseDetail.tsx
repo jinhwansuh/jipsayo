@@ -27,7 +27,7 @@ const HouseDetail = ({ houseState }: Props) => {
         </StyledDanji>
         <StyledSub>
           <StyledDedicatedArea>{`${dedicatedArea}m2`}</StyledDedicatedArea>
-          <div>{dealDay}</div>
+          <div style={{ whiteSpace: 'nowrap' }}>{dealDay}(거래)</div>
         </StyledSub>
       </StyledTitleWrapper>
 
@@ -50,7 +50,7 @@ const HouseDetail = ({ houseState }: Props) => {
 
 const StyledContainer = styled.div`
   width: 100%;
-  height: 220px;
+  min-height: 220px;
   font-size: 15px;
 `;
 
@@ -60,17 +60,21 @@ const StyledTitleWrapper = styled.div`
   padding-top: 10px;
 `;
 
-const StyledDanji = styled.div``;
+const StyledDanji = styled.div`
+  overflow-wrap: anywhere;
+`;
 const StyledDanjiText = styled.div`
   font-weight: 800;
   font-size: 28px;
 `;
 
-const StyledSub = styled.div``;
+const StyledSub = styled.div`
+  text-align: -webkit-right;
+`;
 const StyledDedicatedArea = styled.div`
   width: 86px;
   height: 30px;
-  background: ${(props) => props.theme.color.blue_default};
+  background: ${(props) => props.theme.color.main_content_background};
   color: #ffffff;
   display: flex;
   justify-content: center;
@@ -86,7 +90,7 @@ const StyledHighlightText = styled.span`
   font-weight: 700;
   font-size: 28px;
   line-height: 30px;
-  color: ${(props) => props.theme.color.blue_default};
+  color: ${(props) => props.theme.color.result_highlight_text};
 `;
 
 export default HouseDetail;

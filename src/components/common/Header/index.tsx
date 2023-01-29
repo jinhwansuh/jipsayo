@@ -27,6 +27,7 @@ const Container = styled.header`
 
 const HeaderText = styled.div`
   font-size: 20px;
+  color: #ffffff;
   cursor: pointer;
 `;
 

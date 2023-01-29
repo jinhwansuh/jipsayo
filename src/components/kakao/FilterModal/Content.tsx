@@ -1,8 +1,7 @@
 import { ChangeEvent } from 'react';
 import styled from 'styled-components';
+import { MultiRangeSlider, SingleRangeSlider } from '~/components/kakao';
 import { FilterPriceState, FilterTimeState } from '~/types/house';
-import MultiRangeSlider from '../MultiRangeSlider';
-import SingleRangeSlider from '../SingleRangeSlider';
 
 interface Props {
   handlePriceInputChange: (e: ChangeEvent<HTMLInputElement>) => void;

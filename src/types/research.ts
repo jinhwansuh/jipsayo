@@ -59,3 +59,11 @@ export interface PostResearchRequest {
 export interface PostResearchResponse {
   id: number;
 }
+export type PrefetchedHouse = {
+  roadAddress: string;
+  danjiName: string;
+};
+
+export interface PrefetchedHouseResponse {
+  data: PrefetchedHouse[];
+}
