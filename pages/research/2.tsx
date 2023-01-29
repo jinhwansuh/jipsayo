@@ -1,15 +1,16 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { promises } from 'fs';
-import { isEmpty } from 'lodash-es';
+import { isEmpty, sampleSize } from 'lodash-es';
 import path from 'path';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { DaumPostFrame, NextHead } from '~/components/common';
-import { prefetchedHouse } from '~/types/research';
+import { ReferenceContent } from '~/components/research';
+import { PrefetchedHouse, PrefetchedHouseResponse } from '~/types/research';
 import { getHouse } from '~/api/house';
 import { postResearch } from '~/api/research';
 import { fetchHouseStateAtom } from '~/atoms/house';
@@ -52,6 +53,12 @@ const ResearchSecondPage = ({
   const [isError, setIsError] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const setHouseRecoilState = useSetRecoilState(fetchHouseStateAtom);
+  const randomBigName = useMemo(() => {
+    return sampleSize(bigName.data, 3);
+  }, []);
+  const randomSpacious = useMemo(() => {
+    return sampleSize(spacious.data, 3);
+  }, []);
 
   useEffect(() => {
     if (pageRecoilState.first) {
@@ -62,6 +69,47 @@ const ResearchSecondPage = ({
 
     router.replace(PAGE_ROUTE.RESEARCH_FIRST, undefined, { shallow: true });
   }, []);
+
+  useEffect(() => {
+    if (isComplete) {
+      setIsFetching(true);
+      handleFetchData();
+      setIsFetching(false);
+    }
+  }, [isComplete]);
+
+  const handleHouseClick = useCallback(
+    async ({ danjiName, roadAddress }: PrefetchedHouse) => {
+      const { cash, saving, rate } = researchRecoilState;
+      try {
+        await postResearch({
+          savedMoney: +cash,
+          moneyPerMonth: +saving,
+          jibunAddress: roadAddress,
+          increaseRate: +rate,
+        });
+
+        const { data } = await getHouse({
+          roadAddress: roadAddress,
+          danjiName: danjiName,
+        });
+        if (isEmpty(data.data)) {
+          setIsNoData(true);
+        } else {
+          setIsNoData(false);
+          setHouseRecoilState({
+            ...data.data,
+          });
+          setPageRecoilState((prev) => ({ ...prev, second: true }));
+          router.push(PAGE_ROUTE.RESULT);
+        }
+        setIsError(false);
+      } catch {
+        setIsError(true);
+      }
+    },
+    [researchRecoilState],
+  );
 
   const handleFetchData = async () => {
     // 유저가 주소를 선택을 했을 때
@@ -83,29 +131,21 @@ const ResearchSecondPage = ({
           danjiName: buildingName,
         });
         if (isEmpty(data.data)) {
-          setIsNoData(() => true);
+          setIsNoData(true);
         } else {
-          setIsNoData(() => false);
-          setHouseRecoilState(() => ({
+          setIsNoData(false);
+          setHouseRecoilState({
             ...data.data,
-          }));
+          });
           setPageRecoilState((prev) => ({ ...prev, second: true }));
           router.push(PAGE_ROUTE.RESULT);
         }
-        setIsError(() => false);
+        setIsError(false);
       } catch {
-        setIsError(() => true);
+        setIsError(true);
       }
     }
   };
-
-  useEffect(() => {
-    if (isComplete) {
-      setIsFetching(() => true);
-      handleFetchData();
-      setIsFetching(() => false);
-    }
-  }, [isComplete]);
 
   return (
     <>
@@ -134,10 +174,25 @@ const ResearchSecondPage = ({
         {/* 서버에러가 발생했을 때 */}
         {isError && <div>서버와 통신 에러입니다.</div>}
 
-        {!isLoading &&
-          highEnd.data.map((ap, index) => (
-            <div key={index}>{ap.danjiName}</div>
-          ))}
+        {!isLoading && (
+          <div>
+            <ReferenceContent
+              title='하이엔드 아파트'
+              apartment={highEnd.data}
+              handleHouseClick={handleHouseClick}
+            />
+            <ReferenceContent
+              title='넓은 평수의 아파트'
+              apartment={randomSpacious}
+              handleHouseClick={handleHouseClick}
+            />
+            <ReferenceContent
+              title='지역 브랜드 아파트'
+              apartment={randomBigName}
+              handleHouseClick={handleHouseClick}
+            />
+          </div>
+        )}
       </StyledContainer>
     </>
   );
@@ -162,9 +217,9 @@ const fetchLocalJSONFile = async (src: string) => {
 };
 
 export const getStaticProps: GetStaticProps<{
-  highEnd: prefetchedHouse;
-  bigName: prefetchedHouse;
-  spacious: prefetchedHouse;
+  highEnd: PrefetchedHouseResponse;
+  bigName: PrefetchedHouseResponse;
+  spacious: PrefetchedHouseResponse;
 }> = async () => {
   const highEndJSON = await fetchLocalJSONFile('/src/utils/data/highEnd.json');
   const bigNameJSON = await fetchLocalJSONFile('/src/utils/data/bigName.json');
