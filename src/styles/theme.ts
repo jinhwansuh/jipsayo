@@ -5,7 +5,7 @@ const color = {
   green_light: 'rgba(8, 113, 75, 0.3)',
   main_content_background: '#4983EF',
   button_select: '#BFD9FA',
-  default_header: 'rgba(73, 131, 239, 0.7)',
+  default_header: '#559FFF',
   blue_default: '#4983EF',
 } as const;
 
@@ -27,7 +27,7 @@ const padding = {
 } as const;
 
 const width = {
-  default_global_width: '700px',
+  default_global_width: '600px',
 } as const;
 
 const height = {
