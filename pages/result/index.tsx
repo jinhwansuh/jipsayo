@@ -29,7 +29,10 @@ const ResearchResultPage = () => {
       <NextHead title='결과' />
       <StyledContainer>
         {houseRecoilState.cost ? (
-          <HasHouseData houseState={houseRecoilState} />
+          <HasHouseData
+            houseState={houseRecoilState}
+            handleButtonClick={handlePushPrevPage}
+          />
         ) : houseRecoilState.estimateTime === false ? (
           <div>
             축하합니다!!{' '}
@@ -53,6 +56,8 @@ const ResearchResultPage = () => {
 };
 
 const StyledContainer = styled.div`
+  width: 100%;
+  height: 100%;
   padding: 20px 20px;
 `;
 
