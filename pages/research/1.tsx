@@ -45,6 +45,7 @@ const ResearchFirstPage = () => {
               tag={'만원'}
               name={'cash'}
               placeholder={'4000'}
+              value={inputState.cash}
             />
             <EstimateInput
               handleInputChange={handleInputChange}
@@ -52,6 +53,7 @@ const ResearchFirstPage = () => {
               tag={'만원'}
               name={'saving'}
               placeholder={'200'}
+              value={inputState.saving}
             />
             <EstimateInput
               handleInputChange={handleInputChange}
@@ -59,6 +61,7 @@ const ResearchFirstPage = () => {
               tag={'%'}
               name={'rate'}
               placeholder={'5.5'}
+              value={inputState.rate}
             />
           </InputWrapper>
           {isError && <ErrorNoInputValue />}
