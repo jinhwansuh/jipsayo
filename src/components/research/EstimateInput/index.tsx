@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, FocusEvent } from 'react';
 import styled from 'styled-components';
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
   name: string;
   placeholder?: string;
   value: string;
+  onFocus: (e: FocusEvent<HTMLInputElement>) => void;
 }
 
 const EstimateInput = ({
@@ -19,6 +20,7 @@ const EstimateInput = ({
   name,
   value,
   placeholder,
+  onFocus,
 }: Props) => {
   return (
     <StyledInputContainer>
@@ -32,6 +34,7 @@ const EstimateInput = ({
           inputMode='decimal'
           placeholder={placeholder}
           value={value}
+          onFocus={onFocus}
         />
         <StyledTag>{tag}</StyledTag>
       </StyledInputWrapper>
