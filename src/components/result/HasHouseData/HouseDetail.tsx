@@ -27,7 +27,7 @@ const HouseDetail = ({ houseState }: Props) => {
         </StyledDanji>
         <StyledSub>
           <StyledDedicatedArea>{`${dedicatedArea}m2`}</StyledDedicatedArea>
-          <div>{dealDay}(거래)</div>
+          <div style={{ whiteSpace: 'nowrap' }}>{dealDay}(거래)</div>
         </StyledSub>
       </StyledTitleWrapper>
 
@@ -50,7 +50,7 @@ const HouseDetail = ({ houseState }: Props) => {
 
 const StyledContainer = styled.div`
   width: 100%;
-  height: 220px;
+  min-height: 220px;
   font-size: 15px;
 `;
 
