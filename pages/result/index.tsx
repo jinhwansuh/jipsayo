@@ -28,17 +28,17 @@ const ResearchResultPage = () => {
     <>
       <NextHead title='결과' />
       <StyledContainer>
-        {houseRecoilState.cost ? (
-          <HasHouseData
-            houseState={houseRecoilState}
-            handleButtonClick={handlePushPrevPage}
-          />
-        ) : houseRecoilState.estimateTime === false ? (
+        {houseRecoilState.estimateTime === false ? (
           <div>
             축하합니다!!{' '}
             <StyledMarkText>{houseRecoilState.danjiName}</StyledMarkText> 을
             현재 자산으로 살수 있어요!
           </div>
+        ) : houseRecoilState.cost ? (
+          <HasHouseData
+            houseState={houseRecoilState}
+            handleButtonClick={handlePushPrevPage}
+          />
         ) : null}
 
         {/* 데이터가 없을 때 */}
