@@ -20,7 +20,6 @@ const StyledButtonWrapper = styled.div<Pick<Props, 'rest'>>`
   justify-content: center;
   flex: ${(props) => (props.rest ? 1 : 0)};
   align-items: flex-end;
-  padding-bottom: 40px;
 `;
 
 export default Button;
