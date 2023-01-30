@@ -76,7 +76,7 @@ const ResearchFirstPage = () => {
             </InputWrapper>
             {isError && <ErrorNoInputValue />}
 
-            <Button
+            <StyledButton
               rest={true}
               content='다음으로'
               handleButtonClick={handleNextClick}
@@ -101,6 +101,10 @@ const InputWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 230px;
 `;
 
 export default ResearchFirstPage;
