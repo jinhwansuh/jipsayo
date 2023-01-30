@@ -237,7 +237,6 @@ export const getStaticProps: GetStaticProps<{
       bigName: bigName,
       spacious: spacious,
     },
-    revalidate: 60 * 30,
   };
 };
 
