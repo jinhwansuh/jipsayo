@@ -25,6 +25,7 @@ const StyledHouse = styled.div`
   border-radius: 20px;
   padding: 20px 15px;
   margin: 15px 0;
+  cursor: pointer;
 `;
 
 const StyledName = styled.div`
