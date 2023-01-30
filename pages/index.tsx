@@ -47,7 +47,7 @@ export default function Home() {
 
 const StyledTitleWrapper = styled.div`
   width: 100%;
-  height: 220px;
+  height: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
