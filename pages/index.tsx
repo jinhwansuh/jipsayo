@@ -20,12 +20,13 @@ export default function Home() {
 
       <StyledContentWrapper>
         <Content
-          title='집값을 계산하세요'
+          title='예상 기간을 조회하세요'
           pageTo={PAGE_ROUTE.RESEARCH_FIRST}
           imageSrc={'/image/result.png'}
           imagePriority={true}
         >
-          내 연봉으로 원하는 집을 언제쯤 살 수 있을지 테스트 해보세요!
+          내 자산과 한 달 저축 금액을 입력하여 원하는 집을 언제쯤 살 수 있을지
+          테스트해 보세요!
         </Content>
 
         <Content
