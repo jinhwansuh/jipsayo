@@ -41,7 +41,7 @@ export const makeOverlayContent = ({
     <div class="info__detail">
       <div class="info__header">
         <div class="info__text">최근 실거래가 기준</div>
-        <div class="info__text">목적지와의 거리</div>
+        <div class="info__text">대중 교통</div>
       </div>
       <div class="info__value">
         <div class="info__highlight">${fullWon}</div>
