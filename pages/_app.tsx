@@ -8,7 +8,6 @@ import { GoogleAnalytics } from '~/components/common';
 import GlobalStyle from '~/styles/GlobalStyle';
 import theme from '~/styles/theme';
 import { defaultSEO } from '~/constants/seo';
-import { DefaultLayout } from '~/layouts';
 import '../src/styles/infoOverlay.css';
 
 export default function App({ Component, pageProps, router }: AppProps) {
@@ -19,11 +18,9 @@ export default function App({ Component, pageProps, router }: AppProps) {
       <RecoilRoot>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
-          <DefaultLayout>
-            <AnimatePresence mode='wait' initial={false}>
-              <Component {...pageProps} key={router.route} />
-            </AnimatePresence>
-          </DefaultLayout>
+          <AnimatePresence mode='wait' initial={false}>
+            <Component {...pageProps} key={router.route} />
+          </AnimatePresence>
         </ThemeProvider>
       </RecoilRoot>
     </>

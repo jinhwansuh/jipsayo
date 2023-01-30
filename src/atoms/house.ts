@@ -26,16 +26,16 @@ export const houseStateSelector = selector<HouseData>({
     const { cash, saving, rate } = researchRecoilState;
 
     const estimateTime = calculateEstimateTime({
-      budget: +cash,
-      saving: +saving,
-      rate: +rate,
+      budget: Number(cash),
+      saving: Number(saving),
+      rate: Number(rate),
       targetPrice: cost,
     });
     const won = calculateCostToWon(cost);
     const estimateTimeArray = calculateEstimateTimeArray({
-      budget: +cash,
-      saving: +saving,
-      rate: +rate,
+      budget: Number(cash),
+      saving: Number(saving),
+      rate: Number(rate),
       targetPrice: cost,
     });
 

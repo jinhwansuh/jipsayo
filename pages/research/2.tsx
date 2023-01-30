@@ -8,7 +8,7 @@ import path from 'path';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
-import { DaumPostFrame, NextHead } from '~/components/common';
+import { DaumPostFrame, Header, NextHead } from '~/components/common';
 import { ReferenceContent } from '~/components/research';
 import { PrefetchedHouse, PrefetchedHouseResponse } from '~/types/research';
 import { getHouse } from '~/api/house';
@@ -17,6 +17,7 @@ import { fetchHouseStateAtom } from '~/atoms/house';
 import { researchIndexStateAtom, researchStateAtom } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
 import { useDaumPost } from '~/hooks';
+import { Container } from '~/layouts';
 
 const DynamicSearchAddress = dynamic(
   () => import('~/components/dynamic/DynamicSearchAddress'),
@@ -150,50 +151,54 @@ const ResearchSecondPage = ({
   return (
     <>
       <NextHead title='주소 입력' />
-      <StyledContainer>
-        {hasPrevData && (
-          <StyledTransitions>
-            <DynamicSearchAddress
-              frameOpenClick={frameOpenClick}
-              addressState={addressState}
-            />
-          </StyledTransitions>
-        )}
-        <div style={{ margin: '5px 0' }}>
-          <DaumPostFrame
-            isOpen={isOpen}
-            searchFrameRef={searchFrameRef}
-            frameCloseClick={frameCloseClick}
-          />
-        </div>
 
-        {/*데이터 fetching중  */}
-        {isFetching && <div>데이터 fetching중 입니다.</div>}
-        {/* 받아온 데이터가 없을 때 */}
-        {isNoData && <div>데이터가 없습니다.</div>}
-        {/* 서버에러가 발생했을 때 */}
-        {isError && <div>서버와 통신 에러입니다.</div>}
-
-        {!isLoading && (
-          <div>
-            <ReferenceContent
-              title='하이엔드 아파트'
-              apartment={highEnd.data}
-              handleHouseClick={handleHouseClick}
-            />
-            <ReferenceContent
-              title='넓은 평수의 아파트'
-              apartment={randomSpacious}
-              handleHouseClick={handleHouseClick}
-            />
-            <ReferenceContent
-              title='지역 브랜드 아파트'
-              apartment={randomBigName}
-              handleHouseClick={handleHouseClick}
+      <Header backButton={true} pageTo={PAGE_ROUTE.RESEARCH_FIRST} />
+      <Container>
+        <StyledContainer>
+          {hasPrevData && (
+            <StyledTransitions>
+              <DynamicSearchAddress
+                frameOpenClick={frameOpenClick}
+                addressState={addressState}
+              />
+            </StyledTransitions>
+          )}
+          <div style={{ margin: '5px 0' }}>
+            <DaumPostFrame
+              isOpen={isOpen}
+              searchFrameRef={searchFrameRef}
+              frameCloseClick={frameCloseClick}
             />
           </div>
-        )}
-      </StyledContainer>
+
+          {/*데이터 fetching중  */}
+          {isFetching && <div>데이터 fetching중 입니다.</div>}
+          {/* 받아온 데이터가 없을 때 */}
+          {isNoData && <div>데이터가 없습니다.</div>}
+          {/* 서버에러가 발생했을 때 */}
+          {isError && <div>서버와 통신 에러입니다.</div>}
+
+          {!isLoading && (
+            <div>
+              <ReferenceContent
+                title='하이엔드 아파트'
+                apartment={highEnd.data}
+                handleHouseClick={handleHouseClick}
+              />
+              <ReferenceContent
+                title='넓은 평수의 아파트'
+                apartment={randomSpacious}
+                handleHouseClick={handleHouseClick}
+              />
+              <ReferenceContent
+                title='지역 브랜드 아파트'
+                apartment={randomBigName}
+                handleHouseClick={handleHouseClick}
+              />
+            </div>
+          )}
+        </StyledContainer>
+      </Container>
     </>
   );
 };
@@ -237,7 +242,6 @@ export const getStaticProps: GetStaticProps<{
       bigName: bigName,
       spacious: spacious,
     },
-    revalidate: 60 * 30,
   };
 };
 

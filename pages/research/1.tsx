@@ -4,11 +4,12 @@ import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { ErrorNoInputValue } from '~/components/Error';
-import { Button, NextHead } from '~/components/common';
+import { Button, Header, NextHead } from '~/components/common';
 import { EstimateInput } from '~/components/research';
 import { initialResearch } from '~/utils/house';
 import { researchIndexStateAtom, researchStateAtom } from '~/atoms/research';
 import { PAGE_ROUTE } from '~/constants';
+import { Container } from '~/layouts';
 
 const ResearchFirstPage = () => {
   const router = useRouter();
@@ -40,46 +41,49 @@ const ResearchFirstPage = () => {
     <>
       <NextHead title='자산 입력' />
 
-      <Transitions>
-        <StyledContainer>
-          <InputWrapper>
-            <EstimateInput
-              handleInputChange={handleInputChange}
-              title={'보유 현금'}
-              tag={'만원'}
-              name={'cash'}
-              placeholder={'5000'}
-              value={inputState.cash}
-              onFocus={handleInputClick}
-            />
-            <EstimateInput
-              handleInputChange={handleInputChange}
-              title={'한달 저축 가능 금액'}
-              tag={'만원'}
-              name={'saving'}
-              placeholder={'250'}
-              value={inputState.saving}
-              onFocus={handleInputClick}
-            />
-            <EstimateInput
-              handleInputChange={handleInputChange}
-              title={'연봉 인상률 (%)'}
-              tag={'%'}
-              name={'rate'}
-              placeholder={'4'}
-              value={inputState.rate}
-              onFocus={handleInputClick}
-            />
-          </InputWrapper>
-          {isError && <ErrorNoInputValue />}
+      <Header backButton={true} pageTo={PAGE_ROUTE.HOME} />
+      <Container>
+        <Transitions>
+          <StyledContainer>
+            <InputWrapper>
+              <EstimateInput
+                handleInputChange={handleInputChange}
+                title={'보유 현금'}
+                tag={'만원'}
+                name={'cash'}
+                placeholder={'5000'}
+                value={inputState.cash}
+                onFocus={handleInputClick}
+              />
+              <EstimateInput
+                handleInputChange={handleInputChange}
+                title={'한달 저축 가능 금액'}
+                tag={'만원'}
+                name={'saving'}
+                placeholder={'250'}
+                value={inputState.saving}
+                onFocus={handleInputClick}
+              />
+              <EstimateInput
+                handleInputChange={handleInputChange}
+                title={'연봉 인상률 (%)'}
+                tag={'%'}
+                name={'rate'}
+                placeholder={'4'}
+                value={inputState.rate}
+                onFocus={handleInputClick}
+              />
+            </InputWrapper>
+            {isError && <ErrorNoInputValue />}
 
-          <Button
-            rest={true}
-            content='다음으로'
-            handleButtonClick={handleNextClick}
-          />
-        </StyledContainer>
-      </Transitions>
+            <StyledButton
+              rest={true}
+              content='다음으로'
+              handleButtonClick={handleNextClick}
+            />
+          </StyledContainer>
+        </Transitions>
+      </Container>
     </>
   );
 };
@@ -97,6 +101,10 @@ const InputWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 230px;
 `;
 
 export default ResearchFirstPage;
