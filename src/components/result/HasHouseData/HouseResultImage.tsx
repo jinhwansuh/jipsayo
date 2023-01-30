@@ -1,11 +1,4 @@
-import Image from 'next/image';
 import styled from 'styled-components';
-
-const MOCK =
-  'https://images.unsplash.com/photo-1641913337604-7b040a87fc88?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80';
-
-// TODO: 추후 Image로 바꾸기
-// TODO: prop 연동
 
 interface Props {
   estimateYear: number;
@@ -14,6 +7,7 @@ interface Props {
 const HouseResultImage = ({ estimateYear }: Props) => {
   const imageIndex = Math.floor(estimateYear / 10);
   const futureAge = 30 + imageIndex * 10;
+  const imageSrc = futureAge > 200 ? 200 : futureAge;
 
   return (
     <StyledImageContainer>
@@ -22,7 +16,7 @@ const HouseResultImage = ({ estimateYear }: Props) => {
       </StyledTextWrapper>
       <StyledImageWrapper>
         <StyledImage
-          src={MOCK}
+          src={`${process.env.NEXT_PUBLIC_PICTURE_END_POINT}/age/${imageSrc}.jpg`}
           alt='result image'
           width={'100%'}
           height={'100%'}
