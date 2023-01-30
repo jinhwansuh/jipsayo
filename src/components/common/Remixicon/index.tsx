@@ -1,4 +1,5 @@
 // https://remixicon.com/
+import styled from 'styled-components';
 
 interface Props {
   iconName: string;
@@ -6,13 +7,17 @@ interface Props {
   color?: string;
 }
 
-const Remixicon = ({ iconName, size, color }: Props) => {
+const Remixicon = ({ iconName, size, color, ...props }: Props) => {
   return (
-    <i
-      className={`${iconName}`}
-      style={{ fontSize: `${size}`, color: color || 'black' }}
-    />
+    <StyledContainer {...props}>
+      <i
+        className={`${iconName}`}
+        style={{ fontSize: `${size}`, color: color || 'black' }}
+      />
+    </StyledContainer>
   );
 };
+
+const StyledContainer = styled.span``;
 
 export default Remixicon;
