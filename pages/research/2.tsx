@@ -29,7 +29,6 @@ const DynamicSearchAddress = dynamic(
 const ResearchSecondPage = ({
   highEnd,
   bigName,
-  spacious,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -54,11 +53,12 @@ const ResearchSecondPage = ({
   const [isError, setIsError] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const setHouseRecoilState = useSetRecoilState(fetchHouseStateAtom);
-  const randomBigName = useMemo(() => {
-    return sampleSize(bigName.data, 3);
+  const randomHighEnd = useMemo(() => {
+    return sampleSize(highEnd.data, 3);
   }, []);
-  const randomSpacious = useMemo(() => {
-    return sampleSize(spacious.data, 3);
+
+  const randomBigName = useMemo(() => {
+    return sampleSize(bigName.data, 4);
   }, []);
 
   useEffect(() => {
@@ -182,12 +182,7 @@ const ResearchSecondPage = ({
             <div>
               <ReferenceContent
                 title='하이엔드 아파트'
-                apartment={highEnd.data}
-                handleHouseClick={handleHouseClick}
-              />
-              <ReferenceContent
-                title='넓은 평수의 아파트'
-                apartment={randomSpacious}
+                apartment={randomHighEnd}
                 handleHouseClick={handleHouseClick}
               />
               <ReferenceContent
@@ -224,23 +219,17 @@ const fetchLocalJSONFile = async (src: string) => {
 export const getStaticProps: GetStaticProps<{
   highEnd: PrefetchedHouseResponse;
   bigName: PrefetchedHouseResponse;
-  spacious: PrefetchedHouseResponse;
 }> = async () => {
   const highEndJSON = await fetchLocalJSONFile('/src/utils/data/highEnd.json');
   const bigNameJSON = await fetchLocalJSONFile('/src/utils/data/bigName.json');
-  const spaciousJSON = await fetchLocalJSONFile(
-    '/src/utils/data/spacious.json',
-  );
 
   const highEnd = JSON.parse(highEndJSON.toString());
   const bigName = JSON.parse(bigNameJSON.toString());
-  const spacious = JSON.parse(spaciousJSON.toString());
 
   return {
     props: {
       highEnd: highEnd,
       bigName: bigName,
-      spacious: spacious,
     },
   };
 };
