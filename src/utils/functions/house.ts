@@ -16,7 +16,7 @@ export const calculateEstimateTimeArray = ({
     if (yearMoney <= target) {
       target -= yearMoney;
       nextSaving *= (100 + rate) / 100;
-      yearMoney = nextSaving * 12;
+      yearMoney = year < 23 ? nextSaving * 12 : yearMoney;
       year++;
     } else {
       month = Math.ceil(target / nextSaving);
