@@ -72,3 +72,11 @@ export interface FilterPriceState {
 export interface FilterTimeState {
   time: string;
 }
+
+export type FilterChangePriceStateFn = ({
+  name,
+  value,
+}: {
+  name: string;
+  value: string;
+}) => void;

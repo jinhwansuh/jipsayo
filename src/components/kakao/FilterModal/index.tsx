@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { Portal } from '~/components/common';
 import {
   FetchFilterRequest,
+  FilterChangePriceStateFn,
   FilterPriceState,
   FilterTimeState,
   LocationState,
@@ -45,9 +46,9 @@ const FilterModal = ({
     setFilterModalOpen(false);
   }, []);
 
-  const handlePriceInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setPriceState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handlePriceInputChange: FilterChangePriceStateFn = useCallback(
+    ({ name, value }) => {
+      setPriceState((prev) => ({ ...prev, [name]: value }));
     },
     [],
   );
