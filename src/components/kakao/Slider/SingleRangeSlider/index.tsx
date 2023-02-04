@@ -14,15 +14,10 @@ interface Props {
   maxValue: number;
   step: number;
   timeState: FilterTimeState;
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SingleRangeSlider = ({
-  maxValue,
-  step,
-  timeState,
-  handleInputChange,
-}: Props) => {
+const SingleRangeSlider = ({ maxValue, step, timeState, onChange }: Props) => {
   const [valueState, setValueState] = useState(Number(timeState.time));
   const [rightProgress, setRightProgress] = useState(
     100 - (valueState / maxValue) * 100,
@@ -34,7 +29,7 @@ const SingleRangeSlider = ({
       const percent = 100 - (value / maxValue) * 100;
       setValueState(value);
       setRightProgress(percent);
-      handleInputChange(e);
+      onChange(e);
     },
     [],
   );

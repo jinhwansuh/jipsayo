@@ -42,7 +42,7 @@ const FilterModalContent = ({
           maxValue={120}
           step={2}
           timeState={timeState}
-          handleInputChange={handleTimeInputChange}
+          onChange={handleTimeInputChange}
         />
       </StyledContentWrapper>
     </StyledContentContainer>
