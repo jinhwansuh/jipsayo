@@ -116,6 +116,12 @@ const KakaoMap = ({ locationState, filteredHouseState }: Props) => {
 
       setMarkers((prev) => [...prev, marker]);
 
+      setClickedMarker((prevInfoOverlay: any) => {
+        // 이전 open된 값이 있다면 close
+        if (prevInfoOverlay) prevInfoOverlay.setMap(null);
+        return overlay;
+      });
+
       const overlay = new kakao.maps.CustomOverlay({
         position: marker.getPosition(),
         clickable: true,
