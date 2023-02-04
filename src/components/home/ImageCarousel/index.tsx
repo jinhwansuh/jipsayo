@@ -1,56 +1,48 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { Pagination, AutoPlay } from '@egjs/flicking-plugins';
+import '@egjs/flicking-plugins/dist/pagination.css';
+import Flicking, { ViewportSlot } from '@egjs/react-flicking';
+import '@egjs/react-flicking/dist/flicking.css';
 import styled from 'styled-components';
-import { houseImageData } from '~/utils/house';
+import { HOME_IMAGES } from '~/constants';
 
-const variants = {
-  initial: {
-    x: 200,
-    opacity: 0,
-  },
-  animate: {
-    x: 0,
-    opacity: 1,
-  },
-  exit: {
-    x: -200,
-    opacity: 0,
-  },
-};
+const plugins = [
+  new Pagination({ type: 'bullet' }),
+  new AutoPlay({ duration: 3000, direction: 'NEXT', stopOnHover: false }),
+];
 
 const ImageCarousel = () => {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      let nextIndex = index + 1;
-      if (nextIndex >= houseImageData.length) nextIndex = 0;
-      setIndex(() => nextIndex);
-    }, 6000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, [index]);
+  const router = useRouter();
 
   return (
-    <StyledImageWrapper>
-      <motion.img
-        key={index}
-        variants={variants}
-        animate='animate'
-        initial='initial'
-        exit='exit'
-        src={houseImageData[index]}
-        alt='image'
-        width={'100%'}
-        height={500}
-      />
-    </StyledImageWrapper>
+    <StyledImageContainer>
+      <Flicking circular={true} plugins={plugins}>
+        {HOME_IMAGES.map((image, index) => (
+          <StyledImage
+            key={index}
+            src={image.imageSrc}
+            alt='main image'
+            onClick={() => router.push(image.pathTo)}
+          />
+        ))}
+        <ViewportSlot>
+          <div className='flicking-pagination' />
+        </ViewportSlot>
+      </Flicking>
+    </StyledImageContainer>
   );
 };
 
-const StyledImageWrapper = styled.div`
-  display: flex;
+const StyledImageContainer = styled.div`
+  position: relative;
+  overflow-x: hidden;
+  height: 250px;
+`;
+
+const StyledImage = styled.img`
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
 `;
 
 export default ImageCarousel;
