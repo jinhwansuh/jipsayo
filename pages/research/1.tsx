@@ -51,7 +51,7 @@ const ResearchFirstPage = () => {
                 title={'보유 현금'}
                 tag={'만원'}
                 name={'cash'}
-                placeholder={'5000'}
+                placeholder={'6000'}
                 value={inputState.cash}
                 onFocus={handleInputClick}
               />
@@ -60,7 +60,7 @@ const ResearchFirstPage = () => {
                 title={'한달 저축 가능 금액'}
                 tag={'만원'}
                 name={'saving'}
-                placeholder={'250'}
+                placeholder={'200'}
                 value={inputState.saving}
                 onFocus={handleInputClick}
               />
@@ -69,7 +69,7 @@ const ResearchFirstPage = () => {
                 title={'연봉 인상률 (%)'}
                 tag={'%'}
                 name={'rate'}
-                placeholder={'4'}
+                placeholder={'3.7'}
                 value={inputState.rate}
                 onFocus={handleInputClick}
               />
