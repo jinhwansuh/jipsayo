@@ -23,7 +23,10 @@ const ResearchFirstPage = () => {
   };
 
   const handleNextClick = () => {
-    if (inputState.cash && inputState.rate && inputState.saving) {
+    const cash = inputState.cash;
+    const rate = inputState.rate;
+    const saving = inputState.saving;
+    if (Number(cash) > 0 && Number(rate) > 0 && Number(saving) > 0) {
       setIsError(() => false);
       setResearchRecoilState((prev) => ({ ...prev, ...inputState }));
       setResearchIndex((prev) => ({ ...prev, first: true }));
