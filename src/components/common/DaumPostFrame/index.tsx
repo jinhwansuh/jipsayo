@@ -40,7 +40,7 @@ const StyledFrameWrapper = styled.div`
   min-height: 400px;
   max-height: 500px;
   @media screen and (max-width: 500px) {
-    width: 90%;
+    width: 100%;
   }
 `;
 
