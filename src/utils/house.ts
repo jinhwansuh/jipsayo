@@ -13,8 +13,8 @@ export const initialAddress = {
 
 export const initialResearch = {
   cash: '4000',
-  saving: '200',
-  rate: '5.5',
+  saving: '150',
+  rate: '3.1',
 };
 
 export const initialHouseData: HouseData = {

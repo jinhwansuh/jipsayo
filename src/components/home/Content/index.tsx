@@ -48,10 +48,9 @@ const Content = ({
 
 const StyledContainer = styled.section`
   width: 100%;
-  height: 450px;
-  background: ${(props) => props.theme.color.main_content_background};
-  color: #ffffff;
-  padding: 15px 25px;
+  height: 420px;
+  padding: 0 25px;
+  margin-top: 10px;
   &:first-child {
     border-radius: 20px 20px 0 0;
   }
@@ -73,6 +72,7 @@ const StyledTitleWrapper = styled.div`
   font-size: 30px;
   margin: 10px 0;
   margin-bottom: 20px;
+  color: ${(props) => props.theme.color.blue_default};
 `;
 
 const StyledImageWrapper = styled.div`

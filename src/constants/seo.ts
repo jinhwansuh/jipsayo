@@ -3,7 +3,8 @@ import { DefaultSeoProps } from 'next-seo';
 const BASE_URL = 'https://jipsayo.vercel.app/';
 
 export const defaultSEO: DefaultSeoProps = {
-  titleTemplate: '%s | 집사요~',
+  titleTemplate: '%s |집사요~ ',
+  defaultTitle: '집사요~',
   description: '집을 언제 살 수 있는지 계산해 보기',
   canonical: BASE_URL,
   additionalLinkTags: [

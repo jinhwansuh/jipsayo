@@ -1,6 +1,6 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { FilterPriceState } from '~/types/house';
+import { FilterChangePriceStateFn, FilterPriceState } from '~/types/house';
 import { calculateCostToWon } from '~/utils/functions/house';
 import {
   StyledContainer,
@@ -22,7 +22,7 @@ interface Props {
   step: number;
   gap: number;
   value: FilterPriceState;
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: FilterChangePriceStateFn;
 }
 
 const MultiRangeSlider = ({
@@ -33,7 +33,7 @@ const MultiRangeSlider = ({
   gap,
   step,
   value,
-  handleInputChange,
+  onChange,
 }: Props) => {
   // string값을 number로 다루기 위해 number state를 생성
   const [minState, setMinState] = useState(Number(value.minPrice));
@@ -55,7 +55,10 @@ const MultiRangeSlider = ({
       setMinState(value);
       setLeftProgress(percent);
       setPriceState((prev) => ({ ...prev, left: calculateCostToWon(value) }));
-      handleInputChange(e);
+      onChange({
+        name: e.target.name,
+        value: String(value),
+      });
     },
     [maxState],
   );
@@ -67,7 +70,10 @@ const MultiRangeSlider = ({
       setMaxState(value);
       setRightProgress(percent);
       setPriceState((prev) => ({ ...prev, right: calculateCostToWon(value) }));
-      handleInputChange(e);
+      onChange({
+        name: e.target.name,
+        value: String(value),
+      });
     },
     [minState],
   );

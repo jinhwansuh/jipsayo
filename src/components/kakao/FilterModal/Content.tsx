@@ -1,10 +1,14 @@
 import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { MultiRangeSlider, SingleRangeSlider } from '~/components/kakao';
-import { FilterPriceState, FilterTimeState } from '~/types/house';
+import {
+  FilterChangePriceStateFn,
+  FilterPriceState,
+  FilterTimeState,
+} from '~/types/house';
 
 interface Props {
-  handlePriceInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handlePriceInputChange: FilterChangePriceStateFn;
   handleTimeInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   priceState: FilterPriceState;
   timeState: FilterTimeState;
@@ -23,11 +27,11 @@ const FilterModalContent = ({
         <MultiRangeSlider
           minName={'minPrice'}
           maxName={'maxPrice'}
-          minValue={0} // 추후 min값을 받게된다면 추가 필요
+          minValue={0}
           maxValue={600000}
           gap={50000}
           step={10000}
-          handleInputChange={handlePriceInputChange}
+          onChange={handlePriceInputChange}
           value={priceState}
         />
       </StyledContentWrapper>
@@ -38,7 +42,7 @@ const FilterModalContent = ({
           maxValue={120}
           step={2}
           timeState={timeState}
-          handleInputChange={handleTimeInputChange}
+          onChange={handleTimeInputChange}
         />
       </StyledContentWrapper>
     </StyledContentContainer>

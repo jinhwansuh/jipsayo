@@ -8,6 +8,7 @@ import { GoogleAnalytics } from '~/components/common';
 import GlobalStyle from '~/styles/GlobalStyle';
 import theme from '~/styles/theme';
 import { defaultSEO } from '~/constants/seo';
+import '../src/styles/font.css';
 import '../src/styles/infoOverlay.css';
 
 export default function App({ Component, pageProps, router }: AppProps) {
