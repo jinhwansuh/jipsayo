@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Header, NextImage } from '~/components/common';
-import { Content } from '~/components/home';
+import { Header } from '~/components/common';
+import { Content, ImageCarousel } from '~/components/home';
 import { PAGE_ROUTE } from '~/constants';
 import { Container } from '~/layouts';
 
@@ -9,17 +9,7 @@ export default function Home() {
     <>
       <Header backButton={false} />
       <Container>
-        <StyledTitleWrapper>
-          <StyledTitle>집사기 위한 최고의 서비스</StyledTitle>
-
-          <NextImage
-            imageSrc={'/image/jipsayo.png'}
-            alt='logo'
-            width={'120px'}
-            height={'70px'}
-            priority={true}
-          />
-        </StyledTitleWrapper>
+        <ImageCarousel />
 
         <StyledContentWrapper>
           <Content
@@ -45,19 +35,6 @@ export default function Home() {
   );
 }
 
-const StyledTitleWrapper = styled.div`
-  width: 100%;
-  height: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const StyledContentWrapper = styled.div`
+  margin-top: 20px;
 `;
-
-const StyledTitle = styled.div`
-  width: 220px;
-  font-weight: 700;
-  font-size: 34px;
-  line-height: 36px;
-`;
-
-const StyledContentWrapper = styled.div``;
