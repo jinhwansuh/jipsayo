@@ -36,7 +36,7 @@ const ImageCarousel = () => {
 const StyledImageContainer = styled.div`
   position: relative;
   overflow-x: hidden;
-  height: 250px;
+  height: 200px;
 `;
 
 const StyledImage = styled.img`
