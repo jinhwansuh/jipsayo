@@ -48,7 +48,6 @@ const Content = ({
 
 const StyledContainer = styled.section`
   width: 100%;
-  height: 420px;
   padding: 0 25px;
   margin-top: 10px;
   &:first-child {
@@ -72,7 +71,6 @@ const StyledTitleWrapper = styled.div`
   font-size: 30px;
   margin: 10px 0;
   margin-bottom: 20px;
-  color: ${(props) => props.theme.color.blue_default};
 `;
 
 const StyledImageWrapper = styled.div`
@@ -86,6 +84,7 @@ const StyledStoryWrapper = styled.div`
   line-height: 22px;
   margin-top: 20px;
   padding: 0 10px;
+  margin-bottom: 20px;
 `;
 const StyledStory = styled.div``;
 
