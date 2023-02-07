@@ -12,7 +12,7 @@ const Transitions = ({ children, ...props }: Props) => {
     <StyledHorizontalMotion
       initial={{ x: 150, y: 0, opacity: 0 }}
       animate={{ x: 0, y: 0, opacity: 1 }}
-      exit={{ x: -150, y: 0, opacity: 0 }}
+      // exit={{ x: -150, y: 0, opacity: 0 }}
       transition={{
         type: 'spring',
         stiffness: 260,
