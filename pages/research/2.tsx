@@ -9,7 +9,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
 import { DaumPostFrame, Header, NextHead } from '~/components/common';
-import { ReferenceContent } from '~/components/research';
+import { InfoMessage, ReferenceContent } from '~/components/research';
 import { PrefetchedHouse, PrefetchedHouseResponse } from '~/types/research';
 import { getHouse } from '~/api/house';
 import { postResearch } from '~/api/research';
@@ -179,18 +179,21 @@ const ResearchSecondPage = ({
           {isError && <div>서버와 통신 에러입니다.</div>}
 
           {!isLoading && (
-            <div>
-              <ReferenceContent
-                title='하이엔드 아파트'
-                apartment={randomHighEnd}
-                handleHouseClick={handleHouseClick}
-              />
-              <ReferenceContent
-                title='지역 브랜드 아파트'
-                apartment={randomBigName}
-                handleHouseClick={handleHouseClick}
-              />
-            </div>
+            <>
+              <InfoMessage />
+              <div>
+                <ReferenceContent
+                  title='하이엔드 아파트'
+                  apartment={randomHighEnd}
+                  handleHouseClick={handleHouseClick}
+                />
+                <ReferenceContent
+                  title='지역 브랜드 아파트'
+                  apartment={randomBigName}
+                  handleHouseClick={handleHouseClick}
+                />
+              </div>
+            </>
           )}
         </StyledContainer>
       </Container>
