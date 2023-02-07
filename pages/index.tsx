@@ -13,7 +13,7 @@ export default function Home() {
 
         <StyledContentWrapper>
           <Content
-            title='예상 기간을 조회하세요'
+            title='예상 기간 조회하기'
             pageTo={PAGE_ROUTE.RESEARCH_FIRST}
             imageSrc={'/image/result.png'}
             imagePriority={true}
@@ -23,11 +23,12 @@ export default function Home() {
           </Content>
 
           <Content
-            title='거리를 계산하세요'
+            title='지도에서 검색하기'
             pageTo={PAGE_ROUTE.MAP}
             imageSrc={'/image/map.png'}
           >
-            내 직장 주변에 조건에 맞는 어떤 집이 있을까 찾아보세요!
+            원하는 가격과 이동거리를 설정하여 내 주변에 조건에 맞는 어떤 집이
+            있을까 찾아보세요!
           </Content>
         </StyledContentWrapper>
       </Container>
