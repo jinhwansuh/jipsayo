@@ -8,7 +8,7 @@ import path from 'path';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Transitions from '~/layouts/Transitions';
-import { DaumPostFrame, Header, NextHead } from '~/components/common';
+import { DaumPostFrame, Header, Loading, NextHead } from '~/components/common';
 import { InfoMessage, ReferenceContent } from '~/components/research';
 import { PrefetchedHouse, PrefetchedHouseResponse } from '~/types/research';
 import { getHouse } from '~/api/house';
@@ -73,14 +73,13 @@ const ResearchSecondPage = ({
 
   useEffect(() => {
     if (isComplete) {
-      setIsFetching(true);
       handleFetchData();
-      setIsFetching(false);
     }
   }, [isComplete]);
 
   const handleHouseClick = useCallback(
     async ({ danjiName, roadAddress }: PrefetchedHouse) => {
+      setIsFetching(true);
       const { cash, saving, rate } = researchRecoilState;
       try {
         await postResearch({
@@ -108,6 +107,7 @@ const ResearchSecondPage = ({
       } catch {
         setIsError(true);
       }
+      setIsFetching(false);
     },
     [researchRecoilState],
   );
@@ -115,6 +115,7 @@ const ResearchSecondPage = ({
   const handleFetchData = async () => {
     // 유저가 주소를 선택을 했을 때
     if (addressState.userSelectedType) {
+      setIsFetching(true);
       const { cash, saving, rate } = researchRecoilState;
       const { jibunAddress, roadAddress, buildingName } = addressState;
 
@@ -145,6 +146,7 @@ const ResearchSecondPage = ({
       } catch {
         setIsError(true);
       }
+      setIsFetching(false);
     }
   };
 
@@ -172,7 +174,7 @@ const ResearchSecondPage = ({
           </div>
 
           {/*데이터 fetching중  */}
-          {isFetching && <div>데이터 fetching중 입니다.</div>}
+          {isFetching && <Loading />}
           {/* 받아온 데이터가 없을 때 */}
           {isNoData && <div>데이터가 없습니다.</div>}
           {/* 서버에러가 발생했을 때 */}
