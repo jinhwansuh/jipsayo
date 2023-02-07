@@ -7,3 +7,4 @@ export { default as Remixicon } from './Remixicon';
 export { default as GoogleAnalytics } from './GoogleAnalytics';
 export { default as NextImage } from './NextImage';
 export { default as LinkButton } from './Button/LinkButton';
+export { default as Loading } from './Loading';
