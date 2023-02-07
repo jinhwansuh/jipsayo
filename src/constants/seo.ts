@@ -1,11 +1,11 @@
 import { DefaultSeoProps } from 'next-seo';
 
-const BASE_URL = 'https://jipsayo.vercel.app/';
+const BASE_URL = 'https://jipsayo.com';
 
 export const defaultSEO: DefaultSeoProps = {
   titleTemplate: '%s |집사요~ ',
   defaultTitle: '집사요~',
-  description: '집을 언제 살 수 있는지 계산해 보기',
+  description: '원하는 집을 언제살수 있을지 계산하고, 찾아보자!',
   canonical: BASE_URL,
   additionalLinkTags: [
     {
@@ -33,13 +33,12 @@ export const defaultSEO: DefaultSeoProps = {
     locale: 'ko_KR',
     url: BASE_URL,
     title: '집사요~',
-    // images: [
-    //   {
-    //     url: '카카오톡, 페이스북에에 링크 넣으면 올라올 이미지',
-    //     width: 285,
-    //     height: 167,
-    //     alt: '이미지',
-    //   },
-    // ],
+    images: [
+      {
+        url: 'https://github.com/jinhwansuh/jipsayo/blob/main/public/image/jipsayo0.PNG?raw=true',
+        alt: 'image',
+      },
+    ],
+    siteName: '집사요~',
   },
 };
