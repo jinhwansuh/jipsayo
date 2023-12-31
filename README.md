@@ -1,7 +1,8 @@
 ![jipsayo0](https://user-images.githubusercontent.com/61727311/217318035-8a30c86a-240f-4c55-9e15-c42ba44ffa97.PNG)
 
 # 집사요~
-[![Netlify Status](https://api.netlify.com/api/v1/badges/fac678ff-a99c-46e4-b7d6-31497111ef8d/deploy-status)](https://app.netlify.com/sites/jipsayo/deploys)
+<!-- [![Netlify Status](https://api.netlify.com/api/v1/badges/fac678ff-a99c-46e4-b7d6-31497111ef8d/deploy-status)](https://app.netlify.com/sites/jipsayo/deploys)  -->
+> 서버 이전작업으로 작동이 안됩니다.
 
 나의 집은 언제살수 있는지 예측하는 서비스
 
