@@ -2,7 +2,6 @@
 
 # 집사요~
 <!-- [![Netlify Status](https://api.netlify.com/api/v1/badges/fac678ff-a99c-46e4-b7d6-31497111ef8d/deploy-status)](https://app.netlify.com/sites/jipsayo/deploys)  -->
-> 서버 이전작업으로 작동이 안됩니다.
 
 나의 집은 언제살수 있는지 예측하는 서비스
 
